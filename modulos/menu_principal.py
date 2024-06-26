@@ -44,7 +44,7 @@ class MenuPrincipal:
 
 
      
-        # Menú Opciones crear, modificar, eliminar, mostrar o buscar.
+        # Menú Opciones crear, eliminar, mostrar o buscar.
 
         # Configuramos el Panel de Crear:
         ancho = 300

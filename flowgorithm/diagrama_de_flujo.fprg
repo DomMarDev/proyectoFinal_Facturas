@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Domingo_Nina"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-06-26 11:47:30 "/>
+        <attribute name="created" value="RG9taW5nb19OaW5hO0RFU0tUT1AtSkhKQTkzVjsyMDI0LTA2LTI2OyIwOTo1NToxMCAiOzM0NjE="/>
+        <attribute name="edited" value="RG9taW5nb19OaW5hO0RFU0tUT1AtSkhKQTkzVjsyMDI0LTA2LTI2OyIxMTo0NzozMCAiOzEzOzM2MTY="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="opcion" type="Integer" array="False" size=""/>
+            <comment text="Imita el Login del usuario en la app"/>
+            <while expression="verificacion() == False">
+                <call expression="verificacion()"/>
+            </while>
+            <comment text="Una vez accedemos al men&#250; principal, este muestra las opciones de:&#13;&#10;1) Crear Factura&#13;&#10;2) Eliminar Factura&#13;&#10;3) Buscar Factura&#13;&#10;4) Mostrar Facturas&#13;&#10;5) Salir&#13;&#10;"/>
+            <do expression="opcion != 4">
+                <output expression="&quot;Introduzca una opci&#243;n:&quot;" newline="True"/>
+                <output expression="&quot;1) Crear Factura&quot;" newline="True"/>
+                <output expression="&quot;2) Eliminar Factura&quot;" newline="True"/>
+                <output expression="&quot;3) Buscar Factura&quot;" newline="True"/>
+                <output expression="&quot;4) Mostrar Facturas&quot;" newline="True"/>
+                <output expression="&quot;5) Salir&quot;" newline="True"/>
+                <input variable="opcion"/>
+                <if expression="opcion == 1">
+                    <then>
+                        <output expression="&quot;Vamos a crear una factura&quot;" newline="True"/>
+                        <call expression="crearFactura()"/>
+                    </then>
+                    <else>
+                        <if expression="opcion == 2">
+                            <then>
+                                <output expression="&quot;Vamos a eliminar una factura&quot;" newline="True"/>
+                            </then>
+                            <else>
+                                <if expression="opcion == 3">
+                                    <then>
+                                        <output expression="&quot;Vamos a buscar una factura&quot;" newline="True"/>
+                                    </then>
+                                    <else>
+                                        <if expression="opcion == 4">
+                                            <then>
+                                                <output expression="&quot;Vamos a mostrar todas las facturas&quot;" newline="True"/>
+                                            </then>
+                                            <else>
+                                                <if expression="opcion == 5">
+                                                    <then>
+                                                        <output expression="&quot;Has pulsado salir&quot;" newline="True"/>
+                                                    </then>
+                                                    <else>
+                                                        <output expression="&quot;Opci&#243;n no contemplada&quot;" newline="True"/>
+                                                    </else>
+                                                </if>
+                                            </else>
+                                        </if>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                    </else>
+                </if>
+            </do>
+            <output expression="&quot;Fin del programa&quot;" newline="True"/>
+            <output expression="&quot;Has conseguido entrar&quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="crearFactura" type="None" variable="">
+        <parameters/>
+        <body>
+            <comment text="Se muestran algunos datos que apareceran en la factura creada(no final) en formato PDF "/>
+            <comment text="Se declaran los elementos que se van a ir pidiendo y otros que se dan propios de nuestra empresa"/>
+            <declare name="nombreEmpresa, fechaFactura, cliente, dniCliente, localizacionCliente, elemento, formaPago, banco, iban" type="String" array="False" size=""/>
+            <declare name="elementoFactura" type="String" array="True" size="3"/>
+            <declare name="precioelementoFactura" type="Integer" array="True" size="3"/>
+            <comment text="Indice para recorrer los bucles y la variable de precio del elemento"/>
+            <declare name="indice, precio" type="Integer" array="False" size=""/>
+            <comment text="Asignamos datos propios de nuestra empresa y del d&#237;a de la factura."/>
+            <assign variable="fechaFactura" expression="&quot;dia/mes/a&#241;o&quot;"/>
+            <assign variable="formaPago" expression="&quot;Contado&quot;"/>
+            <assign variable="banco" expression="&quot;La Caixa&quot;"/>
+            <assign variable="iban" expression="&quot;ES *********&quot;"/>
+            <comment text="Pedimos al usuario los datos a rellenar en la factura. Hay control de entrada que no sean campos vaci&#243;s."/>
+            <assign variable="cliente" expression="&quot;&quot;"/>
+            <while expression="cliente == &quot;&quot;">
+                <output expression="&quot;Inserte el nombre del cliente&quot;" newline="True"/>
+                <input variable="cliente"/>
+                <if expression="cliente == &quot;&quot;">
+                    <then>
+                        <output expression="&quot;El campo de cliente no puede estar vac&#237;o.&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </while>
+            <assign variable="dniCliente" expression="&quot;&quot;"/>
+            <while expression="dniCliente == &quot;&quot;">
+                <output expression="&quot;Inserte el DNI del cliente&quot;" newline="True"/>
+                <input variable="dniCliente"/>
+                <if expression="dniCliente == &quot;&quot;">
+                    <then>
+                        <output expression="&quot;El campo de DNI no puede estar vac&#237;o.&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </while>
+            <assign variable="localizacionCliente" expression="&quot;&quot;"/>
+            <while expression="localizacionCliente == &quot;&quot;">
+                <output expression="&quot;Inserte la localizaci&#243;n del cliente&quot;" newline="True"/>
+                <input variable="localizacionCliente"/>
+                <if expression="localizacionCliente == &quot;&quot;">
+                    <then>
+                        <output expression="&quot;El campo de localizaci&#243;n no puede estar vac&#237;o.&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+            </while>
+            <for variable="indice" start="0" end="2" direction="inc" step="1">
+                <comment text=""/>
+                <assign variable="elemento" expression="&quot;&quot;"/>
+                <while expression="elemento == &quot;&quot;">
+                    <output expression="&quot;Inserte elemento de la factura &quot; &amp; indice+1" newline="True"/>
+                    <input variable="elemento"/>
+                    <assign variable="elementoFactura[indice]" expression="elemento"/>
+                    <if expression="elemento == &quot;&quot;">
+                        <then>
+                            <output expression="&quot;El campo de elemento no puede estar vac&#237;o.&quot;" newline="True"/>
+                        </then>
+                        <else/>
+                    </if>
+                </while>
+                <comment text="El control de entrada voy a hacer que si pone 0 que no valga, pero ser&#237;a que si no introduce nada vuelva a pedirlo."/>
+                <assign variable="precio" expression="0"/>
+                <while expression="precio == 0">
+                    <output expression="&quot;Inserte el precio del elemento de la factura &quot; &amp; indice+1" newline="True"/>
+                    <input variable="precio"/>
+                    <assign variable="precioelementoFactura[indice]" expression="precio"/>
+                    <if expression="precio == 0">
+                        <then>
+                            <output expression="&quot;El campo de precio no puede estar vac&#237;o.&quot;" newline="True"/>
+                        </then>
+                        <else/>
+                    </if>
+                </while>
+            </for>
+            <comment text="Generaci&#243;n del PDF"/>
+            <comment text="los datos introducidos por el usuario ser&#225;n guardados en un archivo json"/>
+            <output expression="&quot;PDF: &quot; &amp; &quot; Cliente: &quot; &amp; cliente &amp; &quot; | DNI cliente: &quot; &amp; dniCliente &amp; &quot; | Localizaci&#243;n: &quot; &amp; localizacionCliente" newline="True"/>
+            <output expression="&quot;Elementos de la factura: &quot;" newline="True"/>
+            <for variable="indice" start="0" end="2" direction="inc" step="1">
+                <output expression="elementoFactura[indice] &amp; &quot; Precio sin IVA: &quot; &amp; precioelementoFactura[indice] &amp; &quot; euros &quot; &amp; &quot; | Precio con IVA: &quot; &amp; precioelementoFactura[indice]*1.21 &amp; &quot; euros &quot;" newline="True"/>
+            </for>
+            <output expression="&quot; Fecha Factura: &quot; &amp; fechaFactura &amp; &quot; | Forma de Pago: &quot; &amp; formaPago &amp; &quot; | Banco: &quot; &amp; banco &amp; &quot; IBAN: &quot; &amp; iban" newline="True"/>
+        </body>
+    </function>
+    <function name="verificacion" type="Boolean" variable="resultado">
+        <parameters/>
+        <body>
+            <comment text="Declaramos las variables user y pass para poder verificar mediante una pantalla de log&#237;n al usuario."/>
+            <declare name="user, pass" type="String" array="False" size=""/>
+            <declare name="resultado" type="Boolean" array="False" size=""/>
+            <output expression="&quot;Introduzca el nombre de usuario: &quot;" newline="True"/>
+            <input variable="user"/>
+            <output expression="&quot;Introduzca la contrase&#241;a: &quot;" newline="True"/>
+            <input variable="pass"/>
+            <if expression="user == &quot;user&quot;">
+                <then>
+                    <if expression="pass == &quot;pass&quot;">
+                        <then>
+                            <assign variable="resultado" expression="True"/>
+                        </then>
+                        <else>
+                            <output expression="&quot;La contrase&#241;a no es correcta&quot;" newline="True"/>
+                            <assign variable="resultado" expression="False"/>
+                        </else>
+                    </if>
+                </then>
+                <else>
+                    <if expression="pass == &quot;pass&quot;">
+                        <then>
+                            <output expression="&quot;El usuario introducido no es correcto&quot;" newline="True"/>
+                            <assign variable="resultado" expression="False"/>
+                        </then>
+                        <else>
+                            <output expression="&quot;El usuario y la contrase&#241;a no  son correctos&quot;" newline="True"/>
+                            <assign variable="resultado" expression="False"/>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
