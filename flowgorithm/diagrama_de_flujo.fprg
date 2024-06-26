@@ -4,9 +4,9 @@
         <attribute name="name" value=""/>
         <attribute name="authors" value="Domingo_Nina"/>
         <attribute name="about" value=""/>
-        <attribute name="saved" value="2024-06-26 11:47:30 "/>
+        <attribute name="saved" value="2024-06-26 12:13:27 "/>
         <attribute name="created" value="RG9taW5nb19OaW5hO0RFU0tUT1AtSkhKQTkzVjsyMDI0LTA2LTI2OyIwOTo1NToxMCAiOzM0NjE="/>
-        <attribute name="edited" value="RG9taW5nb19OaW5hO0RFU0tUT1AtSkhKQTkzVjsyMDI0LTA2LTI2OyIxMTo0NzozMCAiOzEzOzM2MTY="/>
+        <attribute name="edited" value="RG9taW5nb19OaW5hO0RFU0tUT1AtSkhKQTkzVjsyMDI0LTA2LTI2OyIxMjoxMzoyNyAiOzE0OzM2MTc="/>
     </attributes>
     <function name="Main" type="None" variable="">
         <parameters/>
@@ -64,7 +64,6 @@
                 </if>
             </do>
             <output expression="&quot;Fin del programa&quot;" newline="True"/>
-            <output expression="&quot;Has conseguido entrar&quot;" newline="True"/>
         </body>
     </function>
     <function name="crearFactura" type="None" variable="">
