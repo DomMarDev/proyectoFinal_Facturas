@@ -41,7 +41,7 @@ class Login:
         utl.centrar_ventanas(self.ventana, 800, 500)
 
         # # Importamos el logo de la carpeta imagenes, le asignamos un tamaño y la ponemos dentro de una etiquta (toda la pantalla)
-        ruta_logo = Path('factura_DM\imagenes\cuadrado.png')
+        ruta_logo = Path('imagenes\cuadrado.png')
         logo = utl.leer_imagen(ruta_logo, (200, 200))
 
         # Configuramos el frame o Panel:

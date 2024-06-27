@@ -5,7 +5,8 @@ from tkinter import ttk, messagebox
 from tkinter.font import BOLD
 from pathlib import Path
 
-import utilidades_ventana.generic as utl
+from utilidades_ventana.generic import leer_imagen as leer , centrar_ventanas as centrar
+# import utilidades_ventana.generic as utl
 
 from modulos.crear_PDF import CrearPDF
 
@@ -33,11 +34,11 @@ class MenuPrincipal:
         self.ventana.resizable(width = 0, height = 0 )
 
         # Centramos la ventana
-        utl.centrar_ventanas(self.ventana, 800, 500)
+        centrar(self.ventana, 800, 500)
 
         # Importamos el logo de la carpeta imagenes, le asignamos un tamaño y la ponemos dentro de una etiquta (toda la pantalla)
-        ruta_logo = Path('factura_DM\imagenes\cuadrado.png')
-        logo = utl.leer_imagen(ruta_logo, (200, 200))
+        ruta_logo = Path('imagenes\cuadrado.png')
+        logo = leer(ruta_logo, (200, 200))
 
         label = tk.Label(self.ventana, image = logo, bg = '#fcfcfc')
         label.place(x=0, y=0, relwidth=1, relheight=1)
@@ -62,8 +63,8 @@ class MenuPrincipal:
                         )
         
         # Generamos etiqueta de Crear
-        ruta_logo_crear = Path('factura_DM\imagenes\crear.png')
-        crear_logo = utl.leer_imagen(ruta_logo_crear, (200, 200))
+        ruta_logo_crear = Path('imagenes\crear.png')
+        crear_logo = leer(ruta_logo_crear, (200, 200))
         # Creamos el título de Crear Factura
         label = tk.Label(frame_Crear, image = crear_logo, bg = '#fcfcfc')
         label.place(x = 0,
@@ -113,8 +114,8 @@ class MenuPrincipal:
                         )
         
         # Generamos etiqueta de Eliminar
-        ruta_logo_Eliminar = Path('factura_DM\imagenes\eliminar.png')
-        Eliminar_logo = utl.leer_imagen(ruta_logo_Eliminar, (200, 200))
+        ruta_logo_Eliminar = Path('imagenes\eliminar.png')
+        Eliminar_logo = leer(ruta_logo_Eliminar, (200, 200))
         # Creamos el título de Eliminar Factura
         label = tk.Label(frame_Eliminar, image = Eliminar_logo, bg = '#fcfcfc')
         label.place(x = 0,
@@ -147,8 +148,8 @@ class MenuPrincipal:
                         )
         
         # Generamos etiqueta de Mostrar
-        ruta_logo_Mostrar = Path('factura_DM\imagenes\mostrar.png')
-        Mostrar_logo = utl.leer_imagen(ruta_logo_Mostrar, (200, 200))
+        ruta_logo_Mostrar = Path('imagenes\mostrar.png')
+        Mostrar_logo = leer(ruta_logo_Mostrar, (200, 200))
         # Creamos el título de Mostrar Factura
         label = tk.Label(frame_Mostrar, image = Mostrar_logo, bg = '#fcfcfc')
         label.place(x = 0,
@@ -181,8 +182,8 @@ class MenuPrincipal:
                         )
         
         # Generamos etiqueta de Buscar
-        ruta_logo_Buscar = Path('factura_DM\imagenes\iuscar.png')
-        Buscar_logo = utl.leer_imagen(ruta_logo_Buscar, (200, 200))
+        ruta_logo_Buscar = Path('imagenes\iuscar.png')
+        Buscar_logo = leer(ruta_logo_Buscar, (200, 200))
         # Creamos el título de Buscar Factura
         label = tk.Label(frame_Buscar, image = Buscar_logo, bg = '#fcfcfc')
         label.place(x = 0,

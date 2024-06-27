@@ -16,7 +16,6 @@
 2. Como mínimo se deberá poder generar facturas en formato PDF dados unos datos en formato json.
 3. Se podrán eliminar las facturas, mostrarlas o buscarlas de alguna manera.
 
-
 #### Importancia:
 
 Es un programa que facilita al usuario el realizar facturas con un formato estándar sin tener que preocuparse de desajustes en word. Será una herramienta sencilla y visual para que personas con bajo nivel en ofimática puedan realizar esta actividad con normalidad.
@@ -89,7 +88,7 @@ Datos presentes en una factura:
 
     * calle/ localiz/ CP / TLF
 
-    * Tabla: (Pedir)
+    Tabla 1: (Pedir)
 
     * Unidades del elemento
 
@@ -99,7 +98,7 @@ Datos presentes en una factura:
 
     * Precio total del elemento
 
-    * Tabla 2:
+    Tabla 2:
 
     * Importe Bruto
 
@@ -111,9 +110,9 @@ Datos presentes en una factura:
 
     * Total Factura
 
-    *Tabla 3:
+    Tabla 3:
 
-    * Fecha vencimiento factura (a 30 días después de la creación de la factura)
+    * Fecha vencimiento factura (a 30 días después de la creación de la factura, pero he de mirar si quiero que sea a día 1 del siguiente més)
 
     * Forma de Pago
 
@@ -124,7 +123,6 @@ Datos presentes en una factura:
 Al acabar con la introducción de datos, el usuario podrá indicarlo mediante un botón de "Generar Factura" y se generará un PDF, con un nombre autogenerado. Además, se guardará dicho arvhivo en la carpeta de "PDF" previamente creada.
 
 Todos los datos introducidos por el usuario se guardarán en un documento json autogenerado (con el nombre de la factura) que contendrá una lista de un diccionarios correspondiente a la factura. (aún no sé si voy a poder implementar una base de datos)
-
 
 ##### Opción 2: Eliminar factura
 
