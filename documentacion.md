@@ -26,6 +26,8 @@ Es un programa que facilita al usuario el realizar facturas con un formato está
 
 #### Librerías:
 
+Aún podrían faltar o quitarse algunas librerías.
+
 1) PIL / Pillow ->  poder ajustar imagenes (pip install Pillow)
 2) datetime -> dar la fecha cuando se crea la factura y fecha límite de pago.
 3) fpdf -> generador de archivo PDF ( pip install fpdf)

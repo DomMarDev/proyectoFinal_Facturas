@@ -6,8 +6,11 @@ from tkinter import ttk, messagebox
 from tkinter.font import BOLD
 from pathlib import Path
 
-import utilidades_ventana.generic as utl
+# import utilidades_ventana.generic as utl
 
+# from utilidades_ventana.generic import leer_imagen as leer , centrar_ventanas as centrar
+
+# Simbolo euro: https://www.w3schools.com/html/html_entities.asp
 
 '''
 Formato del PFD (P de Portrait):
@@ -80,7 +83,7 @@ class CrearPDF:
 
         # ruta_pdf = f'factura_DM\PDF/{doc}.pfd' 
 
-        ruta_pdf = 'factura_DM\PDF/hojaPrueba.pfd' 
+        ruta_pdf = 'PDF/hojaPrueba.pfd'
 
 
         # Creamos el PDF:
@@ -93,7 +96,7 @@ class CrearPDF:
 
         # Elementos del PDF
 
-        ruta_logo = 'factura_DM\imagenes\lego.png'
+        ruta_logo = '/imagenes/lego.png'
 
         pdf.image(ruta_logo, x = 10, y = 10, w = 30, h= 30) # Logo
 
@@ -157,7 +160,7 @@ class CrearPDF:
         #lista_factura = ((unidades, 'Concepto', Precio U., Total))
 
         lista_factura = (
-            ("2", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
+            ("2 &#8364;", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
             ("2", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
             ("2", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
             ("2", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
