@@ -5,7 +5,7 @@ from tkinter import ttk, messagebox
 from tkinter.font import BOLD
 from pathlib import Path
 
-from utilidades_ventana.generic import leer_imagen as leer , centrar_ventanas as centrar
+from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 # import utilidades_ventana.generic as utl
 
 from modulos.colores import *

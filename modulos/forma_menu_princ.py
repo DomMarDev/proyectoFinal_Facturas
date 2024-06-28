@@ -2,24 +2,29 @@ import tkinter as tk
 from tkinter.font import Font
 from pathlib import Path
 
+import sys
+
+sys.path.append('.') # para añadir el directorio principal de donde estás ejecutando el programa (la raiz)
+
+
 from utilidades_ventana.generic import leer_imagen as leer , centrar_ventanas as centrar
 # import utilidades_ventana.generic as utl
 from modulos.colores import *
 
-# from modulos.opciones import VentanaCrear as VC
+from modulos.opciones import VentanaCrear as VC
 
 class MenuPrincipal(tk.Tk):
 
-    # def ir_crear(self):
-    #     '''Método que permite ir a crear una factura'''
-    #     self.MP.destroy() # Eliminamos la ventana
-    #     VC() # Muestra el menú principal
+    def ir_crear(self):
+        '''Método que permite ir a crear una factura'''
+        self.MP.destroy() # Eliminamos la ventana
+        VC() # Muestra el menú principal
 
     def __init__(self):
         super().__init__()
 
         # Importamos el logo de la carpeta imagenes, le asignamos un tamaño y la ponemos dentro de una etiquta (toda la pantalla)
-        ruta_logo = Path('imagenes\cuadrado.png')
+        ruta_logo = Path('imagenes/cuadrado.png')
         self.logo = leer(ruta_logo, (560, 136))
         self.perfil= leer(ruta_logo, (100, 100))
         self.configuracion_ventana()
@@ -32,7 +37,7 @@ class MenuPrincipal(tk.Tk):
 
     def configuracion_ventana(self): # Configuración de la ventana del menú principal
         self.title('Menú Principal') # Se coloca el título de la ventana
-        ruta_icono_menu = 'imagenes\lego.png'
+        ruta_icono_menu = 'imagenes/lego.png'
         self.iconbitmap(ruta_icono_menu)
 
         w, h = 1024, 600 # Tamaño de la ventana
@@ -135,4 +140,4 @@ class MenuPrincipal(tk.Tk):
         else:
             self.menu_lateral.pack(side= tk.LEFT, fill= 'y')
             
-        
+

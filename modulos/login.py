@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 from tkinter.font import BOLD
 from pathlib import Path
 
-import utilidades_ventana.generic as utl
+import modulos.generic as utl
 
 from modulos.forma_menu_princ import MenuPrincipal
 

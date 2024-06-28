@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.font import Font
 
-from utilidades_ventana.generic import leer_imagen as leer , centrar_ventanas as centrar
+from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 
 from modulos.colores import *
 
