@@ -1,4 +1,4 @@
-# Documentación Proyecto Domingo Marchan del Pino
+# Documentación PreProyecto Domingo Marchan del Pino
 
 ## 1. Introducción
 
@@ -26,6 +26,14 @@ Es un programa que facilita al usuario el realizar facturas con un formato está
 
 #### Librerías:
 
+persistencia = datos de una api los tenemos que guardar en un json o csv
+
+    - Archivos: JSON, txt, CSV
+
+    - Bases de datos (BBDD): SQlite
+
+Analisis de datos con: Numpy, Pandas, Matplotlib
+
 Aún podrían faltar o quitarse algunas librerías.
 
 1) PIL / Pillow ->  poder ajustar imagenes (pip install Pillow)
@@ -36,12 +44,13 @@ Aún podrían faltar o quitarse algunas librerías.
 6) os -> para clear o pause screen (no sé si la voy a acabar usando)
 7) random -> generador de números aleatórios
 8) json -> manipulación de archivos json
+9) Numpy, Pandas, Matplotlib -> Analisis de datos
 
 ## 2. Diseño del proyecto:
 
 ### Descripción del diseño: una descripción de alto nivel de cómo se estructurará el código
 
-#### Login screen: (main.py)
+#### Login screen:
 
 Va a aparecer una ventana para que el usuario verifique sus credenciales ( de momento no quiero registrar usuarios).
 
@@ -50,7 +59,7 @@ Las credenciales por defecto serán:
 - Usuario: user
 - Contraseña: 1234
 
-#### Menú principal: (menu_principal.py)
+#### Menú principal:
 
 Se muestra un menú donde clicando en los recuadros se podrán realizar las acciones de:
 
@@ -64,11 +73,11 @@ Se muestra un menú donde clicando en los recuadros se podrán realizar las acci
 
 *5) Salir (esta de momento la dejo como opción, pero con cerrar la pestaña ya estaría hecho)
 
+*6) Analítica datos: Balance facturas del mes o  Nº Facturas del mes
+
 Se baraja la opción de incorporar un menú superior con las mismas funcionalidades u otras que por el momento no tengo pensadas.
 
 ##### Opción 1: Crear factura
-
-Se destruye la ventana de menú principal y se ejecuta el módulo crear_pdf.py. Este módulo permite la aparición de una ventana emergente.
 
 Se piden los datos al usuario (Pedir), los demás vendrán configurados por defecto (a medida del usuario) o se rellenarán automáticamente. La interfaz gráfica hará visibles los campos rellenados por el usuario (en principio).
 
@@ -128,18 +137,13 @@ Al acabar con la introducción de datos, el usuario podrá indicarlo mediante un
 
 Todos los datos introducidos por el usuario se guardarán en un documento json autogenerado (con el nombre de la factura) que contendrá una lista de un diccionarios correspondiente a la factura. (aún no sé si voy a poder implementar una base de datos)
 
-Al acabar se vuelve al menú principal después de destruir la ventana de crear_pdf.
-
 ##### Opción 2: Eliminar factura
-
-Se ejecuta el módulo elminar_factura.py.
 
 Se procederá a mostrar las facturas y se podrán eliminar dado un cliente y un código que se mostrará en pantalla que el usuario deberá de introducir. Si no introduce los datos de forma correcta se mostrará un mensaje.
 
 Otra opción será abrir una ventana con todos los archivos PDF correspondientes a las facturas ya hechas y se podrá eliminar clicando y dandole a suprimir (tengo que darle una vuelta para que sea más fácil aún)
 
 ##### Opción 3: Buscar factura
-Se ejecuta el módulo buscar_factura.py
 
 Se mostrarán las facturas que hay en la base de datos y se podrán buscar según cliente y un código / número que aparecerá al lado de la factura.
 
@@ -147,9 +151,13 @@ Otra opción será abrir una ventana y realizar una búsqueda normal como siempr
 
 ##### Opción 4: Mostrar facturas
 
-Se ejecuta el módulo mostrar_facturas.py.
-
 Se mostrarán las facturas que hay en la base de datos (bien el directorio con los PDF, o las que constan en la base de datos de las facturas introducidas por el usuario en un formato json).
+
+##### Opción 5: Salir
+
+##### Opción 6: Analítica datos: Balance facturas del mes o  Nº Facturas del mes
+
+Gestión de datos para que muestre el balance de las facturas del mes o bien el Nº de facturas hechas del mes.
 
 ## Diagrama de flujo aproximado de la ejecución del programa. Como mínimo del script principal y una de las funcionalidades.
 

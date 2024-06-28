@@ -163,7 +163,7 @@ def crear_pdf():
     #lista_factura = ((unidades, 'Concepto', Precio U., Total))
 
     lista_factura = (
-    ("2", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
+    ("3", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
     ("2", "Pepino a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
     ("2", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),
     ("2", "Macarrones a la bolonyesa y mucha carne picada jaja", "20 ", "40 "),

@@ -22,10 +22,10 @@ menu.mainloop()
 # class MenuPrincipal(tk.Tk):
 #     # Ir a Crear
 
-#     def ir_crear(self):
-#         '''Método que permite ir a crear una factura'''
-#         self.ventana.destroy() # Eliminamos la ventana
-#         crear_pdf() # Muestra el menú principal
+    # def ir_crear(self):
+    #     '''Método que permite ir a crear una factura'''
+    #     self.ventana.destroy() # Eliminamos la ventana
+    #     crear_pdf() # Muestra el menú principal
 
     
 #     def __init__(self):
@@ -244,21 +244,21 @@ menu.mainloop()
 
 
 
-# # Botones
+# Botones
 
-#         # Creando el botón crear factura
-#         crear= tk.Button(frame_MenuCrear,
-#                                 text = 'Crear Factura',
-#                                 font = ('Times', 15, BOLD),
-#                                 bg = '#3a7ff6',
-#                                 bd = 0,
-#                                 fg = '#fff',
-#                                 command = self.crear_factura)
-#         crear.pack(fill = tk.X, padx = 20, pady = 20)
+        # Creando el botón crear factura
+        # crear= tk.Button(frame_MenuCrear,
+        #                         text = 'Crear Factura',
+        #                         font = ('Times', 15, BOLD),
+        #                         bg = '#3a7ff6',
+        #                         bd = 0,
+        #                         fg = '#fff',
+        #                         command = self.crear_factura)
+        # crear.pack(fill = tk.X, padx = 20, pady = 20)
 
-#         # Asignación de user y pass
+        # # Asignación de user y pass
         
-#         crear.bind('<Return>', (lambda event: self.crear_factura())) # Si damos click con un enter lanzamos el método crear factura
+        # crear.bind('<Return>', (lambda event: self.crear_factura())) # Si damos click con un enter lanzamos el método crear factura
 
 
 

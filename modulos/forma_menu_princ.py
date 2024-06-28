@@ -6,9 +6,15 @@ from utilidades_ventana.generic import leer_imagen as leer , centrar_ventanas as
 # import utilidades_ventana.generic as utl
 from modulos.colores import *
 
+from modulos.opciones import VentanaCrear as VC
 
 class MenuPrincipal(tk.Tk):
-    
+
+    def ir_crear(self):
+        '''Método que permite ir a crear una factura'''
+        self.MP.destroy() # Eliminamos la ventana
+        VC() # Muestra el menú principal
+
     def __init__(self):
         super().__init__()
 
@@ -85,26 +91,30 @@ class MenuPrincipal(tk.Tk):
         self.labelPerfil.pack(side= tk.TOP, pady= 10)
 
         # Botones sección del menú lateral
-        self.botonDashBoard= tk.Button(self.menu_lateral)
-        self.botonProfile= tk.Button(self.menu_lateral)             
-        self.botonPicture= tk.Button(self.menu_lateral)        
-        self.botonInfo= tk.Button(self.menu_lateral)
-        self.botonSettings= tk.Button(self.menu_lateral)
+        self.botonCrear= tk.Button(self.menu_lateral)
+        self.botonEliminar= tk.Button(self.menu_lateral)             
+        self.botonBuscar= tk.Button(self.menu_lateral)        
+        self.botonMostrar= tk.Button(self.menu_lateral)
+        self.botonSalir= tk.Button(self.menu_lateral)
+        self.botonDatos= tk.Button(self.menu_lateral)
 
         botones_info= [
-            ('Dasboard', '1)', self.botonDashBoard), # Texto, icono y objeto a insertar
-            ('Profile', '2)', self.botonProfile),
-            ('Picture', '3)', self.botonPicture),
-            ('Info', '4)', self.botonInfo),
-            ('Settings', '5)', self.botonSettings)            
+            ('Crear Factura', '1)', self.botonCrear, self.crearFactura_ventana), # Texto, icono y objeto a insertar
+            ('Eliminar Factura', '2)', self.botonEliminar),
+            ('Buscar Factura', '3)', self.botonBuscar),
+            ('Mostrar Factura', '4)', self.botonMostrar),
+            ('Salir', '5)', self.botonSalir),
+            ('Analítica datos', '6)', self.botonDatos)            
             ]
-        for texto, icono, boton in botones_info:
-            self.configurar_boton_menu(boton, texto, icono, ancho, alto)
+        for texto, icono, boton, comando in botones_info:
+            self.configurar_boton_menu(boton, texto, icono, ancho, alto, comando)
     
-    def configurar_boton_menu(self, boton, texto, icono, ancho, alto):
-        boton.config(text= f" {icono}  {texto}", anchor= "w", bd= 0, bg= color_menu_lateral, fg= 'white', width= ancho, height= alto)
+    def configurar_boton_menu(self, boton, texto, icono, ancho, alto, comando):
+        boton.config(text= f" {icono}  {texto}", anchor= "w", bd= 0, bg= color_menu_lateral, fg= 'white', width= ancho, height= alto, command= comando)
         boton.pack(side= tk.TOP)
         self.bind_hover_events(boton)
+        # self.botonCrear.bind('<Return>', (lambda event: self.crear_factura()))
+        
 
     def bind_hover_events(self, boton): # para que cuando pases se cambie el color
         #Asociar eventos Enter y Leave con la función dinámica
@@ -124,3 +134,5 @@ class MenuPrincipal(tk.Tk):
             self.menu_lateral.pack_forget()
         else:
             self.menu_lateral.pack(side= tk.LEFT, fill= 'y')
+            
+        
