@@ -6,7 +6,7 @@ from pathlib import Path
 
 import utilidades_ventana.generic as utl
 
-from modulos.menu_principal import MenuPrincipal
+from modulos.forma_menu_princ import MenuPrincipal
 
 class Login:
 
