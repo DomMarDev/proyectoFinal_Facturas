@@ -6,6 +6,10 @@ from tkinter import ttk, messagebox
 from tkinter.font import BOLD
 from pathlib import Path
 
+from funciones_json.leer_archivo import Lectura_archivo
+from funciones_json.anadir_factura import Add_factura
+from ruta import ruta
+
 # import utilidades_ventana.generic as utl
 
 # from utilidades_ventana.generic import leer_imagen as leer , centrar_ventanas as centrar
@@ -35,49 +39,7 @@ Align:
 C = centro | L = izq | R = der
 
 '''
-# class CrearPDF:
-    
-#     # # Ventana para rellenar datos:
-#     def __init__(self):
-#     #     self.ventana = tk.Tk()
-#     #     self.ventana.title('Crear Factura') # Se coloca el título de la ventana
-        
-#     #     # Se busca el ancho y lo alto de la ventana, para que se maximice
-#     #     w, h = self.ventana.winfo_screenmmwidth(), self.ventana.winfo_screenmmheight()
-        
-#     #     # Formateo de tuplas donde se indica el ancho y lo alto
-#     #     self.ventana.geometry("%dx%d+0+0" % (w,h))
-        
-#         # Configuramos el fondo de la ventana -> blanco (#fcfcfc). Y que no redimensione la ventana.
-#         # self.ventana.config(bg = '#fcfcfc')
-#         # self.ventana.resizable(width = 0, height = 0 )
 
-#         # # Centramos la ventana
-#         # utl.centrar_ventanas(self.ventana, 800, 500)
-
-
-#         # # Variables:
-#         self.numero_factura = '49-K' 
-#         day0 = datetime.date.today()
-#         self.fecha_Pagar = str(day0 + datetime.timedelta(days = 30)) # Se paga a 30 días de que se crea la factura
-#         self.cliente = input('')
-#         self.dni_nif = input('')
-        
-#         # #lista_factura = ((unidades, 'Concepto', Precio U., Total))
-
-#         # tabla= ttk.Treeview(self.ventana, columns = 4)
-#         # tabla.grid(row=4)
-
-#         # lista_elementos = tk.Listbox(self.ventana)
-
-#         for indice, elemento in enumerate(lista_elementos):
-#             lista_elementos.insert(indice, ('unidades', 'Concepto', 'Precio U.', 'Total'))
-
-
-#         #factura = consulta(conexion)
-
-
-        # Colocar datos de nuestra base de datos en una tabla https://www.youtube.com/watch?v=O-Q_Y1_wV-E&ab_channel=ProgramadorNovato
 
 
     
@@ -85,7 +47,9 @@ def crear_pdf():
     # doc = input('Dime el nombre del documento')
 
     # ruta_pdf = f'factura_DM\PDF/{doc}.pfd' 
-
+    Add_factura(ruta())
+    Add_factura.add_factura()
+    
     ruta_pdf = 'PDF/hojaPrueba2.pdf'
 
 

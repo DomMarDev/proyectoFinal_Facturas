@@ -6,14 +6,14 @@ from utilidades_ventana.generic import leer_imagen as leer , centrar_ventanas as
 # import utilidades_ventana.generic as utl
 from modulos.colores import *
 
-from modulos.opciones import VentanaCrear as VC
+# from modulos.opciones import VentanaCrear as VC
 
 class MenuPrincipal(tk.Tk):
 
-    def ir_crear(self):
-        '''Método que permite ir a crear una factura'''
-        self.MP.destroy() # Eliminamos la ventana
-        VC() # Muestra el menú principal
+    # def ir_crear(self):
+    #     '''Método que permite ir a crear una factura'''
+    #     self.MP.destroy() # Eliminamos la ventana
+    #     VC() # Muestra el menú principal
 
     def __init__(self):
         super().__init__()
@@ -99,18 +99,18 @@ class MenuPrincipal(tk.Tk):
         self.botonDatos= tk.Button(self.menu_lateral)
 
         botones_info= [
-            ('Crear Factura', '1)', self.botonCrear, self.crearFactura_ventana), # Texto, icono y objeto a insertar
+            ('Crear Factura', '1)', self.botonCrear), # Texto, icono y objeto a insertar
             ('Eliminar Factura', '2)', self.botonEliminar),
             ('Buscar Factura', '3)', self.botonBuscar),
             ('Mostrar Factura', '4)', self.botonMostrar),
             ('Salir', '5)', self.botonSalir),
             ('Analítica datos', '6)', self.botonDatos)            
             ]
-        for texto, icono, boton, comando in botones_info:
-            self.configurar_boton_menu(boton, texto, icono, ancho, alto, comando)
+        for texto, icono, boton in botones_info:
+            self.configurar_boton_menu(boton, texto, icono, ancho, alto)
     
-    def configurar_boton_menu(self, boton, texto, icono, ancho, alto, comando):
-        boton.config(text= f" {icono}  {texto}", anchor= "w", bd= 0, bg= color_menu_lateral, fg= 'white', width= ancho, height= alto, command= comando)
+    def configurar_boton_menu(self, boton, texto, icono, ancho, alto):
+        boton.config(text= f" {icono}  {texto}", anchor= "w", bd= 0, bg= color_menu_lateral, fg= 'white', width= ancho, height= alto)
         boton.pack(side= tk.TOP)
         self.bind_hover_events(boton)
         # self.botonCrear.bind('<Return>', (lambda event: self.crear_factura()))
