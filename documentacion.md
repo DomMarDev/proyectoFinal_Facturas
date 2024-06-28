@@ -41,7 +41,7 @@ Aún podrían faltar o quitarse algunas librerías.
 
 ### Descripción del diseño: una descripción de alto nivel de cómo se estructurará el código
 
-#### Login screen:
+#### Login screen: (main.py)
 
 Va a aparecer una ventana para que el usuario verifique sus credenciales ( de momento no quiero registrar usuarios).
 
@@ -50,7 +50,7 @@ Las credenciales por defecto serán:
 - Usuario: user
 - Contraseña: 1234
 
-#### Menú principal:
+#### Menú principal: (menu_principal.py)
 
 Se muestra un menú donde clicando en los recuadros se podrán realizar las acciones de:
 
@@ -67,6 +67,8 @@ Se muestra un menú donde clicando en los recuadros se podrán realizar las acci
 Se baraja la opción de incorporar un menú superior con las mismas funcionalidades u otras que por el momento no tengo pensadas.
 
 ##### Opción 1: Crear factura
+
+Se destruye la ventana de menú principal y se ejecuta el módulo crear_pdf.py. Este módulo permite la aparición de una ventana emergente.
 
 Se piden los datos al usuario (Pedir), los demás vendrán configurados por defecto (a medida del usuario) o se rellenarán automáticamente. La interfaz gráfica hará visibles los campos rellenados por el usuario (en principio).
 
@@ -126,19 +128,26 @@ Al acabar con la introducción de datos, el usuario podrá indicarlo mediante un
 
 Todos los datos introducidos por el usuario se guardarán en un documento json autogenerado (con el nombre de la factura) que contendrá una lista de un diccionarios correspondiente a la factura. (aún no sé si voy a poder implementar una base de datos)
 
+Al acabar se vuelve al menú principal después de destruir la ventana de crear_pdf.
+
 ##### Opción 2: Eliminar factura
+
+Se ejecuta el módulo elminar_factura.py.
 
 Se procederá a mostrar las facturas y se podrán eliminar dado un cliente y un código que se mostrará en pantalla que el usuario deberá de introducir. Si no introduce los datos de forma correcta se mostrará un mensaje.
 
 Otra opción será abrir una ventana con todos los archivos PDF correspondientes a las facturas ya hechas y se podrá eliminar clicando y dandole a suprimir (tengo que darle una vuelta para que sea más fácil aún)
 
 ##### Opción 3: Buscar factura
+Se ejecuta el módulo buscar_factura.py
 
 Se mostrarán las facturas que hay en la base de datos y se podrán buscar según cliente y un código / número que aparecerá al lado de la factura.
 
 Otra opción será abrir una ventana y realizar una búsqueda normal como siempre se ha hecho mediante windows (he de hacerlo más fácil incluso).
 
 ##### Opción 4: Mostrar facturas
+
+Se ejecuta el módulo mostrar_facturas.py.
 
 Se mostrarán las facturas que hay en la base de datos (bien el directorio con los PDF, o las que constan en la base de datos de las facturas introducidas por el usuario en un formato json).
 
