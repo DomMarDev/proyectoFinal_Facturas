@@ -11,7 +11,7 @@ from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 from modulos.colores import *
 
 
-from modulos.crear_PDF import crear_pdf
+from pruebas.crear_PDF import crear_pdf
 
 from modulos.forma_menu_princ import MenuPrincipal
 
@@ -22,10 +22,10 @@ menu.mainloop()
 # class MenuPrincipal(tk.Tk):
 #     # Ir a Crear
 
-    # def ir_crear(self):
-    #     '''Método que permite ir a crear una factura'''
-    #     self.ventana.destroy() # Eliminamos la ventana
-    #     crear_pdf() # Muestra el menú principal
+    def ir_crear(self):
+        '''Método que permite ir a crear una factura'''
+        self.ventana.destroy() # Eliminamos la ventana
+        crear_pdf() # Muestra el menú principal
 
     
 #     def __init__(self):
@@ -69,48 +69,48 @@ menu.mainloop()
      
 #         # Menú Opciones crear, eliminar, mostrar o buscar.
 
-#         # Configuramos el Panel de Crear:
-#         ancho = 300
-#         frame_Crear = tk.Frame(self.ventana, 
-#                               bd = 0, 
-#                               width = ancho, 
-#                               relief = tk.SOLID, 
-#                               padx = 0, 
-#                               pady = 20, 
-#                               bg = ''
-#                               )
-#         frame_Crear.pack(side = 'left',
-#                         expand = tk.NO,
-#                         fill= tk.BOTH
-#                         )
+        # Configuramos el Panel de Crear:
+        ancho = 300
+        frame_Crear = tk.Frame(self.ventana, 
+                              bd = 0, 
+                              width = ancho, 
+                              relief = tk.SOLID, 
+                              padx = 0, 
+                              pady = 20, 
+                              bg = ''
+                              )
+        frame_Crear.pack(side = 'left',
+                        expand = tk.NO,
+                        fill= tk.BOTH
+                        )
         
-#         # Generamos etiqueta de Crear
-#         ruta_logo_crear = Path('imagenes\crear.png')
-#         crear_logo = leer(ruta_logo_crear, (200, 200))
-#         # Creamos el título de Crear Factura
-#         label = tk.Label(frame_Crear, image = crear_logo, bg = '#fcfcfc')
-#         label.place(x = 0,
-#                     y= 70,
-#                     relwidth = 1,
-#                     relheight = 1
-#                     )
+        # Generamos etiqueta de Crear
+        ruta_logo_crear = Path('imagenes\crear.png')
+        crear_logo = leer(ruta_logo_crear, (200, 200))
+        # Creamos el título de Crear Factura
+        label = tk.Label(frame_Crear, image = crear_logo, bg = '#fcfcfc')
+        label.place(x = 0,
+                    y= 70,
+                    relwidth = 1,
+                    relheight = 1
+                    )
         
-#         frame_Crear_titulo = tk.Frame(
-#             frame_Crear, height=30, bd=0, relief=tk.SOLID, bg='black')
-#         frame_Crear_titulo.pack(side="top", fill=tk.X)
-#         title = tk.Label(frame_Crear_titulo, text=f"Crear\nFactura", font=(
-#             'Times', 30), fg="#666a88", bg='#fcfcfc', pady=50)
-#         title.pack(expand=tk.YES, fill=tk.BOTH)
+        frame_Crear_titulo = tk.Frame(
+            frame_Crear, height=30, bd=0, relief=tk.SOLID, bg='black')
+        frame_Crear_titulo.pack(side="top", fill=tk.X)
+        title = tk.Label(frame_Crear_titulo, text=f"Crear\nFactura", font=(
+            'Times', 30), fg="#666a88", bg='#fcfcfc', pady=50)
+        title.pack(expand=tk.YES, fill=tk.BOTH)
 
-#         # Creando el botón de inicio de sesión
-#         botonCrear= tk.Button(frame_Crear,
-#                                 text = 'Crear',
-#                                 font = ('Times', 15, BOLD),
-#                                 bg = '#3a7ff6',
-#                                 bd = 0,
-#                                 fg = '#fff',
-#                                 command = self.ir_crear)
-#         botonCrear.pack(fill = tk.X, padx = 20, pady = 20)
+        # Creando el botón de inicio de sesión
+        botonCrear= tk.Button(frame_Crear,
+                                text = 'Crear',
+                                font = ('Times', 15, BOLD),
+                                bg = '#3a7ff6',
+                                bd = 0,
+                                fg = '#fff',
+                                command = self.ir_crear)
+        botonCrear.pack(fill = tk.X, padx = 20, pady = 20)
 
 #         # Asignación de user y pass
         

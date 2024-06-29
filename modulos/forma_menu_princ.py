@@ -1,13 +1,17 @@
+import sys
+
+sys.path.append('.')
+
+import os
 import tkinter as tk
 from tkinter import font
 from tkinter.font import Font
+from tkinter import ttk, messagebox
 from pathlib import Path
 from tkinter import filedialog as FD
-import os
 
-import sys
 
-sys.path.append('.') # para añadir el directorio principal de donde estás ejecutando el programa (la raiz)
+ # para añadir el directorio principal de donde estás ejecutando el programa (la raiz)
 
 
 from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
@@ -15,23 +19,24 @@ from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 from modulos.colores import *
 
 from modulos.crear_factura import CrearFactura as CF
+from modulos.eliminar_factura import EliminarFactura as EF
 
 
-from tkinter import ttk, messagebox
-from tkinter import filedialog as FD
-import os
+
+
 
 class MenuPrincipalFinal(tk.Tk):
 
-    def ir_crear(self):
+    def crear_facturas(self):
         '''Método que permite ir a crear una factura'''
         self.new_window = tk.Toplevel(self)
         CF(self.new_window)
 
-        # self.ventana.destroy()  # Eliminamos la ventana
-        # self.crear_factura = CF()  # Muestra el menú principal
-        # self.crear_factura.mainloop() 
 
+    def eliminar_facturas(self):
+        '''Método que permite ir a crear una factura'''
+        self.new_window = tk.Toplevel(self)
+        EF(self.new_window)
 
 
     def mostrar_facturas(self):
@@ -126,8 +131,8 @@ class MenuPrincipalFinal(tk.Tk):
         self.botonDatos = tk.Button(self.menu_lateral)
 
         botones_info = [
-            ('Crear Factura', '\uf109', self.botonCrear, self.ir_crear),  # Texto, icono, objeto a insertar y comando
-            ('Eliminar Factura', '\uf007', self.botonEliminar, self.mostrar_facturas),
+            ('Crear Factura', '\uf109', self.botonCrear, self.crear_facturas),  # Texto, icono, objeto a insertar y comando
+            ('Eliminar Factura', '\uf007', self.botonEliminar, self.eliminar_facturas),
             ('Buscar Factura', '\uf03e', self.botonBuscar, self.mostrar_facturas),
             ('Mostrar Factura', '4)', self.botonMostrar, self.mostrar_facturas), # self.mostrar_facturas
             ('Salir', '\uf013', self.botonSalir, self.mostrar_facturas),

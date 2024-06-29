@@ -5,10 +5,12 @@ import tkinter as tk
 from tkinter import messagebox, filedialog as FD
 import sys
 from fpdf import FPDF
-import datetime
+from datetime import date
+
 
 sys.path.append('.')
 
+from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 from modulos.leer_archivo import Lectura_archivo
 
 from ruta import ruta
@@ -23,12 +25,15 @@ class Datos_Factura:
     def add_factura(self):
         self.ventana_facturas = tk.Toplevel()
         self.ventana_facturas.title("Añadir Factura")
+        w, h = 500, 500  # Tamaño de la ventana
+        centrar(self.ventana_facturas, w, h)
 
-        self.numeroFactura = self.entradaDatos(self.ventana_facturas, "Introduce el nombre de la empresa: ")
-        self.fecha = self.entradaDatos(self.ventana_facturas, "Introduce fecha de hoy: ")
+        fecha = date.today()
+
+        self.numeroFactura = self.entradaDatos(self.ventana_facturas, "Introduce el Nº de la factura: ")
+        self.fecha = fecha.strftime("%d/%m/%Y")
         self.cliente = self.entradaDatos(self.ventana_facturas, "Introduce el cliente: ")
         self.dni = self.entradaDatos(self.ventana_facturas, "Introduce el DNI del cliente: ")
-        self.localizacion = self.entradaDatos(self.ventana_facturas, "Introduce la localización de la empresa: ")
 
         self.listaElementos = []
         self.elementos_frame = tk.Frame(self.ventana_facturas)
@@ -74,11 +79,10 @@ class Datos_Factura:
     def guardar_factura(self):# Esto lo he tenido que pedir a una IA, no me salía
         self.datos_factura = {
             'numeroFactura': self.numeroFactura.get().lower().strip(),
-            'fecha': self.fecha.get().lower().strip(),
+            'fecha': self.fecha,
             'cliente': self.cliente.get().lower().strip(),
             'dni': self.dni.get().lower().strip(),
-            'localizacion': self.localizacion.get().lower().strip(),
-            'listaElementos': [(unidades.get().lower().strip(), elemento.get().lower().strip(), precio.get().lower().strip()) for unidades, elemento, precio in self.listaElementos] 
+            'listaElementos': [[unidades.get().lower().strip(), elemento.get().lower().strip(), precio.get().lower().strip()] for unidades, elemento, precio in self.listaElementos] 
         }
 
         self.listaFacturas.append(self.datos_factura)
@@ -95,7 +99,14 @@ class Datos_Factura:
 
 
         # Ruta para guardar el PDF
-        ruta_pdf = f'PDF/4.pdf'
+
+        hoy= date.today()
+        dia= hoy.strftime("%d")
+        mes= hoy.strftime("%m")
+        anyo= hoy.strftime("%Y")
+        fecha= f'{dia}_{mes}_{anyo}'
+
+        ruta_pdf = f"PDF/{fecha}_{self.datos_factura['numeroFactura']}.pdf"
 
         # Creamos el PDF:
         pdf = FPDF(orientation = 'P', unit = 'mm', format = 'A4')
@@ -124,10 +135,10 @@ class Datos_Factura:
 
         # Tabla datos factura:
 
-        nf = self.numeroFactura.get()
-        f  = self.fecha.get()
-        c  = self.cliente.get()
-        d  = self.dni.get()
+        nf = self.datos_factura['numeroFactura']
+        f  = self.datos_factura['fecha']
+        c  = self.datos_factura['cliente']
+        d  = self.datos_factura['dni']
 
         lista_datos ={
         'numeroFactura': nf,
@@ -167,11 +178,15 @@ class Datos_Factura:
         
         
         pdf.set_font('Times', "", 12,  ) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
-        for lista in self.listaElementos:
-            pdf.cell(w = 30, h = 10, txt = lista[0], border = 1, align = 'C', fill= 0) 
-            pdf.cell(w = 100, h = 10, txt = lista[1], border = 1, align = 'C', fill= 0) 
-            pdf.cell(w = 30, h = 10, txt = lista[2] + chr(128), border = 1, align = 'C', fill= 0) 
-            pdf.multi_cell(w = 30, h = 10, txt = int(lista[0])*int(lista[2]) + chr(128), border = 1, align = 'C', fill= 0)
+        lista2 = self.datos_factura['listaElementos']
+
+        for elemento in lista2:
+            elemento[0] = float(elemento[0])
+            elemento[2] = float(elemento[2])
+            pdf.cell(w = 30, h = 10, txt = f'{elemento[0]}', border = 1, align = 'C', fill= 0) 
+            pdf.cell(w = 100, h = 10, txt = elemento[1], border = 1, align = 'C', fill= 0) 
+            pdf.cell(w = 30, h = 10, txt = f'{elemento[2]}' + chr(128), border = 1, align = 'C', fill= 0) 
+            pdf.multi_cell(w = 30, h = 10, txt = f'{elemento[0]*elemento[2]} {chr(128)}', border = 1, align = 'C', fill= 0)
 
 
         # Resumen precio factura
@@ -192,16 +207,26 @@ class Datos_Factura:
         #lista_factura = ((unidades, 'Concepto', Precio U., Total))
         suma1 = 0
         pdf.set_font('Times', "", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
-        for lista in self.listaElementos:
-            suma1 = int(lista[0])*int(lista[2]) + suma1
+        for lista in self.datos_factura['listaElementos']:
+            lista[0] = float(lista[0])
+            lista[2] = float(lista[2])
+            suma1 = lista[0]*lista[2] + suma1
 
 
-        pdf.cell(w = 40, h = 10, txt = f'{str(suma1)} ' + chr(128), border = 1, align = 'C', fill= 0) 
+        pdf.cell(w = 40, h = 10, txt = f'{str(suma1)} {chr(128)}', border = 1, align = 'C', fill= 0) 
         pdf.cell(w = 20, h = 10, txt ='21 %', border = 1, align = 'C', fill= 0) 
-        pdf.cell(w = 40, h = 10, txt = f'{str(suma1)} ' + chr(128), border = 1, align = 'C', fill= 0)
+        pdf.cell(w = 40, h = 10, txt = f'{str(suma1)} {chr(128)}', border = 1, align = 'C', fill= 0)
         pdf.cell(w = 40, h = 10, txt = f'{str(suma1 * 0.21)} ' + chr(128), border = 1, align = 'C', fill= 0)  
-        pdf.multi_cell(w = 50, h = 10, txt = f'{str(suma1 * 1.21)} ' + chr(128), border = 1, align = 'C', fill= 0)
+        pdf.multi_cell(w = 50, h = 10, txt = f'{str(suma1 * 1.21)} {chr(128)}', border = 1, align = 'C', fill= 0)
 
+        hoy= date.today()
+        mes= int(hoy.strftime("%m"))
+        anyo= hoy.strftime("%Y")
+        mesFin= str(mes+1)
+        if len(mesFin) == 1:
+            mesFin = f'0{mesFin}'
+        fechafin= f'01/{mesFin}/{anyo}'
+        
 
         # Como pagar la factura:
         pdf.multi_cell(w = 0, h = 5, txt = '', border = 0, align = 'C', fill= 0) #Linea vacía
@@ -209,7 +234,7 @@ class Datos_Factura:
         pdf.set_font('Times', "B", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
         pdf.cell(w = 40, h = 10, txt = 'Vencimiento', border = 1, align = 'C', fill= 0)
         pdf.set_font('Times', "", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente) 
-        pdf.multi_cell(w = 150, h = 10, txt = self.fecha , border = 1, align = 'C', fill= 0) 
+        pdf.multi_cell(w = 150, h = 10, txt = fechafin , border = 1, align = 'C', fill= 0) 
 
         pdf.set_font('Times', "B", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
         pdf.cell(w = 40, h = 10, txt = 'Forma de Pago', border = 1, align = 'C', fill= 0)
@@ -234,39 +259,58 @@ class Datos_Factura:
 class CrearFactura():
 
     def __init__(self, root):
+        
         self.root = root
         self.root.title("Crear Factura")
+        w, h = 500, 100  # Tamaño de la ventana
+        centrar(self.root, w, h)
         
         self.barraMenu = tk.Menu(self.root)
         self.root.config(menu=self.barraMenu)
+        self.root.resizable(False,False)
+    
 
-        self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
-        self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
-        self.menuArchivo.add_command(label="Abrir JSON de Facturas", command=self.abrir_json)
-        self.menuArchivo.add_separator()
-        self.menuArchivo.add_command(label="Salir", command=self.root.quit)
+        botonCrear= tk.Button(self.root,
+                                text = 'Crear',
+                                font = ('Times', 15),
+                                bg = '#3a7ff6',
+                                bd = 0,
+                                fg = '#fff',
+                                command = self.abrir_json)
+        botonCrear.pack(fill = tk.X, padx = 20, pady = 30)
+
+
+        
+        #Por si queremos que el usuario escoja el json
+        # self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
+        # self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
+        # self.menuArchivo.add_command(label="Abrir JSON de Facturas", command=self.abrir_json)
+        # self.menuArchivo.add_separator()
+        # self.menuArchivo.add_command(label="Salir", command=self.root.quit)
+
 
         self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
         self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
-        self.menuFactura.add_command(label="Añadir Factura", command=self.add_factura)
+        self.menuFactura.add_command(label="Añadir Factura", command=self.abrir_json)# Si se quiere abrir Json, cambiar abrir_json por add_factura
 
+
+    #Por si queremos que el usuario escoja el json
+    # def abrir_json(self):
+    #     ruta_Json = FD.askopenfilename(title="Selecciona el archivo de facturas", filetypes=[("Archivo JSON", "*.json"),], initialdir= 'archivoJson')
+    #     if ruta_Json:
+    #         self.ventana_anadir_factura = Datos_Factura(ruta_Json)
+    #         self.ventana_anadir_factura.add_factura()
+    
     def abrir_json(self):
-        ruta_Json = FD.askopenfilename(title="Selecciona el archivo de facturas", filetypes=[("Archivo JSON", "*.json"),], initialdir= 'archivoJson')
+        ruta_Json = 'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Datos_Factura(ruta_Json)
             self.ventana_anadir_factura.add_factura()
-
-    def add_factura(self):
-        if hasattr(self, 'Ventana de Añadir Factura'):
-            self.ventana_anadir_factura.add_factura()
-        else:
-            messagebox.showwarning("Archivo no seleccionado", "Primero seleccione un archivo JSON de facturas desde el menú Archivo -> Abrir JSON de Facturas.")
-# if __name__ == "__main__":
-#     root = tk.Tk()
-#     app = CrearFactura(root)
-#     root.mainloop()
-
-# root = tk.Tk()
-# app = CrearFactura(root)
-
+    
+    #Por si queremos que el usuario escoja el json
+    # def add_factura(self):
+    #     if hasattr(self, 'Ventana de Añadir Factura'):
+    #         self.ventana_anadir_factura.add_factura()
+    #     else:
+    #         messagebox.showwarning("Archivo no seleccionado", "Primero seleccione un archivo JSON de facturas desde el menú Archivo -> Abrir JSON de Facturas.")
     

@@ -5,7 +5,7 @@ from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 
 from modulos.colores import *
 
-from modulos.crear_PDF import crear_pdf as CPDF
+from pruebas.crear_PDF import crear_pdf as CPDF
 
 
 class VentanaCrear(tk.Toplevel): # Hereda de tk.Toplevel para que cuando se muera la ventana principal se muera tambien esta.
