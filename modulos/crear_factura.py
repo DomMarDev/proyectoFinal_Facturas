@@ -2,7 +2,7 @@
 import json                                             # Trabajar con el archivo json
 from pathlib import Path                                # Trabajar con las rutas
 import tkinter as tk                                    # Interfaz gráfica
-from tkinter import messagebox, filedialog as FD        # Por si queremos agregar la función de escoger el archivo json
+from tkinter import messagebox, filedialog as FD        # Por si queremos agregar la función de escoger el archivo json, mostrar mensajes
 import sys                                              # Necesario para que no haya errores a la hora de importar módulos
 from fpdf import FPDF                                   # Necesario para crear el archivo PDF
 from datetime import date                               # Necesario para manejar fechas
@@ -145,7 +145,6 @@ class Datos_Factura:
         '''
 
         # / Ruta para guardar el PDF
-
         hoy= date.today()
         dia= hoy.strftime("%d")
         mes= hoy.strftime("%m")
@@ -264,20 +263,22 @@ class Datos_Factura:
         pdf.set_font('Times', "B", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
         pdf.cell(w = 40, h = 10, txt = 'Forma de Pago', border = 1, align = 'C', fill= 0)
         pdf.set_font('Times', "", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente) 
-        pdf.multi_cell(w = 150, h = 10, txt = 'Contado' , border = 1, align = 'C', fill= 0) 
+        pdf.multi_cell(w = 150, h = 10, txt = formaPago , border = 1, align = 'C', fill= 0) 
 
         pdf.set_font('Times', "B", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
         pdf.cell(w = 40, h = 10, txt = 'Banco', border = 1, align = 'C', fill= 0)
         pdf.set_font('Times', "", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente) 
-        pdf.multi_cell(w = 150, h = 10, txt = 'La Caixa' , border = 1, align = 'C', fill= 0)
+        pdf.multi_cell(w = 150, h = 10, txt = bancoPagar , border = 1, align = 'C', fill= 0)
 
         pdf.set_font('Times', "B", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
         pdf.cell(w = 40, h = 10, txt = 'IBAN', border = 1, align = 'C', fill= 0)
         pdf.set_font('Times', "", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente) 
-        pdf.multi_cell(w = 150, h = 10, txt = 'ES ................' , border = 1, align = 'C', fill= 0) 
+        pdf.multi_cell(w = 150, h = 10, txt = iban , border = 1, align = 'C', fill= 0) 
 
         # / Generación del PDF
-        pdf.output(ruta_pdf)    
+        pdf.output(ruta_pdf)
+
+        messagebox.showinfo("PDF Generado", f"El PDF se ha generado correctamente.")    
 
     
 
@@ -325,7 +326,8 @@ class CrearFactura():
     def abrir_json(self):
         ''' Método para abrir el archivo json automáticamente:
         1) Asignamos la ruta
-        2) Si existe el archivo se invoca a la clase para introducir los datos de la factura'''
+        2) Si existe el archivo se invoca a la clase para introducir los datos de la factura
+        '''
         ruta_Json = 'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Datos_Factura(ruta_Json)
@@ -337,4 +339,3 @@ class CrearFactura():
     #         self.ventana_anadir_factura.add_factura()
     #     else:
     #         messagebox.showwarning("Archivo no seleccionado", "Primero seleccione un archivo JSON de facturas desde el menú Archivo -> Abrir JSON de Facturas.")
-    
