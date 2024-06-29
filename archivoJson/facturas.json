@@ -2,47 +2,11 @@
     {
         "numeroFactura": "19k",
         "fecha": "29/06/2024",
-        "cliente": "1",
-        "dni": "2",
-        "listaElementos": [
-            [
-                "30",
-                "macarrones",
-                "30"
-            ],
-            [
-                "70",
-                "peras",
-                "20"
-            ]
-        ]
-    },
-    {
-        "numeroFactura": "19k",
-        "fecha": "29/06/2024",
         "cliente": "2",
         "dni": "2",
         "listaElementos": [
             [
                 "3",
-                "macarrones",
-                "30"
-            ],
-            [
-                "70",
-                "peras",
-                "20"
-            ]
-        ]
-    },
-    {
-        "numeroFactura": "20l",
-        "fecha": "29/06/2024",
-        "cliente": "1",
-        "dni": "2",
-        "listaElementos": [
-            [
-                "20",
                 "macarrones",
                 "30"
             ],

@@ -69,13 +69,48 @@ class Eliminar:
                 self.ventana_eliminar.destroy()
             else:
                 messagebox.showerror("Error", "Factura no encontrada")
+    ###################################################
+    def borrado_factura2(self, nombrePDF):
+        
+        self.nombrePDF = str(nombrePDF)
+
+        numFactura0= self.nombrePDF[11:]
+        fecha1= self.nombrePDF[0:10]
+        fecha0 = fecha1.replace('_', '/')
+        numeroFactura = numFactura0
+        fecha = fecha0
+
+        factura_encontrada = False
+
+        for factura in self.listaFacturas:
+            if factura['numeroFactura'] == numeroFactura and factura['fecha'] == fecha:
+                self.listaFacturas.remove(factura)
+                factura_encontrada = True
+                break
+
+        if factura_encontrada:
+            contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
+            self.path.write_text(contenido)
+
+            fechaCorregida = fecha.replace('/', '_')
+
+            ruta_pdf = f"PDF/{fechaCorregida}_{numeroFactura}.pdf"
+
+            if os.path.exists(ruta_pdf):
+                os.remove(ruta_pdf)
+
+            messagebox.showinfo("Éxito", "Factura eliminada correctamente")
+            self.ventana_eliminar.destroy()
+        else:
+            messagebox.showerror("Error", "Factura no encontrada")
+    ###############################################
 
 class EliminarFactura():
 
     def __init__(self, root):
         self.root = root
         self.root.title("Eliminar Factura")
-        w, h = 500, 100  # Tamaño de la ventana
+        w, h = 500, 200  # Tamaño de la ventana
         centrar(self.root, w, h)
         self.barraMenu = tk.Menu(self.root)
         self.root.config(menu=self.barraMenu)
@@ -90,12 +125,29 @@ class EliminarFactura():
                                 command = self.abrir_json)
         botonCrear.pack(fill = tk.X, padx = 20, pady = 30)
 
+        botonBuscarEliminar= tk.Button(self.root,
+                                text = 'Buscar y Eliminar',
+                                font = ('Times', 15),
+                                bg = '#3a7ff6',
+                                bd = 0,
+                                fg = '#fff',
+                                command = self.abrir_PDF)
+        botonBuscarEliminar.pack(fill = tk.X, padx = 20, pady = 30)
+
         #Por si queremos que el usuario escoja el json
         # self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
         # self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
         # self.menuArchivo.add_command(label="Abrir JSON de Facturas", command=self.abrir_json)
         # self.menuArchivo.add_separator()
         # self.menuArchivo.add_command(label="Salir", command=self.root.quit)
+
+    # Por si queremos que el usuario escoja el PDF
+        self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
+        self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
+        self.menuArchivo.add_command(label="Abrir PDF de Facturas", command=self.abrir_PDF)
+        self.menuArchivo.add_separator()
+        self.menuArchivo.add_command(label="Salir", command=self.root.quit)
+
 
         self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
         self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
@@ -108,6 +160,14 @@ class EliminarFactura():
     #         self.ventana_anadir_factura = Eliminar(ruta_Json)
     #         self.ventana_anadir_factura.eliminar_factura()
     
+    def abrir_PDF(self):
+        ruta_PDF   = FD.askopenfilename(title="Selecciona la factura a modificar", filetypes=[("Archivo PDF", "*.pdf"),], initialdir= 'PDF')
+        nombre_PDF = Path(ruta_PDF).stem
+
+        ruta_Json  = 'archivoJson/facturas.json'
+        if ruta_Json:
+            self.ventana_modificar_factura = Eliminar(ruta_Json)
+            self.ventana_modificar_factura.borrado_factura2(nombre_PDF)
     
     def abrir_json(self):
         ruta_Json = 'archivoJson/facturas.json'

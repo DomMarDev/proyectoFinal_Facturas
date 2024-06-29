@@ -76,7 +76,7 @@ class Modificar:
         if factura_encontrada:
             self.mostrar_formulario_edicion2(factura_encontrada)
         else:
-            messagebox.showerror("Error", "No se encontró una factura 2 con los datos proporcionados")
+            messagebox.showerror("Error", "No se pudo editar la factura.")
    
 
     def mostrar_formulario_edicion2(self, factura):
