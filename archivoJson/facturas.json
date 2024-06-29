@@ -1,1 +1,78 @@
-[]
+[
+    {
+        "numeroFactura": "bar",
+        "fecha": "290425",
+        "cliente": "pepe",
+        "dni": "145328 h",
+        "localizacion": "bar",
+        "listaElementos": [
+            [
+                "1",
+                "mac",
+                "2000"
+            ],
+            [
+                "2",
+                "per",
+                "50"
+            ]
+        ]
+    },
+    {
+        "numeroFactura": "asd",
+        "fecha": "adasd",
+        "cliente": "adasda",
+        "dni": "adsad",
+        "localizacion": "adasdas",
+        "listaElementos": [
+            [
+                "1",
+                "2",
+                "3"
+            ],
+            [
+                "2",
+                "f",
+                "7"
+            ]
+        ]
+    },
+    {
+        "numeroFactura": "1",
+        "fecha": "2",
+        "cliente": "34",
+        "dni": "4",
+        "localizacion": "6",
+        "listaElementos": [
+            [
+                "2",
+                "pepe",
+                "100"
+            ],
+            [
+                "3",
+                "jose",
+                "20"
+            ]
+        ]
+    },
+    {
+        "numeroFactura": "3",
+        "fecha": "4",
+        "cliente": "5",
+        "dni": "6",
+        "localizacion": "7",
+        "listaElementos": [
+            [
+                "1",
+                "mac",
+                "30"
+            ],
+            [
+                "2",
+                "pera",
+                "50"
+            ]
+        ]
+    }
+]

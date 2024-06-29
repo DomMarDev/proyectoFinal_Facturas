@@ -6,7 +6,7 @@ from tkinter import ttk, messagebox
 from tkinter.font import BOLD
 from pathlib import Path
 
-from funciones_json.leer_archivo import Lectura_archivo
+from modulos.leer_archivo import Lectura_archivo
 from funciones_json.anadir_factura import Add_factura
 from ruta import ruta
 
