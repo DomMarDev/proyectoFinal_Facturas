@@ -9,7 +9,7 @@ sys.path.append('.')
 
 import modulos.generic as utl
 from modulos.forma_menu_princ import MenuPrincipalFinal as MP
-
+from modulos.colores_y_rutas import *
 class Login:
 
     def verificacion(self):
@@ -42,7 +42,7 @@ class Login:
         utl.centrar_ventanas(self.ventana, 800, 500)
 
         # Importamos el logo de la carpeta imagenes, le asignamos un tamaño y la ponemos dentro de una etiqueta (toda la pantalla)
-        ruta_logo = Path('imagenes/cuadrado.png')
+        ruta_logo = Path(ruta_logo_programa)
         logo = utl.leer_imagen(ruta_logo, (200, 200))
 
         # Configuramos el frame o Panel:
@@ -52,11 +52,11 @@ class Login:
                               relief=tk.SOLID, 
                               padx=10, 
                               pady=10, 
-                              bg='#2BE7E7')
+                              bg= color_login_borde)
         frame_logo.pack(side='left', expand=tk.NO, fill=tk.BOTH)
 
         # Generamos etiqueta de logo
-        label = tk.Label(frame_logo, image=logo, bg='#2BE7E7')
+        label = tk.Label(frame_logo, image=logo, bg= color_login_relleno)
         label.place(x=0, y=0, relwidth=1, relheight=1)
 
         # Panel de datos Login

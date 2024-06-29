@@ -7,12 +7,11 @@ import sys
 from fpdf import FPDF
 from datetime import date
 
-
 sys.path.append('.')
 
 from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 from modulos.leer_archivo import Lectura_archivo
-
+from modulos.colores_y_rutas import *
 from ruta import ruta
 
 class Datos_Factura:
@@ -23,29 +22,29 @@ class Datos_Factura:
         self.listaFacturas = json.loads(self.facturas)
 
     def add_factura(self):
-        self.ventana_facturas = tk.Toplevel()
-        self.ventana_facturas.title("Añadir Factura")
+        self.ventana_CrearFactura = tk.Toplevel()
+        self.ventana_CrearFactura.title("Añadir Factura")
         w, h = 500, 500  # Tamaño de la ventana
-        centrar(self.ventana_facturas, w, h)
+        centrar(self.ventana_CrearFactura, w, h)
 
         fecha = date.today()
 
-        self.numeroFactura = self.entradaDatos(self.ventana_facturas, "Introduce el Nº de la factura: ")
+        self.numeroFactura = self.entradaDatos(self.ventana_CrearFactura, "Introduce el Nº de la factura: ")
         self.fecha = fecha.strftime("%d/%m/%Y")
-        self.cliente = self.entradaDatos(self.ventana_facturas, "Introduce el cliente: ")
-        self.dni = self.entradaDatos(self.ventana_facturas, "Introduce el DNI del cliente: ")
+        self.cliente = self.entradaDatos(self.ventana_CrearFactura, "Introduce el cliente: ")
+        self.dni = self.entradaDatos(self.ventana_CrearFactura, "Introduce el DNI del cliente: ")
 
         self.listaElementos = []
-        self.elementos_frame = tk.Frame(self.ventana_facturas)
+        self.elementos_frame = tk.Frame(self.ventana_CrearFactura)
         self.elementos_frame.pack(pady=10)
-        self.botonElemento = tk.Button(self.ventana_facturas, text="Añadir Elemento", command=self.anadir_elemento)
+        self.botonElemento = tk.Button(self.ventana_CrearFactura, text="Añadir Elemento", command=self.anadir_elemento)
         self.botonElemento.pack(pady=5)
 
-        self.botonGuardar = tk.Button(self.ventana_facturas, text="Guardar Factura", command=self.guardar_factura)
+        self.botonGuardar = tk.Button(self.ventana_CrearFactura, text="Guardar Factura", command=self.guardar_factura)
         self.botonGuardar.pack(pady=10)
 
-    def entradaDatos(self, ventana_facturas, texto):
-        frame = tk.Frame(ventana_facturas)
+    def entradaDatos(self, ventana_CrearFactura, texto):
+        frame = tk.Frame(ventana_CrearFactura)
         frame.pack(pady=5)
         label = tk.Label(frame, text=texto)
         label.pack(side=tk.LEFT)
@@ -89,7 +88,7 @@ class Datos_Factura:
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
         self.path.write_text(contenido)
         messagebox.showinfo("Éxito", "Factura guardada")
-        self.ventana_facturas.destroy()
+        self.ventana_CrearFactura.destroy()
         self.crear_pdf()
     
     def crear_pdf(self):
@@ -117,7 +116,7 @@ class Datos_Factura:
 
         # Elementos del PDF
 
-        ruta_logo = 'imagenes\lego.png'
+        ruta_logo = ruta_logo_empresa
 
         pdf.image(ruta_logo, x = 10, y = 10, w = 30, h= 30) # Logo
 

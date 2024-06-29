@@ -7,7 +7,7 @@ sys.path.append('.') # para añadir el directorio principal de donde estás ejec
 
 from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 # import utilidades_ventana.generic as utl
-from modulos.colores import *
+from modulos.colores_y_rutas import *
 
 class FormularioMaestroDesign(tk.Tk):
 

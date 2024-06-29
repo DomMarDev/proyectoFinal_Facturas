@@ -3,7 +3,7 @@ from tkinter.font import Font
 
 from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 
-from modulos.colores import *
+from modulos.colores_y_rutas import *
 
 from pruebas.crear_PDF import crear_pdf as CPDF
 

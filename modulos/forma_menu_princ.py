@@ -16,11 +16,11 @@ from tkinter import filedialog as FD
 
 from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 # import utilidades_ventana.generic as utl
-from modulos.colores import *
+from modulos.colores_y_rutas import *
 
 from modulos.crear_factura import CrearFactura as CF
 from modulos.eliminar_factura import EliminarFactura as EF
-
+from modulos.modificar_factura import ModificarFactura as MF
 
 
 
@@ -34,7 +34,7 @@ class MenuPrincipalFinal(tk.Tk):
 
 
     def eliminar_facturas(self):
-        '''Método que permite ir a crear una factura'''
+        '''Método que permite ir a eliminar una factura'''
         self.new_window = tk.Toplevel(self)
         EF(self.new_window)
 
@@ -47,13 +47,22 @@ class MenuPrincipalFinal(tk.Tk):
         if archivo is not None:  # Si hay algo en el archivo va a abrirlo usando su ruta
             ruta_pdf = Path(archivo.name)  # Se obtiene la ruta del archivo
             os.startfile(ruta_pdf)  # Se abre el archivo
+    
+    def modificar(self):
+        '''Método que permite ir a modificar una factura'''
+        self.new_window = tk.Toplevel(self)
+        MF(self.new_window)
+
+    def salir_programa(self):
+        exit()
+        
 
     def __init__(self):
         super().__init__()
 
         # Importamos el logo de la carpeta imágenes, le asignamos un tamaño y la ponemos dentro de una etiqueta
-        self.logo = leer("imagenes/lego.png", (560, 136))
-        self.perfil = leer("imagenes/cuadrado.png", (100, 100))
+        self.logo = leer(ruta_imagen_instrucciones, (750, 500))
+        self.perfil = leer(ruta_logo_empresa, (100, 100))
         self.configuracion_ventana()
         self.paneles()
         self.controles_barra_superior()
@@ -108,7 +117,7 @@ class MenuPrincipalFinal(tk.Tk):
 
         # Etiqueta web de la empresa
         self.labelTitulo2 = tk.Label(self.barra_superior, text= mail_empresa)
-        self.labelTitulo2.config(fg='#fff', font=('Roboto', 10), bg=color_menu_superior, padx=10, width=20)
+        self.labelTitulo2.config(fg='#fff', font=('Roboto', 13), bg=color_menu_superior, padx=10, width=20)
         self.labelTitulo2.pack(side=tk.RIGHT)
 
     def controles_barra_lateral(self):
@@ -134,8 +143,8 @@ class MenuPrincipalFinal(tk.Tk):
             ('Crear Factura', '\uf109', self.botonCrear, self.crear_facturas),  # Texto, icono, objeto a insertar y comando
             ('Eliminar Factura', '\uf007', self.botonEliminar, self.eliminar_facturas),
             ('Buscar Factura', '\uf03e', self.botonBuscar, self.mostrar_facturas),
-            ('Mostrar Factura', '4)', self.botonMostrar, self.mostrar_facturas), # self.mostrar_facturas
-            ('Salir', '\uf013', self.botonSalir, self.mostrar_facturas),
+            ('Modificar Factura', '4)', self.botonMostrar, self.modificar), # self.mostrar_facturas
+            ('Salir', '\uf013', self.botonSalir, self.salir_programa),
             ('Analítica datos', '\uf129', self.botonDatos, self.mostrar_facturas)
         ]
         for texto, icono, boton, comando in botones_info:
@@ -172,11 +181,5 @@ class MenuPrincipalFinal(tk.Tk):
             self.menu_lateral.pack(side=tk.LEFT, fill='y')
 
 if __name__ == "__main__":
-    app=MenuPrincipalFinal()
+    app= MenuPrincipalFinal()
     app.mainloop()
-
-        
-# # Iniciar el bucle principal de la ventana
-#     self.ventana.mainloop()
-# if __name__ == "__main__":            
-#     app = MenuPrincipalFinal()

@@ -8,7 +8,7 @@ from pathlib import Path
 from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 # import utilidades_ventana.generic as utl
 
-from modulos.colores import *
+from modulos.colores_y_rutas import *
 
 
 from pruebas.crear_PDF import crear_pdf

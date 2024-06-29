@@ -41,13 +41,13 @@ class Eliminar:
         return entrada
 
     def borrado_factura(self):
-            numero_factura = self.numeroFacturaEliminar.get().lower().strip()
-            fecha_factura = self.fechaEliminar.get().strip()
+            numeroFactura = self.numeroFacturaEliminar.get().lower().strip()
+            fechaFactura = self.fechaEliminar.get().strip()
 
             factura_encontrada = False
 
             for factura in self.listaFacturas:
-                if factura['numeroFactura'] == numero_factura and factura['fecha'] == fecha_factura:
+                if factura['numeroFactura'] == numeroFactura and factura['fecha'] == fechaFactura:
                     self.listaFacturas.remove(factura)
                     factura_encontrada = True
                     break
@@ -56,13 +56,10 @@ class Eliminar:
                 contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
                 self.path.write_text(contenido)
 
-                hoy = date.today()
-                dia = hoy.strftime("%d")
-                mes = hoy.strftime("%m")
-                anyo = hoy.strftime("%Y")
-                fecha = f'{dia}_{mes}_{anyo}'
 
-                ruta_pdf = f"PDF/{fecha}_{numero_factura}.pdf"
+                fechaCorregida = fechaFactura.replace('/', '_')
+
+                ruta_pdf = f"PDF/{fechaCorregida}_{numeroFactura}.pdf"
 
 
                 if os.path.exists(ruta_pdf):

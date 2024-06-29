@@ -1,32 +1,55 @@
 [
     {
-        "numeroFactura": "175",
+        "numeroFactura": "19k",
         "fecha": "29/06/2024",
-        "cliente": "jose",
-        "dni": "4580 h",
+        "cliente": "1",
+        "dni": "2",
         "listaElementos": [
             [
-                "1",
-                "1",
-                "1"
+                "30",
+                "macarrones",
+                "30"
             ],
             [
-                "2",
-                "7",
-                "a"
+                "70",
+                "peras",
+                "20"
             ]
         ]
     },
     {
-        "numeroFactura": "456",
+        "numeroFactura": "19k",
         "fecha": "29/06/2024",
-        "cliente": "56",
-        "dni": "56",
+        "cliente": "2",
+        "dni": "2",
         "listaElementos": [
             [
-                "1",
-                "2",
-                "3"
+                "3",
+                "macarrones",
+                "30"
+            ],
+            [
+                "70",
+                "peras",
+                "20"
+            ]
+        ]
+    },
+    {
+        "numeroFactura": "20l",
+        "fecha": "29/06/2024",
+        "cliente": "1",
+        "dni": "2",
+        "listaElementos": [
+            [
+                "20",
+                "macarrones",
+                "30"
+            ],
+            [
+                "70",
+                "peras",
+                "20"
             ]
         ]
     }
