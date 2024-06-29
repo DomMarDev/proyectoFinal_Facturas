@@ -1,5 +1,5 @@
 # IMAGENES PROGRAMA
-ruta_logo_programa          = 'imagenes/cuadrado.png'
+ruta_logo_programa          = 'imagenes/factura.png'
 ruta_imagen_instrucciones   = 'imagenes/instrucciones.png'
 # COLORES PROGRAMA
 color_menu_superior         = 'black' #1 '#1f2329'

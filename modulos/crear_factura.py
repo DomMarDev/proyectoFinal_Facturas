@@ -143,6 +143,26 @@ class Datos_Factura:
             - Se genera el PDF dada la ruta que generamos en 1
             
         '''
+        '''
+        Formato del PFD (P de Portrait):
+        Vertical: 297 mm
+        Horizontal: 210 mm
+
+        A4 = 210 x 297 mm
+        '''
+
+        ''' 
+        Distribución de textos y grids:
+
+        Bordes (Border):
+
+        0 = no | 1 = Si | T = arriba | B = abajo | L = izq | R = der
+
+        Align:
+
+        C = centro | L = izq | R = der
+
+        '''
 
         # / Ruta para guardar el PDF
         hoy= date.today()
@@ -311,11 +331,13 @@ class CrearFactura():
         # self.menuArchivo.add_command(label="Abrir JSON de Facturas", command=self.abrir_json)
         # self.menuArchivo.add_separator()
         # self.menuArchivo.add_command(label="Salir", command=self.root.quit)
-
+        
         self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
         self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
         self.menuFactura.add_command(label="Añadir Factura", command=self.abrir_json)# Si se quiere abrir Json, cambiar abrir_json por add_factura
-
+        self.menuFactura.add_separator()
+        self.menuFactura.add_command(label="Salir", command=self.root.destroy)
+        
         #Por si queremos que el usuario escoja el json
         # def abrir_json(self):
         #     ruta_Json = FD.askopenfilename(title="Selecciona el archivo de facturas", filetypes=[("Archivo JSON", "*.json"),], initialdir= 'archivoJson')

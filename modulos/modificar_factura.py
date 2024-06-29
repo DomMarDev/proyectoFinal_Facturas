@@ -1,5 +1,5 @@
 # Importaciones de librerías
-import os
+import os                                               # Obtener rutas del sistema operativo
 import json                                             # Trabajar con el archivo json
 from pathlib import Path                                # Trabajar con las rutas
 import tkinter as tk                                    # Interfaz gráfica
@@ -493,7 +493,7 @@ class ModificarFactura():
         self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
         self.menuArchivo.add_command(label="Abrir PDF de Facturas", command=self.abrir_PDF)
         self.menuArchivo.add_separator()
-        self.menuArchivo.add_command(label="Salir", command=self.root.quit)
+        self.menuArchivo.add_command(label="Salir", command=self.root.destroy)
 
         self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
         self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)

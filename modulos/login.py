@@ -8,7 +8,7 @@ import sys
 sys.path.append('.')
 
 import modulos.generic as utl
-from modulos.forma_menu_princ import MenuPrincipalFinal as MP
+from modulos.menu_principal import MenuPrincipalFinal as MP
 from modulos.colores_y_rutas import *
 class Login:
 

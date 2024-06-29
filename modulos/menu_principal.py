@@ -1,29 +1,24 @@
-import sys
-
-sys.path.append('.')
-
-import os
-import tkinter as tk
+# Importaciones de librerias
+import os                                                                       # Obtener rutas del sistema operativo y abrir documentos
+from pathlib import Path                                                        # Trabajar con las rutas
+import tkinter as tk                                                            # Interfaz gráfica
 from tkinter import font
 from tkinter.font import Font
-from tkinter import ttk, messagebox
-from pathlib import Path
-from tkinter import filedialog as FD
+# from tkinter import ttk
+from tkinter import filedialog as FD                                            # Por si queremos agregar la función de escoger el archivo json
+import sys                                                                      # Necesario para que no haya errores a la hora de importar módulos  
+                                                                                    # para añadir el directorio principal de donde estás ejecutando el programa (la raiz)
+sys.path.append('.')
 
+from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar   # Necesario para importar la función de centrar y leer
+from modulos.colores_y_rutas import *                                           # Necesario para autoasignar ciertos campos de colores e imagenes
 
- # para añadir el directorio principal de donde estás ejecutando el programa (la raiz)
-
-
-from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
-# import utilidades_ventana.generic as utl
-from modulos.colores_y_rutas import *
-
+# Importacion de modulos que dan funcionalidad al programa
 from modulos.crear_factura import CrearFactura as CF
 from modulos.eliminar_factura import EliminarFactura as EF
 from modulos.modificar_factura import ModificarFactura as MF
 
-
-
+# web unicode: https://www.rapidtables.com/code/text/unicode-characters.html
 
 class MenuPrincipalFinal(tk.Tk):
 
@@ -61,13 +56,16 @@ class MenuPrincipalFinal(tk.Tk):
         super().__init__()
 
         # Importamos el logo de la carpeta imágenes, le asignamos un tamaño y la ponemos dentro de una etiqueta
-        self.logo = leer(ruta_imagen_instrucciones, (750, 500))
+        alto = 550
+        ancho = 600
+        self.logo = leer(ruta_imagen_instrucciones, (ancho, alto))
         self.perfil = leer(ruta_logo_empresa, (100, 100))
         self.configuracion_ventana()
         self.paneles()
         self.controles_barra_superior()
         self.controles_barra_lateral()
         self.controles_cuerpo()
+        self.resizable(False, False)
 
     def configuracion_ventana(self):  # Configuración de la ventana del menú principal
         self.title('Menú Principal')  # Se coloca el título de la ventana
@@ -102,7 +100,6 @@ class MenuPrincipalFinal(tk.Tk):
 
     def controles_barra_superior(self):
         # Configuración de la barra superior
-        font_awesome = font.Font(family='FontAwesome', size=12)
 
         # Etiqueta del título
         self.labelTitulo = tk.Label(self.barra_superior, text= empresa)
@@ -110,7 +107,7 @@ class MenuPrincipalFinal(tk.Tk):
         self.labelTitulo.pack(side=tk.LEFT)
 
         # Botón del menú lateral
-        self.botonMenuLateral = tk.Button(self.barra_superior, text="\uf0c9", font=font_awesome,
+        self.botonMenuLateral = tk.Button(self.barra_superior, text="\u2600",
                                           command=self.toggle_panel,
                                           bd=0, bg=color_menu_superior, fg='white')
         self.botonMenuLateral.pack(side=tk.LEFT)
@@ -124,7 +121,7 @@ class MenuPrincipalFinal(tk.Tk):
         # Configuración menú lateral
         ancho = 20
         alto = 2
-        font_awesome = font.Font(family='FontAwesome', size=15)
+        font_awesome = font.Font(family='Roboto', size=15)
         
 
         # Etiqueta Perfil: foto de la empresa
@@ -140,12 +137,12 @@ class MenuPrincipalFinal(tk.Tk):
         self.botonDatos = tk.Button(self.menu_lateral)
 
         botones_info = [
-            ('Crear Factura', '\uf109', self.botonCrear, self.crear_facturas),  # Texto, icono, objeto a insertar y comando
-            ('Eliminar Factura', '\uf007', self.botonEliminar, self.eliminar_facturas),
-            ('Buscar Factura', '\uf03e', self.botonBuscar, self.mostrar_facturas),
-            ('Modificar Factura', '4)', self.botonMostrar, self.modificar), # self.mostrar_facturas
-            ('Salir', '\uf013', self.botonSalir, self.salir_programa),
-            ('Analítica datos', '\uf129', self.botonDatos, self.mostrar_facturas)
+            ('Crear Factura', '\u26CF' , self.botonCrear, self.crear_facturas),  # Texto, icono, objeto a insertar y comando
+            ('Eliminar Factura', '\u26D4', self.botonEliminar, self.eliminar_facturas),
+            ('Buscar Factura', '\u2328', self.botonBuscar, self.mostrar_facturas),
+            ('Modificar Factura', '\u2692', self.botonMostrar, self.modificar), # self.mostrar_facturas
+            ('Salir', '\u267F', self.botonSalir, self.salir_programa), #'\uf013'
+            ('Analítica datos', '\u26F6', self.botonDatos, self.mostrar_facturas)
         ]
         for texto, icono, boton, comando in botones_info:
             self.configurar_boton_menu(boton, texto, icono, font_awesome, ancho, alto, comando)
@@ -157,6 +154,7 @@ class MenuPrincipalFinal(tk.Tk):
         label.place(x=0, y=0, relwidth=1, relheight=1)
 
     def configurar_boton_menu(self, boton, texto, icono, font_awesome, ancho, alto, comando):
+        # Configuración de botones menu lateral
         boton.config(text=f" {icono}  {texto}", anchor="w", font=font_awesome, bd=0, bg=color_menu_lateral, fg='white', width=ancho, height=alto, command= comando)
         boton.pack(side=tk.TOP)
         self.bind_hover_events(boton)
