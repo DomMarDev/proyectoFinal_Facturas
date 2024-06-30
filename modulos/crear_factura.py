@@ -13,7 +13,7 @@ from modulos.generic import centrar_ventanas as centrar # Necesario para importa
 from modulos.leer_archivo import Lectura_archivo        # Necesario para leer el archivo json
 from modulos.colores_y_rutas import *                   # Necesario para autoasignar ciertos campos de la factura
 from ruta import ruta                                   # Se importa la ruta del archivo json
-
+import random
 class Datos_Factura:
 
     def __init__(self, ruta):
@@ -108,12 +108,31 @@ class Datos_Factura:
         6) Destruimos la ventana de crear facturas y accedemos al método de crear_pdf para que se vaya generando el archivo mientras hacemos otras cosas en el menú principal
         '''
         self.datos_factura = {
-            'numeroFactura': self.numeroFactura.get().lower().strip(),
+            'numeroFactura': str(self.numeroFactura.get().lower().strip()),
             'fecha': self.fecha,
-            'cliente': self.cliente.get().lower().strip(),
-            'dni': self.dni.get().lower().strip(),
-            'listaElementos': [[unidades.get().lower().strip(), elemento.get().lower().strip(), precio.get().lower().strip()] for unidades, elemento, precio in self.listaElementos] 
+            'cliente': str(self.cliente.get().lower().strip()),
+            'dni': str(self.dni.get().lower().strip()),
+            'listaElementos': [[str(unidades.get().lower().strip()), str(elemento.get().lower().strip()), str(precio.get().lower().strip())] for unidades, elemento, precio in self.listaElementos] 
         }
+        if self.datos_factura['numeroFactura'] == '':
+            self.datos_factura['numeroFactura'] = 'sn'
+
+        for factura in self.listaFacturas:
+            if factura['numeroFactura'] == self.datos_factura['numeroFactura']:
+                self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" #{random.randint(0, 1000)}
+       
+        for elemento1 in self.datos_factura['listaElementos']:
+            if elemento1[0].isdigit():
+                elemento1[0] = elemento1[0]
+            else:
+                elemento1[0] = '0'
+        
+        for elemento2 in self.datos_factura['listaElementos']:
+            if elemento2[2].isdigit():
+                elemento2[2] = elemento2[2]
+            else:
+                elemento2[2] = '0'
+
 
         self.listaFacturas.append(self.datos_factura)
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
@@ -233,8 +252,14 @@ class Datos_Factura:
         tabla2 = self.datos_factura['listaElementos'] # tabla2 = [unidades, concepto , precio U., total]
         for elemento in tabla2:
             # Se convierten los elementos de unidades y total a float
-            elemento[0] = float(elemento[0])
-            elemento[2] = float(elemento[2])
+            if elemento[0]:
+                elemento[0] = float(elemento[0])
+            else:
+                elemento[0] = 0
+            if elemento[2]:
+                elemento[2] = float(elemento[2])
+            else:
+                elemento[2] = 0
             pdf.cell(w = 30, h = 10, txt = f'{elemento[0]}', border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 100, h = 10, txt = elemento[1], border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 30, h = 10, txt = f'{elemento[2]}' + chr(128), border = 1, align = 'C', fill= 0) 
@@ -322,8 +347,9 @@ class CrearFactura():
                                 bg = '#3a7ff6',
                                 bd = 0,
                                 fg = '#fff',
-                                command = self.abrir_json)
+                                command =  self.abrir_json)
         botonCrear.pack(fill = tk.X, padx = 20, pady = 30)
+        
 
         #Por si queremos que el usuario escoja el json
         # self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
@@ -350,6 +376,7 @@ class CrearFactura():
         1) Asignamos la ruta
         2) Si existe el archivo se invoca a la clase para introducir los datos de la factura
         '''
+        self.root.destroy()
         ruta_Json = 'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Datos_Factura(ruta_Json)

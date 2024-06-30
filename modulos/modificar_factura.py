@@ -15,6 +15,7 @@ from modulos.leer_archivo import Lectura_archivo        # Necesario para leer el
 from modulos.colores_y_rutas import *                   # Necesario para autoasignar ciertos campos de la factura
 from ruta import ruta                                   # Se importa la ruta del archivo json
 from pathlib import Path
+import random
 
 class Modificar:
 
@@ -44,6 +45,8 @@ class Modificar:
                 # /// Se hace un botón para los buscar facturas, se le asigna el comando buscar_factura y se empaqueta luego   
         self.botonBuscar = tk.Button(self.ventana_ModificarFactura, text="Buscar Factura", command=self.buscar_factura)
         self.botonBuscar.pack(pady=10)
+        
+
 
     def entradaDatos(self, ventana_ModificarFactura, texto):
         ''' Método para hacer la entrada de datos:
@@ -72,6 +75,7 @@ class Modificar:
         Si no coincide alguno de los datos va a decir que no se pudo encontrar la factura con los datos proporcionados
         Además se borra el PDF antiguo y el diccionario antiguo para volver a introducirlos posteriormente modificados
         '''
+        
         numeroFactura = self.numeroFactura.get().lower().strip()
         fecha = self.fecha.get().lower().strip()
         
@@ -94,6 +98,7 @@ class Modificar:
                 os.remove(ruta_pdf)
         else:
             messagebox.showerror("Error", "No se encontró una factura con los datos proporcionados")
+        self.ventana_ModificarFactura.destroy()
         
         ###############################################
         # Necesario para que haya dos maneras de proceder a la hora de gestionar las ventanas de modificar facturas
@@ -120,7 +125,7 @@ class Modificar:
         fecha = fecha0.lower().strip()
         
         facturaEncontrada = None
-
+        
         for factura in self.listaFacturas:
             if factura['numeroFactura'] == numeroFactura and factura['fecha'] == fecha:
                 facturaEncontrada = factura
@@ -167,6 +172,7 @@ class Modificar:
 
         self.botonGuardar = tk.Button(self.ventana_EditarFactura, text="Guardar Cambios", command=lambda: self.guardar_cambios2(factura))
         self.botonGuardar.pack(pady=10)
+        
 
     def anadir_elemento2(self, unidades="", elemento="", precio=""):
         ''' Método para generar los frames y entradas de los elementos'''
@@ -209,6 +215,23 @@ class Modificar:
             'dni': self.dni.get().lower().strip(),
             'listaElementos': [[unidades.get().lower().strip(), elemento.get().lower().strip(), precio.get().lower().strip()] for unidades, elemento, precio in self.listaElementos] 
         }
+        if self.datos_factura['numeroFactura'] == '':
+            self.datos_factura['numeroFactura'] = 'sn'
+        for factura in self.listaFacturas:
+            if factura['numeroFactura'] == self.datos_factura['numeroFactura']:
+                self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" 
+        
+        for elemento1 in self.datos_factura['listaElementos']:
+            if elemento1[0].isdigit():
+                elemento1[0] = elemento1[0]
+            else:
+                elemento1[0] = '0'
+        
+        for elemento2 in self.datos_factura['listaElementos']:
+            if elemento2[2].isdigit():
+                elemento2[2] = elemento2[2]
+            else:
+                elemento2[2] = '0'
 
         self.listaFacturas.append(self.datos_factura)
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
@@ -248,6 +271,7 @@ class Modificar:
         self.botonGuardar = tk.Button(self.ventana_EditarFactura, text="Guardar Cambios", command=lambda: self.guardar_cambios(factura))
         self.botonGuardar.pack(pady=10)
 
+
     def anadir_elemento(self, unidades="", elemento="", precio=""):
         ''' Método para generar los frames y entradas de los elementos'''
         frame = tk.Frame(self.elementos_frame)
@@ -283,12 +307,29 @@ class Modificar:
         Se invoca al método de crear_pdf
         '''
         self.datos_factura = {
-            'numeroFactura': self.numeroFactura.get().lower().strip(),
-            'fecha': self.fecha.get().lower().strip(),
-            'cliente': self.cliente.get().lower().strip(),
-            'dni': self.dni.get().lower().strip(),
-            'listaElementos': [[unidades.get().lower().strip(), elemento.get().lower().strip(), precio.get().lower().strip()] for unidades, elemento, precio in self.listaElementos] 
+            'numeroFactura': str(self.numeroFactura.get().lower().strip()),
+            'fecha': str(self.fecha.get().lower().strip()),
+            'cliente': str(self.cliente.get().lower().strip()),
+            'dni': str(self.dni.get().lower().strip()),
+            'listaElementos': [[unidades.get().lower().strip(), str(elemento.get().lower().strip()), precio.get().lower().strip()] for unidades, elemento, precio in self.listaElementos] 
         }
+        if self.datos_factura['numeroFactura'] == '':
+            self.datos_factura['numeroFactura'] = 'sn'
+        for factura in self.listaFacturas:
+            if factura['numeroFactura'] == self.datos_factura['numeroFactura']:
+                self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}"
+        
+        for elemento1 in self.datos_factura['listaElementos']:
+            if elemento1[0].isdigit():
+                elemento1[0] = elemento1[0]
+            else:
+                elemento1[0] = '0'
+        
+        for elemento2 in self.datos_factura['listaElementos']:
+            if elemento2[2].isdigit():
+                elemento2[2] = elemento2[2]
+            else:
+                elemento2[2] = '0'
 
         self.listaFacturas.append(self.datos_factura)
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
@@ -388,8 +429,14 @@ class Modificar:
         tabla2 = self.datos_factura['listaElementos'] # tabla2 = [unidades, concepto , precio U., total]
         for elemento in tabla2:
             # Se convierten los elementos de unidades y total a float
-            elemento[0] = float(elemento[0])
-            elemento[2] = float(elemento[2])
+            if elemento[0]:
+                elemento[0] = float(elemento[0])
+            else:
+                elemento[0] = 0
+            if elemento[2]:
+                elemento[2] = float(elemento[2])
+            else:
+                elemento[2] = 0
             pdf.cell(w = 30, h = 10, txt = f'{elemento[0]}', border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 100, h = 10, txt = elemento[1], border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 30, h = 10, txt = f'{elemento[2]}' + chr(128), border = 1, align = 'C', fill= 0) 
@@ -504,6 +551,7 @@ class ModificarFactura():
         1) Asignamos la ruta
         2) Si existe el archivo se invoca a la clase para introducir los datos de búsqueda de factura
         '''
+        self.root.destroy()
         ruta_Json = 'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_modificar_factura = Modificar(ruta_Json)
@@ -516,6 +564,7 @@ class ModificarFactura():
         3) Se obtiene el nombre del archivo PDF sin extensión .pdf
         4) Si existe el archivo se invoca a la clase para buscar la factura, pero la versión 2 donde no introducimos datos para buscar la factura
         '''
+        self.root.destroy()
         ruta_Json = 'archivoJson/facturas.json'        
         ruta_PDF   = FD.askopenfilename(title="Selecciona la factura a modificar", filetypes=[("Archivo PDF", "*.pdf"),], initialdir= 'PDF')
         nombre_PDF = Path(ruta_PDF).stem

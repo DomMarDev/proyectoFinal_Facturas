@@ -29,16 +29,16 @@ class Eliminar:
         Cuando se acabe se pulsa el botón de Eliminar factura y se invoca el método de borrado_factura     
         '''
         # / Genero una ventana por encima de la del menú principal.          
-        self.ventana_eliminar = tk.Toplevel() # Uso la clase Toplevel de tkinter
-        self.ventana_eliminar.title("Eliminar Factura") # Asigno el título Eliminar factura a esta ventana
+        self.ventanaEliminarFactura = tk.Toplevel() # Uso la clase Toplevel de tkinter
+        self.ventanaEliminarFactura.title("Eliminar Factura") # Asigno el título Eliminar factura a esta ventana
         w, h = 500, 100  # Tamaño de la ventana
-        centrar(self.ventana_eliminar, w, h)  # Llamo a la función centrar para que me centre la ventana en el centro de la pantalla
+        centrar(self.ventanaEliminarFactura, w, h)  # Llamo a la función centrar para que me centre la ventana en el centro de la pantalla
         
         # / Pido la entrada de datos
-        self.numeroFacturaEliminar = self.entradaDatos(self.ventana_eliminar, "Introduce el Nº de la factura a eliminar: ")
-        self.fechaEliminar = self.entradaDatos(self.ventana_eliminar, "Introduce la fecha de la factura (dd/mm/yyyy): ")
+        self.numeroFacturaEliminar = self.entradaDatos(self.ventanaEliminarFactura, "Introduce el Nº de la factura a eliminar: ")
+        self.fechaEliminar = self.entradaDatos(self.ventanaEliminarFactura, "Introduce la fecha de la factura (dd/mm/yyyy): ")
 
-        self.botonEliminar = tk.Button(self.ventana_eliminar, text="Eliminar Factura", command=self.borrado_factura)
+        self.botonEliminar = tk.Button(self.ventanaEliminarFactura, text="Eliminar Factura", command=self.borrado_factura)
         self.botonEliminar.pack(pady=10)
     
     def entradaDatos(self, ventana_facturas, texto):
@@ -68,7 +68,7 @@ class Eliminar:
             3) la lista de diccionarios de facturas se pasa a json y se sobreescribe
             4) Se rescata la fecha y el numeroFactura para poder eliminar el PDF gracias a la clase os con .path.exists()
         '''           
-        numeroFactura = self.numeroFacturaEliminar.get().lower().strip()
+        numeroFactura = str(self.numeroFacturaEliminar.get().lower().strip())
         fechaFactura = self.fechaEliminar.get().strip()
 
         factura_encontrada = False
@@ -91,9 +91,10 @@ class Eliminar:
                 os.remove(ruta_pdf)
 
             messagebox.showinfo("Éxito", "Factura eliminada correctamente")
-            self.ventana_eliminar.destroy()
+            self.ventanaEliminarFactura.destroy()
         else:
             messagebox.showerror("Error", "Factura no encontrada")
+        self.ventanaEliminarFactura.destroy()
     ###################################################
     def borrado_factura2(self, nombrePDF):
         ''' Método 2 para eliminar una factura sin introducir los datos de búsqueda de la factura:
@@ -201,7 +202,8 @@ class EliminarFactura():
         ''' Método para abrir el archivo json automáticamente:
         1) Asignamos la ruta
         2) Si existe el archivo se invoca a la clase para introducir los datos de eliminar de factura
-        '''        
+        '''
+        self.root.destroy()        
         ruta_Json = 'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Eliminar(ruta_Json)
@@ -214,6 +216,7 @@ class EliminarFactura():
         3) Se obtiene el nombre del archivo PDF sin extensión .pdf
         4) Si existe el archivo se invoca a la clase para eliminar la factura, pero la versión 2 donde no introducimos datos para eliminar la factura
         '''
+        self.root.destroy()
         ruta_PDF   = FD.askopenfilename(title="Selecciona la factura a modificar", filetypes=[("Archivo PDF", "*.pdf"),], initialdir= 'PDF')
         nombre_PDF = Path(ruta_PDF).stem
 
