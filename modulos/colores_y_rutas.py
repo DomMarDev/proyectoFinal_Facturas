@@ -14,7 +14,7 @@ urlCorreo                   = 'https://accounts.google.com/ServiceLogin?service=
 nombreCompleto              = 'DOMINGO MARCHAN DEL PINO'
 empresa                     = 'CIFO La Violeta'
 mail_empresa                = 'julandron@hotmail.com'
-ruta_logo_empresa           = 'imagenes/logo_empresa.png'
+ruta_logo_empresa           = 'imagenes/cifo_logo.png'
 calleEmpresa                = 'C/ INVENTADA, 8'
 poblacionEmpresa            = 'BARCELONA'
 cpProvinciaEmpresa          = '00000 BARCELONA'
