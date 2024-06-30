@@ -14,10 +14,6 @@ from modulos.leer_archivo import Lectura_archivo        # Necesario para leer el
 from modulos.colores_y_rutas import *                   # Necesario para autoasignar ciertos campos de la factura
 from ruta import ruta                                   # Se importa la ruta del archivo json
 import random
-
-
-
-
 class Datos_Factura:
 
     def __init__(self, ruta):
@@ -52,16 +48,9 @@ class Datos_Factura:
                 # /// Se hace un frame para los elementos y se empaqueta luego
         self.frameElementos = tk.Frame(self.ventana_CrearFactura) 
         self.frameElementos.pack(pady = 10)
-
-        frame = tk.Frame(self.frameElementos)
-        frame.pack(pady=5)
-
-        # self.listaElementos.append((entradaUnidades, entradaElemento, entradaPrecio))
-        
                 # /// Se hace un botón para los elementos, se le asigna el comando anadir_elemento y se empaqueta luego        
         self.botonElemento = tk.Button(self.ventana_CrearFactura, text="Añadir Elemento", command=self.anadir_elemento) 
         self.botonElemento.pack(pady = 5)
-        
                 # /// Se hace un botón para los Guardar la factura, se le asigna el comando guardar_factura y se empaqueta luego    
         self.botonGuardar = tk.Button(self.ventana_CrearFactura, text="Guardar Factura", command=self.guardar_factura)
         self.botonGuardar.pack(pady = 10)
@@ -88,7 +77,6 @@ class Datos_Factura:
         2) A cada parte del elemento (Unidades/concepto/PrecioU) se le genera su etiqueta (y se empaqueta), y su entrada (y se la empaqueta)
         3) Luego cogemos por herencia la lista declarada en add_factura y le hacemos un append de cada parte del elemento de la factura
         '''        
-
         frame = tk.Frame(self.frameElementos)
         frame.pack(pady=5)
 
@@ -96,35 +84,24 @@ class Datos_Factura:
         etiquetaUnidades.pack(side=tk.LEFT)
         entradaUnidades = tk.Entry(frame, width=5)
         entradaUnidades.pack(side=tk.LEFT)
+        entradaUnidades.pack(side=tk.LEFT)
         
+                
+
         etiquetaElemento = tk.Label(frame, text="Elemento:")
         etiquetaElemento.pack(side=tk.LEFT)
         entradaElemento = tk.Entry(frame, width=20)
         entradaElemento.pack(side=tk.LEFT)
 
-        etiquetaPrecio = tk.Label(frame, text="Precio U.:")
+        etiquetaPrecio = tk.Label(frame, text="Precio:")
         etiquetaPrecio.pack(side=tk.LEFT)
         entradaPrecio = tk.Entry(frame, width=10)
-        entradaPrecio.pack(side=tk.LEFT)
-        
+        entradaPrecio.pack(side=tk.LEFT)       
+       
+
         self.listaElementos.append((entradaUnidades, entradaElemento, entradaPrecio))
 
-        # Controles de entrada, de partida le pone un 0 a unidades y precio
-        if entradaUnidades.get().isdigit() and entradaUnidades.get() == '' :
-            pass
-        else:
-            entradaUnidades.delete(0, tk.END)
-            entradaUnidades.insert(0, '0')
-        
-        if entradaPrecio.get().isdigit() and entradaUnidades.get() == '' :
-            pass
-        else:
-            entradaPrecio.delete(0, tk.END)
-            entradaPrecio.insert(0, '0')
-
-
-
-    def guardar_factura(self):
+    def guardar_factura(self):# Esto lo he tenido que pedir a una IA, no me salía, sobretodo para añadir los elementos con el bucle for
         ''' Método que sirve para guardar los datos de la factura:
         1) Se genera diccionario (datos_factura) con cada dato introducido (incluido elementos de la factura)
             - Keys: numeroFactura, fecha, cliente, dni (para DNI/CIF), listaElementos
@@ -134,19 +111,12 @@ class Datos_Factura:
         5) Le decimos al usuario que se ha guardado la factura gracias al método de showinfo de la clase messagebox (librería tkinter)
         6) Destruimos la ventana de crear facturas y accedemos al método de crear_pdf para que se vaya generando el archivo mientras hacemos otras cosas en el menú principal
         '''
-        listaFinalElementos = []
-        for unidad, elemento, precio in self.listaElementos:
-            unidad = str(unidad.get().lower().strip())
-            elemento= str(elemento.get().lower().strip())
-            precio= str(precio.get().lower().strip())
-            listaFinalElementos.append([unidad, elemento, precio])
-
         self.datos_factura = {
             'numeroFactura': str(self.numeroFactura.get().lower().strip()),
             'fecha': self.fecha,
             'cliente': str(self.cliente.get().lower().strip()),
             'dni': str(self.dni.get().lower().strip()),
-            'listaElementos': listaFinalElementos 
+            'listaElementos': [[str(unidades.get().lower().strip()), str(elemento.get().lower().strip()), str(precio.get().lower().strip())] for unidades, elemento, precio in self.listaElementos] 
         }
         if self.datos_factura['numeroFactura'] == '':
             self.datos_factura['numeroFactura'] = 'sn'
@@ -297,7 +267,7 @@ class Datos_Factura:
                 elemento[2] = 0
             pdf.cell(w = 30, h = 10, txt = f'{elemento[0]}', border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 100, h = 10, txt = elemento[1], border = 1, align = 'C', fill= 0) 
-            pdf.cell(w = 30, h = 10, txt = f'{elemento[2]} {chr(128)}', border = 1, align = 'C', fill= 0) 
+            pdf.cell(w = 30, h = 10, txt = f'{elemento[2]}' + chr(128), border = 1, align = 'C', fill= 0) 
             pdf.multi_cell(w = 30, h = 10, txt = f'{elemento[0]*elemento[2]} {chr(128)}', border = 1, align = 'C', fill= 0)
         pdf.multi_cell(w = 0, h = 5, txt = '', border = 0, align = 'C', fill= 0) #Linea vacía
 

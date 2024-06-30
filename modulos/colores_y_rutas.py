@@ -9,6 +9,7 @@ color_menu_cursor_encima    = '#2f88c5'
 color_login_borde           = '#2C3E50'
 color_login_relleno         = '#2C3E50'
 # DATOS EMPRESA
+urlEmpresa                  = 'https://serveiocupacio.gencat.cat/ca/soc/com-ens-organitzem/centres-propis-formacio-cifo-cfpa/centres-dinnovacio-i-formacio-ocupacional-cifo/cifo-barcelona-la-violeta/'
 nombreCompleto              = 'DOMINGO MARCHAN DEL PINO'
 empresa                     = 'CIFO La Violeta'
 mail_empresa                = 'julandron@hotmail.com'

@@ -96,6 +96,7 @@ class Modificar:
 
             if os.path.exists(ruta_pdf):
                 os.remove(ruta_pdf)
+                
         else:
             messagebox.showerror("Error", "No se encontró una factura con los datos proporcionados")
         self.ventana_ModificarFactura.destroy()
@@ -116,6 +117,7 @@ class Modificar:
         '''
         # numeroFactura = self.numeroFactura.get().lower().strip()
         # fecha = self.fecha.get().lower().strip()    
+
 
         self.nombrePDF = str(nombrePDF)
         numFactura0= self.nombrePDF[11:]
@@ -141,8 +143,12 @@ class Modificar:
 
             if os.path.exists(ruta_pdf): # Prueba2
                 os.remove(ruta_pdf)
+  
         else:
             messagebox.showerror("Error", "No se encontró una factura con los datos proporcionados")
+            
+        
+        
    
     def formulario_edicion2(self, factura):
         ''' Método para editar los campos de la factura seleccionada manualmente:
@@ -172,10 +178,11 @@ class Modificar:
 
         self.botonGuardar = tk.Button(self.ventana_EditarFactura, text="Guardar Cambios", command=lambda: self.guardar_cambios2(factura))
         self.botonGuardar.pack(pady=10)
-        
+       
 
     def anadir_elemento2(self, unidades="", elemento="", precio=""):
         ''' Método para generar los frames y entradas de los elementos'''
+        
         frame = tk.Frame(self.elementos_frame)
         frame.pack(pady=5)
 
@@ -198,6 +205,9 @@ class Modificar:
         entradaPrecio.insert(0, precio)
 
         self.listaElementos.append((entradaUnidades, entradaElemento, entradaPrecio))
+        
+        
+        
 
     def guardar_cambios2(self, factura):
         ''' Método para guardar los cambios realizados en la factura:
@@ -208,24 +218,33 @@ class Modificar:
         La diferencia aqui no se destruye la ventana de modificar factura porque nunca se generó (si no, peta)
         Se invoca al método de crear_pdf
         '''
+
+        listaFinalElementos = []
+        for unidad, elemento, precio in self.listaElementos:
+            unidad = str(unidad.get().lower().strip())
+            elemento= str(elemento.get().lower().strip())
+            precio= str(precio.get().lower().strip())
+            listaFinalElementos.append([unidad, elemento, precio])
+
         self.datos_factura = {
-            'numeroFactura': self.numeroFactura.get().lower().strip(),
+            'numeroFactura': str(self.numeroFactura.get().lower().strip()),
             'fecha': self.fecha.get().lower().strip(),
-            'cliente': self.cliente.get().lower().strip(),
-            'dni': self.dni.get().lower().strip(),
-            'listaElementos': [[unidades.get().lower().strip(), elemento.get().lower().strip(), precio.get().lower().strip()] for unidades, elemento, precio in self.listaElementos] 
+            'cliente': str(self.cliente.get().lower().strip()),
+            'dni': str(self.dni.get().lower().strip()),
+            'listaElementos': listaFinalElementos 
         }
         if self.datos_factura['numeroFactura'] == '':
             self.datos_factura['numeroFactura'] = 'sn'
+
         for factura in self.listaFacturas:
             if factura['numeroFactura'] == self.datos_factura['numeroFactura']:
-                self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" 
-        
+                self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" #{random.randint(0, 1000)}
+       
         for elemento1 in self.datos_factura['listaElementos']:
             if elemento1[0].isdigit():
                 elemento1[0] = elemento1[0]
             else:
-                elemento1[0] = '0'
+                elemento1[0] = '0'                
         
         for elemento2 in self.datos_factura['listaElementos']:
             if elemento2[2].isdigit():
@@ -237,6 +256,7 @@ class Modificar:
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
         self.path.write_text(contenido)
         messagebox.showinfo("Éxito", "Factura guardada")
+        self.ventana_EditarFactura.destroy()
         self.crear_pdf()
 
         ###############################################
@@ -306,24 +326,32 @@ class Modificar:
         La diferencia aqui se destruye la ventana de modificar factura previamente generada
         Se invoca al método de crear_pdf
         '''
+        listaFinalElementos = []
+        for unidad, elemento, precio in self.listaElementos:
+            unidad = str(unidad.get().lower().strip())
+            elemento= str(elemento.get().lower().strip())
+            precio= str(precio.get().lower().strip())
+            listaFinalElementos.append([unidad, elemento, precio])
+
         self.datos_factura = {
             'numeroFactura': str(self.numeroFactura.get().lower().strip()),
-            'fecha': str(self.fecha.get().lower().strip()),
+            'fecha': self.fecha.get().lower().strip(),
             'cliente': str(self.cliente.get().lower().strip()),
             'dni': str(self.dni.get().lower().strip()),
-            'listaElementos': [[unidades.get().lower().strip(), str(elemento.get().lower().strip()), precio.get().lower().strip()] for unidades, elemento, precio in self.listaElementos] 
+            'listaElementos': listaFinalElementos 
         }
         if self.datos_factura['numeroFactura'] == '':
             self.datos_factura['numeroFactura'] = 'sn'
+
         for factura in self.listaFacturas:
             if factura['numeroFactura'] == self.datos_factura['numeroFactura']:
-                self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}"
-        
+                self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" #{random.randint(0, 1000)}
+       
         for elemento1 in self.datos_factura['listaElementos']:
             if elemento1[0].isdigit():
                 elemento1[0] = elemento1[0]
             else:
-                elemento1[0] = '0'
+                elemento1[0] = '0'                
         
         for elemento2 in self.datos_factura['listaElementos']:
             if elemento2[2].isdigit():
@@ -335,7 +363,7 @@ class Modificar:
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
         self.path.write_text(contenido)
         messagebox.showinfo("Éxito", "Factura guardada")
-        self.ventana_ModificarFactura.destroy()
+        self.ventana_EditarFactura.destroy()
         self.crear_pdf()
 
     def crear_pdf(self):
@@ -439,7 +467,7 @@ class Modificar:
                 elemento[2] = 0
             pdf.cell(w = 30, h = 10, txt = f'{elemento[0]}', border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 100, h = 10, txt = elemento[1], border = 1, align = 'C', fill= 0) 
-            pdf.cell(w = 30, h = 10, txt = f'{elemento[2]}' + chr(128), border = 1, align = 'C', fill= 0) 
+            pdf.cell(w = 30, h = 10, txt = f'{elemento[2]} {chr(128)}', border = 1, align = 'C', fill= 0) 
             pdf.multi_cell(w = 30, h = 10, txt = f'{elemento[0]*elemento[2]} {chr(128)}', border = 1, align = 'C', fill= 0)
         pdf.multi_cell(w = 0, h = 5, txt = '', border = 0, align = 'C', fill= 0) #Linea vacía
 
@@ -509,16 +537,16 @@ class ModificarFactura():
     def __init__(self, root):
         ''' Método para crear la ventana de Modificar Factura
         Se le asigna un título, unas dimensiones base, se centra en el centro de la pantalla'''        
-        self.root = root
-        self.root.title("Modificar Factura") # Título
+        self.ventana_buscar_por_datos = root
+        self.ventana_buscar_por_datos.title("Modificar Factura") # Título
         w, h = 500, 200  # Tamaño de la ventana
-        centrar(self.root, w, h) # Centrado
+        centrar(self.ventana_buscar_por_datos, w, h) # Centrado
         # Configuración del menú superior y botón Modificar / Buscar y Modificar
-        self.barraMenu = tk.Menu(self.root)
-        self.root.config(menu=self.barraMenu)
-        self.root.resizable(False,False)
+        self.barraMenu = tk.Menu(self.ventana_buscar_por_datos)
+        self.ventana_buscar_por_datos.config(menu=self.barraMenu)
+        self.ventana_buscar_por_datos.resizable(False,False)
 
-        botonModificar= tk.Button(self.root,
+        botonModificar= tk.Button(self.ventana_buscar_por_datos,
                                 text = 'Modificar',
                                 font = ('Times', 15),
                                 bg = '#3a7ff6',
@@ -527,7 +555,7 @@ class ModificarFactura():
                                 command = self.abrir_json)
         botonModificar.pack(fill = tk.X, padx = 20, pady = 30)
         
-        botonBuscarModificar= tk.Button(self.root,
+        botonBuscarModificar= tk.Button(self.ventana_buscar_por_datos,
                                 text = 'Buscar y Modificar',
                                 font = ('Times', 15),
                                 bg = '#3a7ff6',
@@ -539,19 +567,20 @@ class ModificarFactura():
         self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
         self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
         self.menuArchivo.add_command(label="Abrir PDF de Facturas", command=self.abrir_PDF)
+
         self.menuArchivo.add_separator()
-        self.menuArchivo.add_command(label="Salir", command=self.root.destroy)
+        self.menuArchivo.add_command(label="Salir", command=self.ventana_buscar_por_datos.destroy)
 
         self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
         self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
         self.menuFactura.add_command(label="Modificar Factura", command=self.abrir_json)# Si se quiere abrir Json, cambiar abrir_json por add_factura
-    
+
     def abrir_json(self):
         ''' Método para abrir el archivo json automáticamente:
         1) Asignamos la ruta
         2) Si existe el archivo se invoca a la clase para introducir los datos de búsqueda de factura
         '''
-        self.root.destroy()
+        self.ventana_buscar_por_datos.destroy()
         ruta_Json = 'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_modificar_factura = Modificar(ruta_Json)
@@ -564,13 +593,14 @@ class ModificarFactura():
         3) Se obtiene el nombre del archivo PDF sin extensión .pdf
         4) Si existe el archivo se invoca a la clase para buscar la factura, pero la versión 2 donde no introducimos datos para buscar la factura
         '''
-        self.root.destroy()
         ruta_Json = 'archivoJson/facturas.json'        
         ruta_PDF   = FD.askopenfilename(title="Selecciona la factura a modificar", filetypes=[("Archivo PDF", "*.pdf"),], initialdir= 'PDF')
         nombre_PDF = Path(ruta_PDF).stem
         if ruta_Json:
             self.ventana_modificar_factura = Modificar(ruta_Json)
             self.ventana_modificar_factura.buscar_factura2(nombre_PDF)
+
+            
     
 # #  Por si queremos que el usuario escoja el json
 #     def add_factura(self):

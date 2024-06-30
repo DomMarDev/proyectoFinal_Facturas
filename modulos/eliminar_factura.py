@@ -146,16 +146,16 @@ class EliminarFactura():
     def __init__(self, root):
         ''' Método para crear la ventana de Eliminar Factura
         Se le asigna un título, unas dimensiones base, se centra en el centro de la pantalla'''
-        self.root = root
-        self.root.title("Eliminar Factura") # Título
+        self.ventana_eliminar_por_datos = root
+        self.ventana_eliminar_por_datos.title("Eliminar Factura") # Título
         w, h = 500, 200  # Tamaño de la ventana
-        centrar(self.root, w, h) # Centrado
+        centrar(self.ventana_eliminar_por_datos, w, h) # Centrado
         # Configuración del menú superior y botón Eliminar / Buscar y Eliminar       
-        self.barraMenu = tk.Menu(self.root) 
-        self.root.config(menu=self.barraMenu)
-        self.root.resizable(False, False)
+        self.barraMenu = tk.Menu(self.ventana_eliminar_por_datos) 
+        self.ventana_eliminar_por_datos.config(menu=self.barraMenu)
+        self.ventana_eliminar_por_datos.resizable(False, False)
 
-        botonCrear= tk.Button(self.root,
+        botonCrear= tk.Button(self.ventana_eliminar_por_datos,
                                 text = 'Eliminar',
                                 font = ('Times', 15),
                                 bg = '#3a7ff6',
@@ -164,7 +164,7 @@ class EliminarFactura():
                                 command = self.abrir_json)
         botonCrear.pack(fill = tk.X, padx = 20, pady = 30)
 
-        botonBuscarEliminar= tk.Button(self.root,
+        botonBuscarEliminar= tk.Button(self.ventana_eliminar_por_datos,
                                 text = 'Buscar y Eliminar',
                                 font = ('Times', 15),
                                 bg = '#3a7ff6',
@@ -184,7 +184,7 @@ class EliminarFactura():
         self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
         self.menuArchivo.add_command(label="Abrir PDF de Facturas", command=self.abrir_PDF)
         self.menuArchivo.add_separator()
-        self.menuArchivo.add_command(label="Salir", command=self.root.destroy)
+        self.menuArchivo.add_command(label="Salir", command=self.ventana_eliminar_por_datos.destroy)
 
 
         self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
@@ -203,7 +203,7 @@ class EliminarFactura():
         1) Asignamos la ruta
         2) Si existe el archivo se invoca a la clase para introducir los datos de eliminar de factura
         '''
-        self.root.destroy()        
+        self.ventana_eliminar_por_datos.destroy()        
         ruta_Json = 'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Eliminar(ruta_Json)
@@ -216,7 +216,7 @@ class EliminarFactura():
         3) Se obtiene el nombre del archivo PDF sin extensión .pdf
         4) Si existe el archivo se invoca a la clase para eliminar la factura, pero la versión 2 donde no introducimos datos para eliminar la factura
         '''
-        self.root.destroy()
+        self.ventana_eliminar_por_datos.destroy()
         ruta_PDF   = FD.askopenfilename(title="Selecciona la factura a modificar", filetypes=[("Archivo PDF", "*.pdf"),], initialdir= 'PDF')
         nombre_PDF = Path(ruta_PDF).stem
 

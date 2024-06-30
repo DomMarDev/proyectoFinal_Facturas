@@ -1,6 +1,7 @@
 # Importaciones de librerias
 import os                                                                       # Obtener rutas del sistema operativo y abrir documentos
 from pathlib import Path                                                        # Trabajar con las rutas
+import webbrowser                                                               # Incorporar la función de ir a la web de la empresa
 import tkinter as tk                                                            # Interfaz gráfica
 from tkinter import font
 from tkinter.font import Font
@@ -12,11 +13,13 @@ sys.path.append('.')
 
 from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar   # Necesario para importar la función de centrar y leer
 from modulos.colores_y_rutas import *                                           # Necesario para autoasignar ciertos campos de colores e imagenes
-
+                                          
 # Importacion de modulos que dan funcionalidad al programa
 from modulos.crear_factura import CrearFactura as CF
 from modulos.eliminar_factura import EliminarFactura as EF
 from modulos.modificar_factura import ModificarFactura as MF
+
+
 
 # web unicode: https://www.rapidtables.com/code/text/unicode-characters.html
 
@@ -58,7 +61,7 @@ class MenuPrincipalFinal(tk.Tk):
         # Importamos el logo de la carpeta imágenes, le asignamos un tamaño y la ponemos dentro de una etiqueta
         alto = 550
         ancho = 600
-        self.logo = leer(ruta_imagen_instrucciones, (ancho, alto))
+        self.logo = leer(ruta_logo_programa, (ancho, alto))
         self.perfil = leer(ruta_logo_empresa, (100, 100))
         self.configuracion_ventana()
         self.paneles()
@@ -107,15 +110,20 @@ class MenuPrincipalFinal(tk.Tk):
         self.labelTitulo.pack(side=tk.LEFT)
 
         # Botón del menú lateral
-        self.botonMenuLateral = tk.Button(self.barra_superior, text="\u2600",
+        self.botonMenuLateral = tk.Button(self.barra_superior, text="Menú/Instrucciones", font= ('Roboto', 13),
                                           command=self.toggle_panel,
                                           bd=0, bg=color_menu_superior, fg='white')
         self.botonMenuLateral.pack(side=tk.LEFT)
 
-        # Etiqueta web de la empresa
-        self.labelTitulo2 = tk.Label(self.barra_superior, text= mail_empresa)
-        self.labelTitulo2.config(fg='#fff', font=('Roboto', 13), bg=color_menu_superior, padx=10, width=20)
-        self.labelTitulo2.pack(side=tk.RIGHT)
+        # Botón Url de la Empresa
+        self.botonLinkEmpresa = tk.Button(self.barra_superior, text="Web Empresa", font= ('Roboto', 13),
+                                          command= self.url,
+                                          bd=0, bg=color_menu_superior, fg='white')
+        self.botonLinkEmpresa.pack(side=tk.RIGHT, padx= 10)        
+        
+    def url(self):
+        # Se usa webbrowser para abrir un url
+        webbrowser.open(urlEmpresa)
 
     def controles_barra_lateral(self):
         # Configuración menú lateral
@@ -152,6 +160,16 @@ class MenuPrincipalFinal(tk.Tk):
         label = tk.Label(self.cuerpo, image=self.logo,
                          bg=color_cuerpo)
         label.place(x=0, y=0, relwidth=1, relheight=1)
+    
+    def controles_cuerpo2(self):
+        # Imagen en el cuerpo principal
+        alto = 550
+        ancho = 600
+        self.instrucciones = leer(ruta_imagen_instrucciones, (ancho, alto))
+        label = tk.Label(self.cuerpo, image=self.instrucciones,
+                         bg=color_cuerpo)
+        label.place(x=0, y=0, relwidth=1, relheight=1)
+
 
     def configurar_boton_menu(self, boton, texto, icono, font_awesome, ancho, alto, comando):
         # Configuración de botones menu lateral
@@ -175,8 +193,10 @@ class MenuPrincipalFinal(tk.Tk):
     def toggle_panel(self):  # Altera la visibilidad dentro de tkinter, en el menú lateral
         if self.menu_lateral.winfo_ismapped():
             self.menu_lateral.pack_forget()
+            self.controles_cuerpo2()
         else:
             self.menu_lateral.pack(side=tk.LEFT, fill='y')
+            self.controles_cuerpo()
 
 if __name__ == "__main__":
     app= MenuPrincipalFinal()
