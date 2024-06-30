@@ -117,13 +117,23 @@ class MenuPrincipalFinal(tk.Tk):
 
         # Botón Url de la Empresa
         self.botonLinkEmpresa = tk.Button(self.barra_superior, text="Web Empresa", font= ('Roboto', 13),
-                                          command= self.url,
+                                          command= self.urlEmpresa,
                                           bd=0, bg=color_menu_superior, fg='white')
-        self.botonLinkEmpresa.pack(side=tk.RIGHT, padx= 10)        
+        self.botonLinkEmpresa.pack(side=tk.RIGHT, padx= 10)
+
+        # Botón Url de la Hotmail
+        self.botonLinkHotmail = tk.Button(self.barra_superior, text="Correo", font= ('Roboto', 13),
+                                          command= self.urlCorreo,
+                                          bd=0, bg=color_menu_superior, fg='white')
+        self.botonLinkHotmail.pack(side=tk.RIGHT, padx= 10)          
         
-    def url(self):
+    def urlEmpresa(self):
         # Se usa webbrowser para abrir un url
         webbrowser.open(urlEmpresa)
+    
+    def urlCorreo(self):
+        # Se usa webbrowser para abrir un url
+        webbrowser.open(urlCorreo)
 
     def controles_barra_lateral(self):
         # Configuración menú lateral
