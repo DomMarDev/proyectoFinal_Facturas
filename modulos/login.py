@@ -10,6 +10,10 @@ sys.path.append('.')
 import modulos.generic as utl
 from modulos.menu_principal import MenuPrincipalFinal as MP
 from modulos.colores_y_rutas import *
+
+from facturaDatos.factura import Abrir_archivo
+miArchivo = Abrir_archivo()
+
 class Login:
 
     def verificacion(self):

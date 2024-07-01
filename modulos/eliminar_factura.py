@@ -11,6 +11,97 @@ sys.path.append('.')
 from modulos.leer_archivo import Lectura_archivo        # Necesario para leer el archivo json
 from modulos.generic import centrar_ventanas as centrar # Necesario para importar la función de centrar
 
+class EliminarFactura():
+
+    def __init__(self, root):
+        ''' Método para crear la ventana de Eliminar Factura
+        Se le asigna un título, unas dimensiones base, se centra en el centro de la pantalla'''
+        self.ventana_eliminar_por_datos = root
+        self.ventana_eliminar_por_datos.title("Eliminar Factura") # Título
+        w, h = 500, 200  # Tamaño de la ventana
+        centrar(self.ventana_eliminar_por_datos, w, h) # Centrado
+        # Configuración del menú superior y botón Eliminar / Buscar y Eliminar       
+        self.barraMenu = tk.Menu(self.ventana_eliminar_por_datos) 
+        self.ventana_eliminar_por_datos.config(menu=self.barraMenu)
+        self.ventana_eliminar_por_datos.resizable(False, False)
+
+        botonCrear= tk.Button(self.ventana_eliminar_por_datos,
+                                text = 'Eliminar',
+                                font = ('Times', 15),
+                                bg = '#3a7ff6',
+                                bd = 0,
+                                fg = '#fff',
+                                command = self.abrir_json)
+        botonCrear.pack(fill = tk.X, padx = 20, pady = 30)
+
+        botonBuscarEliminar= tk.Button(self.ventana_eliminar_por_datos,
+                                text = 'Buscar y Eliminar',
+                                font = ('Times', 15),
+                                bg = '#3a7ff6',
+                                bd = 0,
+                                fg = '#fff',
+                                command = self.abrir_PDF)
+        botonBuscarEliminar.pack(fill = tk.X, padx = 20, pady = 30)
+
+        #Por si queremos que el usuario escoja el json
+        # self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
+        # self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
+        # self.menuArchivo.add_command(label="Abrir JSON de Facturas", command=self.abrir_json)
+        # self.menuArchivo.add_separator()
+        # self.menuArchivo.add_command(label="Salir", command=self.root.quit)
+
+        self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
+        self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
+        self.menuArchivo.add_command(label="Abrir PDF de Facturas", command=self.abrir_PDF)
+        self.menuArchivo.add_separator()
+        self.menuArchivo.add_command(label="Salir", command=self.ventana_eliminar_por_datos.destroy)
+
+
+        self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
+        self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
+        self.menuFactura.add_command(label="Eliminar Factura", command=self.abrir_json) # Si se quiere abrir Json, cambiar abrir_json por eliminar_factura
+    
+    #Por si queremos que el usuario escoja el json
+    # def abrir_json(self):
+    #     ruta_Json = FD.askopenfilename(title="Selecciona el archivo de facturas", filetypes=[("Archivo JSON", "*.json"),], initialdir= 'archivoJson')
+    #     if ruta_Json:
+    #         self.ventana_anadir_factura = Eliminar(ruta_Json)
+    #         self.ventana_anadir_factura.eliminar_factura()
+
+    def abrir_json(self):
+        ''' Método para abrir el archivo json automáticamente:
+        1) Asignamos la ruta
+        2) Si existe el archivo se invoca a la clase para introducir los datos de eliminar de factura
+        '''
+        self.ventana_eliminar_por_datos.destroy()        
+        ruta_Json = 'archivoJson/facturas.json'
+        if ruta_Json:
+            self.ventana_anadir_factura = Eliminar(ruta_Json)
+            self.ventana_anadir_factura.eliminar_factura()
+
+    def abrir_PDF(self):
+        ''' Método para abrir el archivo PDF manualmente:
+        1) Asignamos la ruta del json (necesaria)
+        2) Obtenemos la ruta absoluta del archivo PDF seleccionado
+        3) Se obtiene el nombre del archivo PDF sin extensión .pdf
+        4) Si existe el archivo se invoca a la clase para eliminar la factura, pero la versión 2 donde no introducimos datos para eliminar la factura
+        '''
+        self.ventana_eliminar_por_datos.destroy()
+        ruta_PDF   = FD.askopenfilename(title="Selecciona la factura a modificar", filetypes=[("Archivo PDF", "*.pdf"),], initialdir= 'PDF')
+        nombre_PDF = Path(ruta_PDF).stem
+
+        ruta_Json  = 'archivoJson/facturas.json'
+        if ruta_Json:
+            self.ventana_modificar_factura = Eliminar(ruta_Json)
+            self.ventana_modificar_factura.borrado_factura2(nombre_PDF)
+    
+    #Por si queremos que el usuario escoja el json
+    # def eliminar_factura(self):
+    #     if hasattr(self, 'Ventana de Añadir Factura'):
+    #         self.ventana_anadir_factura.eliminar_factura()
+    #     else:
+    #         messagebox.showwarning("Archivo no seleccionado", "Primero seleccione un archivo JSON de facturas desde el menú Archivo -> Abrir JSON de Facturas.")
+
 class Eliminar:
 
     def __init__(self, ruta):
@@ -140,94 +231,3 @@ class Eliminar:
         else:
             messagebox.showerror("Error", "Factura no encontrada")
     ###############################################
-
-class EliminarFactura():
-
-    def __init__(self, root):
-        ''' Método para crear la ventana de Eliminar Factura
-        Se le asigna un título, unas dimensiones base, se centra en el centro de la pantalla'''
-        self.ventana_eliminar_por_datos = root
-        self.ventana_eliminar_por_datos.title("Eliminar Factura") # Título
-        w, h = 500, 200  # Tamaño de la ventana
-        centrar(self.ventana_eliminar_por_datos, w, h) # Centrado
-        # Configuración del menú superior y botón Eliminar / Buscar y Eliminar       
-        self.barraMenu = tk.Menu(self.ventana_eliminar_por_datos) 
-        self.ventana_eliminar_por_datos.config(menu=self.barraMenu)
-        self.ventana_eliminar_por_datos.resizable(False, False)
-
-        botonCrear= tk.Button(self.ventana_eliminar_por_datos,
-                                text = 'Eliminar',
-                                font = ('Times', 15),
-                                bg = '#3a7ff6',
-                                bd = 0,
-                                fg = '#fff',
-                                command = self.abrir_json)
-        botonCrear.pack(fill = tk.X, padx = 20, pady = 30)
-
-        botonBuscarEliminar= tk.Button(self.ventana_eliminar_por_datos,
-                                text = 'Buscar y Eliminar',
-                                font = ('Times', 15),
-                                bg = '#3a7ff6',
-                                bd = 0,
-                                fg = '#fff',
-                                command = self.abrir_PDF)
-        botonBuscarEliminar.pack(fill = tk.X, padx = 20, pady = 30)
-
-        #Por si queremos que el usuario escoja el json
-        # self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
-        # self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
-        # self.menuArchivo.add_command(label="Abrir JSON de Facturas", command=self.abrir_json)
-        # self.menuArchivo.add_separator()
-        # self.menuArchivo.add_command(label="Salir", command=self.root.quit)
-
-        self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
-        self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
-        self.menuArchivo.add_command(label="Abrir PDF de Facturas", command=self.abrir_PDF)
-        self.menuArchivo.add_separator()
-        self.menuArchivo.add_command(label="Salir", command=self.ventana_eliminar_por_datos.destroy)
-
-
-        self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
-        self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
-        self.menuFactura.add_command(label="Eliminar Factura", command=self.abrir_json) # Si se quiere abrir Json, cambiar abrir_json por eliminar_factura
-    
-    #Por si queremos que el usuario escoja el json
-    # def abrir_json(self):
-    #     ruta_Json = FD.askopenfilename(title="Selecciona el archivo de facturas", filetypes=[("Archivo JSON", "*.json"),], initialdir= 'archivoJson')
-    #     if ruta_Json:
-    #         self.ventana_anadir_factura = Eliminar(ruta_Json)
-    #         self.ventana_anadir_factura.eliminar_factura()
-
-    def abrir_json(self):
-        ''' Método para abrir el archivo json automáticamente:
-        1) Asignamos la ruta
-        2) Si existe el archivo se invoca a la clase para introducir los datos de eliminar de factura
-        '''
-        self.ventana_eliminar_por_datos.destroy()        
-        ruta_Json = 'archivoJson/facturas.json'
-        if ruta_Json:
-            self.ventana_anadir_factura = Eliminar(ruta_Json)
-            self.ventana_anadir_factura.eliminar_factura()
-
-    def abrir_PDF(self):
-        ''' Método para abrir el archivo PDF manualmente:
-        1) Asignamos la ruta del json (necesaria)
-        2) Obtenemos la ruta absoluta del archivo PDF seleccionado
-        3) Se obtiene el nombre del archivo PDF sin extensión .pdf
-        4) Si existe el archivo se invoca a la clase para eliminar la factura, pero la versión 2 donde no introducimos datos para eliminar la factura
-        '''
-        self.ventana_eliminar_por_datos.destroy()
-        ruta_PDF   = FD.askopenfilename(title="Selecciona la factura a modificar", filetypes=[("Archivo PDF", "*.pdf"),], initialdir= 'PDF')
-        nombre_PDF = Path(ruta_PDF).stem
-
-        ruta_Json  = 'archivoJson/facturas.json'
-        if ruta_Json:
-            self.ventana_modificar_factura = Eliminar(ruta_Json)
-            self.ventana_modificar_factura.borrado_factura2(nombre_PDF)
-    
-    #Por si queremos que el usuario escoja el json
-    # def eliminar_factura(self):
-    #     if hasattr(self, 'Ventana de Añadir Factura'):
-    #         self.ventana_anadir_factura.eliminar_factura()
-    #     else:
-    #         messagebox.showwarning("Archivo no seleccionado", "Primero seleccione un archivo JSON de facturas desde el menú Archivo -> Abrir JSON de Facturas.")

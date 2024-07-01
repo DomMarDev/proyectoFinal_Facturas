@@ -18,8 +18,7 @@ from modulos.colores_y_rutas import *                                           
 from modulos.crear_factura import CrearFactura as CF
 from modulos.eliminar_factura import EliminarFactura as EF
 from modulos.modificar_factura import ModificarFactura as MF
-
-
+from modulos.borrar_json import EliminarJson_PDF as EJ
 
 # web unicode: https://www.rapidtables.com/code/text/unicode-characters.html
 
@@ -53,6 +52,11 @@ class MenuPrincipalFinal(tk.Tk):
 
     def salir_programa(self):
         exit()
+
+    def borrar_json_pdf(self):
+        self.new_window = tk.Toplevel(self)
+        EJ(self.new_window)
+
         
 
     def __init__(self):
@@ -160,7 +164,7 @@ class MenuPrincipalFinal(tk.Tk):
             ('Buscar Factura', '\u2328', self.botonBuscar, self.mostrar_facturas),
             ('Modificar Factura', '\u2692', self.botonMostrar, self.modificar), # self.mostrar_facturas
             ('Salir', '\u267F', self.botonSalir, self.salir_programa), #'\uf013'
-            ('Analítica datos', '\u26F6', self.botonDatos, self.mostrar_facturas)
+            ('Borrar json y PDF', '\u26F6', self.botonDatos, self.borrar_json_pdf)
         ]
         for texto, icono, boton, comando in botones_info:
             self.configurar_boton_menu(boton, texto, icono, font_awesome, ancho, alto, comando)
