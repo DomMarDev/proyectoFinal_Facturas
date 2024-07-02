@@ -1,1 +1,38 @@
-[]
+[
+    {
+        "numeroFactura": "123",
+        "fecha": "02/07/2024",
+        "cliente": "pepe",
+        "dni": "1145 h",
+        "listaElementos": [
+            [
+                "10",
+                "macarrones",
+                "150"
+            ],
+            [
+                "30",
+                "peras",
+                "30"
+            ]
+        ]
+    },
+    {
+        "numeroFactura": "2",
+        "fecha": "02/07/2024",
+        "cliente": "2",
+        "dni": "2 h",
+        "listaElementos": [
+            [
+                "10",
+                "",
+                "40"
+            ],
+            [
+                "20",
+                "",
+                "10"
+            ]
+        ]
+    }
+]

@@ -19,6 +19,7 @@ from modulos.crear_factura import CrearFactura as CF
 from modulos.eliminar_factura import EliminarFactura as EF
 from modulos.modificar_factura import ModificarFactura as MF
 from modulos.borrar_json import EliminarJson_PDF as EJ
+from modulos.analisis_datos import AnalizarFactura as AF
 
 # web unicode: https://www.rapidtables.com/code/text/unicode-characters.html
 
@@ -56,6 +57,10 @@ class MenuPrincipalFinal(tk.Tk):
     def borrar_json_pdf(self):
         self.new_window = tk.Toplevel(self)
         EJ(self.new_window)
+    
+    def analisis_datos(self):
+        self.new_window = tk.Toplevel(self)
+        AF(self.new_window)
 
         
 
@@ -156,7 +161,9 @@ class MenuPrincipalFinal(tk.Tk):
         self.botonBuscar = tk.Button(self.menu_lateral)
         self.botonMostrar = tk.Button(self.menu_lateral)
         self.botonSalir = tk.Button(self.menu_lateral)
-        self.botonDatos = tk.Button(self.menu_lateral)
+        self.botonBorrarJsonPDF = tk.Button(self.menu_lateral)
+        self.botonAnalisis = tk.Button(self.menu_lateral)
+
 
         botones_info = [
             ('Crear Factura', '\u26CF' , self.botonCrear, self.crear_facturas),  # Texto, icono, objeto a insertar y comando
@@ -164,7 +171,8 @@ class MenuPrincipalFinal(tk.Tk):
             ('Buscar Factura', '\u2328', self.botonBuscar, self.mostrar_facturas),
             ('Modificar Factura', '\u2692', self.botonMostrar, self.modificar), # self.mostrar_facturas
             ('Salir', '\u267F', self.botonSalir, self.salir_programa), #'\uf013'
-            ('Borrar json y PDF', '\u26F6', self.botonDatos, self.borrar_json_pdf)
+            ('Borrar json y PDF', '\u26F6', self.botonBorrarJsonPDF, self.borrar_json_pdf),
+            ('Analisis datos', '\u26F6', self.botonAnalisis, self.analisis_datos)
         ]
         for texto, icono, boton, comando in botones_info:
             self.configurar_boton_menu(boton, texto, icono, font_awesome, ancho, alto, comando)
