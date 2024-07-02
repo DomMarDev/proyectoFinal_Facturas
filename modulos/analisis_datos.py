@@ -27,7 +27,7 @@ from modulos. creacionPDF import crear_pdf as CPDF
 class AnalizarFactura():
 
     def __init__(self, root):
-        ''' Método para crear la ventana de Crear Factura
+        ''' Método para crear la ventana de Analisis de datos:
         Se le asigna un título, unas dimensiones base, se centra en el centro de la pantalla'''
         self.root = root
         self.root.title("Analitica de Facturas") # Título
@@ -37,36 +37,22 @@ class AnalizarFactura():
         self.barraMenu = tk.Menu(self.root) 
         self.root.config(menu=self.barraMenu)
         self.root.resizable(False,False)
-    
+        # Botón de Analizar todas las facturas
         botonCrear= tk.Button(self.root,
-                                text = 'Analizar mes',
+                                text = 'Analizar',
                                 font = ('Times', 15),
                                 bg = '#3a7ff6',
                                 bd = 0,
                                 fg = '#fff',
                                 command =  self.abrir_json)
         botonCrear.pack(fill = tk.X, padx = 20, pady = 30)
-        
 
-        #Por si queremos que el usuario escoja el json
-        # self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
-        # self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
-        # self.menuArchivo.add_command(label="Abrir JSON de Facturas", command=self.abrir_json)
-        # self.menuArchivo.add_separator()
-        # self.menuArchivo.add_command(label="Salir", command=self.root.quit)
         
         self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
         self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
         self.menuFactura.add_command(label="Analizar Facturas", command=self.abrir_json)# Si se quiere abrir Json, cambiar abrir_json por add_factura
         self.menuFactura.add_separator()
         self.menuFactura.add_command(label="Salir", command=self.root.destroy)
-        
-        #Por si queremos que el usuario escoja el json
-        # def abrir_json(self):
-        #     ruta_Json = FD.askopenfilename(title="Selecciona el archivo de facturas", filetypes=[("Archivo JSON", "*.json"),], initialdir= 'archivoJson')
-        #     if ruta_Json:
-        #         self.ventana_anadir_factura = Datos_Factura(ruta_Json)
-        #         self.ventana_anadir_factura.add_factura()
         
     def abrir_json(self):
         ''' Método para abrir el archivo json automáticamente:
@@ -117,8 +103,15 @@ class Datos_Facturas:
         print(listaFechasFacturas)
         
 
-        tabla = pd.DataFrame(np.array([listaTotalesFacturas]), columns = listaFechasFacturas)
+        # tabla = pd.DataFrame(np.array([listaTotalesFacturas]), columns = listaFechasFacturas)
 
-        tabla.plot()
+        # tabla = pd.bar()
+        plt.figure(figsize=(9, 7))
+        
+        for i in range(len(listaTotalesFacturas)):
+            plt.bar(listaFechasFacturas, listaTotalesFacturas, color="green", label="Python")
+
+
+        # tabla.plot()
         plt.show()
         
