@@ -302,13 +302,13 @@ class Modificar:
         numFactura0= self.nombrePDF[11:]
         fecha1= self.nombrePDF[0:10]
         fecha0 = fecha1.replace('_', '/')
-        numeroFactura = numFactura0.lower().strip()
-        fecha = fecha0.lower().strip()
-        
+        self.numeroFacturaZ = numFactura0.lower().strip()
+        self.fechaZ = fecha0.lower().strip()
+
         facturaEncontrada = None
         
         for factura in self.listaFacturas:
-            if factura['numeroFactura'] == numeroFactura and factura['fecha'] == fecha:
+            if factura['numeroFactura'] == self.numeroFacturaZ and factura['fecha'] == self.fechaZ:
                 facturaEncontrada = factura
                 self.listaFacturas.remove(factura)
                 break
@@ -316,12 +316,12 @@ class Modificar:
         if facturaEncontrada:
             self.formulario_edicion2(facturaEncontrada)
 
-            fechaCorregida = fecha.replace('/', '_') # Prueba2
+            # fechaCorregida = fecha2.replace('/', '_') # Prueba2
 
-            ruta_pdf = f"PDF/{fechaCorregida}_{numeroFactura}.pdf" # Prueba2
+            # ruta_pdf = f"PDF/{fechaCorregida}_{numeroFactura}.pdf" # Prueba2
 
-            if os.path.exists(ruta_pdf): # Prueba2
-                os.remove(ruta_pdf)
+            # if os.path.exists(ruta_pdf): # Prueba2
+            #     os.remove(ruta_pdf)
   
         else:
             messagebox.showerror("Error", "No se encontró una factura con los datos proporcionados")
@@ -391,6 +391,13 @@ class Modificar:
         La diferencia aqui no se destruye la ventana de modificar factura porque nunca se generó (si no, peta)
         Se invoca al método de crear_pdf
         '''
+
+        fechaCorregidaZ = self.fechaZ.replace('/', '_') # Prueba2
+
+        ruta_pdf = f"PDF/{fechaCorregidaZ}_{self.numeroFacturaZ}.pdf" # Prueba2
+
+        if os.path.exists(ruta_pdf): # Prueba2
+            os.remove(ruta_pdf)
 
         listaFinalElementos = []
         for unidad, elemento, precio in self.listaElementos:

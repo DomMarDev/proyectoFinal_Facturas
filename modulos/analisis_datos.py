@@ -18,7 +18,8 @@ import random
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
 
 # Prueba
 from modulos. creacionPDF import crear_pdf as CPDF
@@ -37,6 +38,7 @@ class AnalizarFactura():
         self.barraMenu = tk.Menu(self.root) 
         self.root.config(menu=self.barraMenu)
         self.root.resizable(False,False)
+
         # Botón de Analizar todas las facturas
         botonCrear= tk.Button(self.root,
                                 text = 'Analizar',
@@ -75,11 +77,6 @@ class Datos_Facturas:
         self.listaFacturas = json.loads(self.facturas)
 
     def mostrar_analisis(self):
-        # / Genero una ventana por encima de la del menú principal.        
-        self.ventana_CrearFactura = tk.Toplevel() # Uso la clase Toplevel de tkinter
-        self.ventana_CrearFactura.title("Añadir Factura") # Asigno el título Añadir factura a esta ventana
-        w, h = 500, 500  # Tamaño de la ventana
-        centrar(self.ventana_CrearFactura, w, h) # Llamo a la función centrar para que me centre la ventana en el centro de la pantalla
 
         # El array será una lista con los valores del total de la factura sumados / dia 
         iva = 1.21
@@ -87,7 +84,7 @@ class Datos_Facturas:
         listaFechasFacturas = []
         for factura in self.listaFacturas:
             if factura:
-                fechaFactura = factura['fecha']
+                fechaFactura = f"{factura['fecha']}.{factura['numeroFactura']}"
                 listaTotal = []
                
                 for datos in factura['listaElementos']:
@@ -98,20 +95,20 @@ class Datos_Facturas:
 
             listaTotalesFacturas.append(sum(listaTotal))
             listaFechasFacturas.append(fechaFactura)
-        
-        print(listaTotalesFacturas)
-        print(listaFechasFacturas)
-        
 
-        # tabla = pd.DataFrame(np.array([listaTotalesFacturas]), columns = listaFechasFacturas)
+        if self.listaFacturas:
 
-        # tabla = pd.bar()
-        plt.figure(figsize=(9, 7))
-        
-        for i in range(len(listaTotalesFacturas)):
-            plt.bar(listaFechasFacturas, listaTotalesFacturas, color="green", label="Python")
+            # Generación del Gráfico
+            plt.figure('Facturación', figsize = (10, 5))        
 
-
-        # tabla.plot()
-        plt.show()
-        
+            plt.style.use('ggplot')
+            
+            for i in range(len(listaTotalesFacturas)):
+                plt.bar(listaFechasFacturas, listaTotalesFacturas, color="blue", label="Python")
+            
+            plt.title("Beneficios/factura", fontsize= 24)
+            plt.xlabel("Factura", fontsize= 14)
+            plt.ylabel("Beneficios (€)", fontsize= 14)
+            plt.show()
+        else:
+            messagebox.showinfo('Error', 'No hay facturas en la base de datos.')
