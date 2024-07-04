@@ -390,19 +390,6 @@ class Modificar:
 
         self.listaElementos.append((entradaUnidades, entradaElemento, entradaPrecio))
 
-                # Controles de entrada, de partida le pone un 0 a unidades y precio################### falta esto
-        if entradaUnidades.get().isdigit() and entradaUnidades.get() == '' :
-            pass
-        else:
-            entradaUnidades.delete(0, tk.END)
-            entradaUnidades.insert(0, '0')
-        
-        if entradaPrecio.get().isdigit() and entradaUnidades.get() == '' :
-            pass
-        else:
-            entradaPrecio.delete(0, tk.END)
-            entradaPrecio.insert(0, '0')
-        
     def guardar_cambios2(self, factura):
         ''' Método para guardar los cambios realizados en la factura:
         Se asignan los valores introducios en el formulario de edición al diccionario de la factura seleccionada (datos_factura)

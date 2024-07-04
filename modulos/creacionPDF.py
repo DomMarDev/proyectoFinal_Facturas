@@ -119,17 +119,40 @@ def crear_pdf(datos_factura):
         pdf.multi_cell(w = 30, h = 10, txt = 'Total', border = 1, align = 'C', fill= 0)
                 # /// Valores elementos factura
         pdf.set_font('Times', "", 12,  ) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
+        
         tabla2 = datos_factura['listaElementos'] # tabla2 = [unidades, concepto , precio U., total]
+        indice = len(tabla2)
+        seguro = True
+        contador = 0
+        
+        while seguro:
+            if contador == indice:
+                seguro = False 
+            for elementoFactura in tabla2:
+                #Prueba
+                if elementoFactura[0] == '0':
+                    messagebox.showinfo(f"¡Cuidado!", f"{elementoFactura[1]}\n No tiene unidades o estas son 0\n No constará en el PDF")
+                    tabla2.remove(elementoFactura)
+
+
+                    
+                else:
+                    pass
+            contador+=1
+        if not tabla2:
+            messagebox.showinfo("Cuidado", "Has imprimido una factura sin elementos")
+
         for elemento in tabla2:
             # Se convierten los elementos de unidades y total a float
             if elemento[0]:
                 elemento[0] = float(elemento[0])
             else:
-                elemento[0] = 0
+                pass
             if elemento[2]:
                 elemento[2] = float(elemento[2])
             else:
-                elemento[2] = 0
+                pass
+
             pdf.cell(w = 30, h = 10, txt = f'{elemento[0]}', border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 100, h = 10, txt = elemento[1], border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 30, h = 10, txt = f'{elemento[2]} {chr(128)}', border = 1, align = 'C', fill= 0) 
