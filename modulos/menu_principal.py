@@ -3,9 +3,8 @@ import os                                                                       
 from pathlib import Path                                                        # Trabajar con las rutas
 import webbrowser                                                               # Incorporar la función de ir a la web de la empresa
 import tkinter as tk                                                            # Interfaz gráfica
-from tkinter import font
-from tkinter.font import Font
-# from tkinter import ttk
+from tkinter import font                                                        # Asignar un tipo de fuente de texto
+from tkinter.font import Font                                                   # Asignar un tipo de fuente de texto
 from tkinter import filedialog as FD                                            # Por si queremos agregar la función de escoger el archivo json
 import sys                                                                      # Necesario para que no haya errores a la hora de importar módulos  
                                                                                     # para añadir el directorio principal de donde estás ejecutando el programa (la raiz)
@@ -52,13 +51,16 @@ class MenuPrincipalFinal(tk.Tk):
         MF(self.new_window)
 
     def salir_programa(self):
+        '''Método para salir del programa'''
         exit()
 
     def borrar_json_pdf(self):
+        '''Método que permite borrar todo registro de las facturas en el archivo json y de los PDF'''
         self.new_window = tk.Toplevel(self)
         EJ(self.new_window)
     
     def analisis_datos(self):
+        '''Método que permite visualizar las ganancias/factura'''
         self.new_window = tk.Toplevel(self)
         AF(self.new_window)
 
@@ -77,16 +79,21 @@ class MenuPrincipalFinal(tk.Tk):
         self.controles_barra_superior()
         self.controles_barra_lateral()
         self.controles_cuerpo()
-        self.resizable(False, False)
+        self.resizable(False, False) # No quiero que se pueda reescalar 
 
     def configuracion_ventana(self):  # Configuración de la ventana del menú principal
+        ''' Método para realizar la configuración de la ventana del menú principal'''
         self.title('Menú Principal')  # Se coloca el título de la ventana
-        ruta_icono_menu = 'imagenes/lego.png'
-        self.iconbitmap(ruta_icono_menu)
+        ruta_icono_menu = 'imagenes/lego.png' 
+        self.iconbitmap(ruta_icono_menu) # Se coloca el logo/icono deseado en el frame del centro del menú principal
         w, h = 1024, 600  # Tamaño de la ventana
-        centrar(self, w, h)
+        centrar(self, w, h) # Se centra la ventana
 
     def paneles(self):  # Creación de los paneles: Barra menú superior, menú lateral y cuerpo principal con instrucciones
+        ''' Método para crear los 3 paneles del menú principal:
+        1) Barra/Menú superior
+        2) Barra/Menú lateral
+        3) Cuerpo o centro del menú principal'''
         # Menú superior
         self.barra_superior = tk.Frame(
             self,
@@ -111,6 +118,12 @@ class MenuPrincipalFinal(tk.Tk):
         self.cuerpo.pack(side=tk.RIGHT, fill='both', expand=True)
 
     def controles_barra_superior(self):
+        ''' Método para configurar el 1) Barra/Menú superior
+        Botones:
+            a) Menú/ Instrucciones -> Permite visualizar el menú lateral o las instrucciones del programa
+            b) Link o web empresa  -> Permite acceder a la Web de la empresa
+            c) Correo              -> Permite abrir nuestro correo electrónico
+        '''
         # Configuración de la barra superior
 
         # Etiqueta del título
@@ -137,20 +150,29 @@ class MenuPrincipalFinal(tk.Tk):
         self.botonLinkHotmail.pack(side=tk.RIGHT, padx= 10)          
         
     def urlEmpresa(self):
-        # Se usa webbrowser para abrir un url
+        # Se usa webbrowser para abrir un url hacia la web de la empresa
         webbrowser.open(urlEmpresa)
     
     def urlCorreo(self):
-        # Se usa webbrowser para abrir un url
+        # Se usa webbrowser para abrir un url hacia el correo de la empresa
         webbrowser.open(urlCorreo)
 
     def controles_barra_lateral(self):
+        ''' Método para configurar el 2) Barra/Menú lateral
+        Botones del menú lateral que llevan a ejecutar las diferentes funciones del programa:
+            Crear Factura
+            Eliminar Factura
+            Buscar Factura
+            Modificar Factura
+            Salir
+            Borrar json y PDF
+            Analisis datos
+        '''
         # Configuración menú lateral
         ancho = 20
         alto = 2
         font_awesome = font.Font(family='Roboto', size=15)
         
-
         # Etiqueta Perfil: foto de la empresa
         self.labelPerfil = tk.Label(self.menu_lateral, image=self.perfil, bg=color_menu_lateral)
         self.labelPerfil.pack(side=tk.TOP, pady=10)
@@ -164,7 +186,6 @@ class MenuPrincipalFinal(tk.Tk):
         self.botonBorrarJsonPDF = tk.Button(self.menu_lateral)
         self.botonAnalisis = tk.Button(self.menu_lateral)
 
-
         botones_info = [
             ('Crear Factura', '\u26CF' , self.botonCrear, self.crear_facturas),  # Texto, icono, objeto a insertar y comando
             ('Eliminar Factura', '\u26D4', self.botonEliminar, self.eliminar_facturas),
@@ -176,6 +197,36 @@ class MenuPrincipalFinal(tk.Tk):
         ]
         for texto, icono, boton, comando in botones_info:
             self.configurar_boton_menu(boton, texto, icono, font_awesome, ancho, alto, comando)
+    
+    def configurar_boton_menu(self, boton, texto, icono, font_awesome, ancho, alto, comando):
+        '''Método para configurar los botones del menú lateral'''
+        # Configuración de botones menu lateral
+        boton.config(text=f" {icono}  {texto}", anchor="w", font=font_awesome, bd=0, bg=color_menu_lateral, fg='white', width=ancho, height=alto, command= comando)
+        boton.pack(side=tk.TOP)
+        self.bind_hover_events(boton)
+
+    def bind_hover_events(self, boton):  # Para que cuando pases se cambie el color
+        '''Método para poder ilumniar o no los botones del menú lateral'''
+        # Asociar eventos Enter y Leave con la función dinámica
+        boton.bind("<Enter>", lambda event: self.on_enter(event, boton))
+        boton.bind("<Leave>", lambda event: self.on_leave(event, boton))
+
+    def on_enter(self, event, boton):
+        # Cambio el estilo al pasar con el ratón por encima
+        boton.config(bg=color_menu_cursor_encima, fg='white')
+
+    def on_leave(self, event, boton):
+        # Si no está el ratón encima vuelve al color original
+        boton.config(bg=color_menu_lateral, fg='white')
+
+    def toggle_panel(self):  # Altera la visibilidad dentro de tkinter, en el menú lateral
+        '''Método para poder replegar o no el menú lateral y así también mostrar las instrucciones o no'''
+        if self.menu_lateral.winfo_ismapped():
+            self.menu_lateral.pack_forget()
+            self.controles_cuerpo2()
+        else:
+            self.menu_lateral.pack(side=tk.LEFT, fill='y')
+            self.controles_cuerpo()
     
     def controles_cuerpo(self):
         # Imagen en el cuerpo principal
@@ -191,34 +242,6 @@ class MenuPrincipalFinal(tk.Tk):
         label = tk.Label(self.cuerpo, image=self.instrucciones,
                          bg=color_cuerpo)
         label.place(x=0, y=0, relwidth=1, relheight=1)
-
-
-    def configurar_boton_menu(self, boton, texto, icono, font_awesome, ancho, alto, comando):
-        # Configuración de botones menu lateral
-        boton.config(text=f" {icono}  {texto}", anchor="w", font=font_awesome, bd=0, bg=color_menu_lateral, fg='white', width=ancho, height=alto, command= comando)
-        boton.pack(side=tk.TOP)
-        self.bind_hover_events(boton)
-
-    def bind_hover_events(self, boton):  # Para que cuando pases se cambie el color
-        # Asociar eventos Enter y Leave con la función dinámica
-        boton.bind("<Enter>", lambda event: self.on_enter(event, boton))
-        boton.bind("<Leave>", lambda event: self.on_leave(event, boton))
-
-    def on_enter(self, event, boton):
-        # Cambio el estilo al pasar con el ratón por encima
-        boton.config(bg=color_menu_cursor_encima, fg='white')
-
-    def on_leave(self, event, boton):
-        # Si no está el ratón encima vuelve al color original
-        boton.config(bg=color_menu_lateral, fg='white')
-
-    def toggle_panel(self):  # Altera la visibilidad dentro de tkinter, en el menú lateral
-        if self.menu_lateral.winfo_ismapped():
-            self.menu_lateral.pack_forget()
-            self.controles_cuerpo2()
-        else:
-            self.menu_lateral.pack(side=tk.LEFT, fill='y')
-            self.controles_cuerpo()
 
 if __name__ == "__main__":
     app= MenuPrincipalFinal()

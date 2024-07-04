@@ -23,17 +23,20 @@ class CrearFactura():
 
     def __init__(self, root):
         ''' Método para crear la ventana de Crear Factura
-        Se le asigna un título, unas dimensiones base, se centra en el centro de la pantalla'''
-        self.root = root
-        self.root.title("Crear Factura") # Título
+        Se le asigna un título, unas dimensiones base, se centra en el centro de la pantalla
+        Tiene un menú superior con la función de crear factura o salir
+        En el centro de la ventana podrá dar a un botón que le llevará al menú para crear la factura
+        '''
+        self.ventana_crear = root
+        self.ventana_crear.title("Crear Factura") # Título
         w, h = 500, 100  # Tamaño de la ventana
-        centrar(self.root, w, h) # Centrado
+        centrar(self.ventana_crear, w, h) # Centrado
         # Configuración del menú superior y botón Crear
-        self.barraMenu = tk.Menu(self.root) 
-        self.root.config(menu=self.barraMenu)
-        self.root.resizable(False,False)
+        self.barraMenu = tk.Menu(self.ventana_crear) 
+        self.ventana_crear.config(menu=self.barraMenu)
+        self.ventana_crear.resizable(False,False)
     
-        botonCrear= tk.Button(self.root,
+        botonCrear= tk.Button(self.ventana_crear,
                                 text = 'Crear',
                                 font = ('Times', 15),
                                 bg = '#3a7ff6',
@@ -54,7 +57,7 @@ class CrearFactura():
         self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
         self.menuFactura.add_command(label="Añadir Factura", command=self.abrir_json)# Si se quiere abrir Json, cambiar abrir_json por add_factura
         self.menuFactura.add_separator()
-        self.menuFactura.add_command(label="Salir", command=self.root.destroy)
+        self.menuFactura.add_command(label="Salir", command=self.ventana_crear.destroy)
         
         #Por si queremos que el usuario escoja el json
         # def abrir_json(self):
@@ -65,10 +68,12 @@ class CrearFactura():
         
     def abrir_json(self):
         ''' Método para abrir el archivo json automáticamente:
+        Destruimos la ventana ventana_crear
         1) Asignamos la ruta
-        2) Si existe el archivo se invoca a la clase para introducir los datos de la factura
+        2) Si existe el archivo se invoca a la clase para introducir los datos de la factura.
+        Se ejecuta el método add_factura
         '''
-        self.root.destroy()
+        self.ventana_crear.destroy()
         ruta_Json = 'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Datos_Factura(ruta_Json)
@@ -149,6 +154,7 @@ class Datos_Factura:
         1) Se usa el frame de los elementos (heredado) y se empaqueta
         2) A cada parte del elemento (Unidades/concepto/PrecioU) se le genera su etiqueta (y se empaqueta), y su entrada (y se la empaqueta)
         3) Luego cogemos por herencia la lista declarada en add_factura y le hacemos un append de cada parte del elemento de la factura
+        Hay control de entrada donde los valores de unidad y precio se les autoasigna un 0 si no se les ha puesto valor alguno
         '''        
 
         frame = tk.Frame(self.frameElementos)
@@ -188,6 +194,7 @@ class Datos_Factura:
         ''' Método que sirve para guardar los datos de la factura:
         1) Se genera diccionario (datos_factura) con cada dato introducido (incluido elementos de la factura)
             - Keys: numeroFactura, fecha, cliente, dni (para DNI/CIF), listaElementos
+            - Control de entrada: del número de la factura -> Si hay una factura con el mismo nombre generará otra con el mismo nombre  + -copia
         2) El diccionario datos_factura se añade mediante el método append a la listaFacturas (archivo Json, ahora lista rescatado y cargado en memoria)
         3) La lista de diccionarios se transforma a un archivo json con json.dumps
         4) Se sobreescribe el archivo json con write_text
