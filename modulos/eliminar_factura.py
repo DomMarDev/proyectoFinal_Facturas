@@ -5,6 +5,7 @@ from pathlib import Path                                # Trabajar con las rutas
 import tkinter as tk                                    # Interfaz gráfica
 from tkinter import messagebox, filedialog as FD        # Por si queremos agregar la función de escoger el archivo json, mostrar mensajes
 import sys                                              # Necesario para que no haya errores a la hora de importar módulos
+from ruta import ruta                                   # Se importa la ruta del archivo json
 
 sys.path.append('.')
 
@@ -52,8 +53,7 @@ class EliminarFactura():
         self.ventana_eliminar_por_datos.destroy()
         ruta_PDF   = FD.askopenfilename(title="Selecciona la factura a modificar", filetypes=[("Archivo PDF", "*.pdf"),], initialdir= 'PDF')
         nombre_PDF = Path(ruta_PDF).stem
-
-        ruta_Json  = 'archivoJson/facturas.json'
+        ruta_Json = ruta() # 'archivoJson/facturas.json' 
         if ruta_Json:
             self.ventana_modificar_factura = Eliminar(ruta_Json)
             self.ventana_modificar_factura.borrado_factura2(nombre_PDF)
@@ -88,24 +88,33 @@ class Eliminar:
         numeroFactura = numFactura0
         fecha = fecha0
 
+        # Primero borro el PDF si coincide el nombre del documento
+        fechaCorregida = fecha.replace('/', '_')
+
+        ruta_pdf = f"PDF/{fechaCorregida}_{numeroFactura}.pdf"
+
+        if os.path.exists(ruta_pdf):
+            os.remove(ruta_pdf)
+
+
         facturaEncontrada = False
 
-        for factura in self.listaFacturas:
+        for factura in self.listaFacturas: # Bucle que busca el número de la factura y la fecha (el primero es único) y si coincide elimina el diccionario de la factura
             if factura['numeroFactura'] == numeroFactura and factura['fecha'] == fecha:
                 self.listaFacturas.remove(factura)
                 facturaEncontrada = True
                 break
 
-        if facturaEncontrada:
+        if facturaEncontrada: # Si ha encontrado la factura, va a sobreescribir el json con los datos actualizados
             contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
             self.path.write_text(contenido)
 
-            fechaCorregida = fecha.replace('/', '_')
+            # fechaCorregida = fecha.replace('/', '_')
 
-            ruta_pdf = f"PDF/{fechaCorregida}_{numeroFactura}.pdf"
+            # ruta_pdf = f"PDF/{fechaCorregida}_{numeroFactura}.pdf"
 
-            if os.path.exists(ruta_pdf):
-                os.remove(ruta_pdf)
+            # if os.path.exists(ruta_pdf):
+            #     os.remove(ruta_pdf)
 
             messagebox.showinfo("Éxito", "Factura eliminada correctamente")
         else:

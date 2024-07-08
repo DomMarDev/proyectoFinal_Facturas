@@ -89,10 +89,10 @@ def crear_pdf(datos_factura):
         d  = datos_factura['dni']
 
         lista_datos ={
-        'numeroFactura': nf,
+        'numeroFactura': nf.title(),
         'fecha': f,
-        'cliente': c,
-        'DNI/NIF': d
+        'cliente': c.title(),
+        'DNI/NIF': d.title()
         } 
                 # /// Encabezados datos cliente
         pdf.set_font('Times', "B", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
@@ -125,17 +125,16 @@ def crear_pdf(datos_factura):
         seguro = True
         contador = 0
         
+        # Bucle while que va a ejecuarse tantas veces como elementos tenga una factura y se va a encargar de elminar los elementos que tengan un 0 en las unidades
         while seguro:
             if contador == indice:
                 seguro = False 
             for elementoFactura in tabla2:
                 #Prueba
                 if elementoFactura[0] == '0':
-                    messagebox.showinfo(f"¡Cuidado!", f"{elementoFactura[1]}\n No tiene unidades o estas son 0\n No constará en el PDF")
+                    messagebox.showinfo(f"¡Cuidado!", f"{elementoFactura[1]}\n No tiene unidades o estas son 0\n No constará en el PDF") # Avisa que hay elementos con 0 en sus unidades
                     tabla2.remove(elementoFactura)
 
-
-                    
                 else:
                     pass
             contador+=1
@@ -154,7 +153,7 @@ def crear_pdf(datos_factura):
                 pass
 
             pdf.cell(w = 30, h = 10, txt = f'{elemento[0]}', border = 1, align = 'C', fill= 0) 
-            pdf.cell(w = 100, h = 10, txt = elemento[1], border = 1, align = 'C', fill= 0) 
+            pdf.cell(w = 100, h = 10, txt = elemento[1].capitalize(), border = 1, align = 'C', fill= 0) 
             pdf.cell(w = 30, h = 10, txt = f'{elemento[2]} {chr(128)}', border = 1, align = 'C', fill= 0) 
             pdf.multi_cell(w = 30, h = 10, txt = f'{elemento[0]*elemento[2]} {chr(128)}', border = 1, align = 'C', fill= 0)
         pdf.multi_cell(w = 0, h = 5, txt = '', border = 0, align = 'C', fill= 0) #Linea vacía
@@ -192,6 +191,7 @@ def crear_pdf(datos_factura):
         if len(mesFin) == 1:
             mesFin = f'0{mesFin}'
         fechafin= f'01/{mesFin}/{anyo}'
+
                 # /// Encabezados y valores tabla pago
         pdf.set_font('Times', "B", 12) #pdf.set_font('Fuente', 'BOLD etc', Tamaño fuente)
         pdf.cell(w = 40, h = 10, txt = 'Vencimiento', border = 1, align = 'C', fill= 0)

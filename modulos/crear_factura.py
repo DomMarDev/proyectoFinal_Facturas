@@ -4,7 +4,6 @@ from pathlib import Path                                # Trabajar con las rutas
 import tkinter as tk                                    # Interfaz gráfica
 from tkinter import messagebox, filedialog as FD        # Por si queremos agregar la función de escoger el archivo json, mostrar mensajes
 import sys                                              # Necesario para que no haya errores a la hora de importar módulos
-from fpdf import FPDF                                   # Necesario para crear el archivo PDF
 from datetime import date                               # Necesario para manejar fechas
 
 sys.path.append('.')
@@ -13,10 +12,7 @@ from modulos.generic import centrar_ventanas as centrar # Necesario para importa
 from modulos.leer_archivo import Lectura_archivo        # Necesario para leer el archivo json
 from modulos.colores_y_rutas import *                   # Necesario para autoasignar ciertos campos de la factura
 from ruta import ruta                                   # Se importa la ruta del archivo json
-import random
-
-# Prueba
-from modulos. creacionPDF import crear_pdf as CPDF
+from modulos. creacionPDF import crear_pdf as CPDF      # Necesario para llamar al módulo de creación del PDF (crear_pdf)
 
 
 class CrearFactura():
@@ -44,28 +40,13 @@ class CrearFactura():
                                 fg = '#fff',
                                 command =  self.abrir_json)
         botonCrear.pack(fill = tk.X, padx = 20, pady = 30)
-        
-
-        #Por si queremos que el usuario escoja el json
-        # self.menuArchivo = tk.Menu(self.barraMenu, tearoff=0)
-        # self.barraMenu.add_cascade(label="Archivo", menu=self.menuArchivo)
-        # self.menuArchivo.add_command(label="Abrir JSON de Facturas", command=self.abrir_json)
-        # self.menuArchivo.add_separator()
-        # self.menuArchivo.add_command(label="Salir", command=self.root.quit)
-        
+       
         self.menuFactura = tk.Menu(self.barraMenu, tearoff=0)
         self.barraMenu.add_cascade(label="Facturas", menu=self.menuFactura)
-        self.menuFactura.add_command(label="Añadir Factura", command=self.abrir_json)# Si se quiere abrir Json, cambiar abrir_json por add_factura
+        self.menuFactura.add_command(label="Añadir Factura", command=self.abrir_json)
         self.menuFactura.add_separator()
         self.menuFactura.add_command(label="Salir", command=self.ventana_crear.destroy)
-        
-        #Por si queremos que el usuario escoja el json
-        # def abrir_json(self):
-        #     ruta_Json = FD.askopenfilename(title="Selecciona el archivo de facturas", filetypes=[("Archivo JSON", "*.json"),], initialdir= 'archivoJson')
-        #     if ruta_Json:
-        #         self.ventana_anadir_factura = Datos_Factura(ruta_Json)
-        #         self.ventana_anadir_factura.add_factura()
-        
+
     def abrir_json(self):
         ''' Método para abrir el archivo json automáticamente:
         Destruimos la ventana ventana_crear
@@ -74,17 +55,12 @@ class CrearFactura():
         Se ejecuta el método add_factura
         '''
         self.ventana_crear.destroy()
-        ruta_Json = 'archivoJson/facturas.json'
+        ruta_Json = ruta()#'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Datos_Factura(ruta_Json)
             self.ventana_anadir_factura.add_factura()
     
-    #Por si queremos que el usuario escoja el json
-    # def add_factura(self):
-    #     if hasattr(self, 'Ventana de Añadir Factura'):
-    #         self.ventana_anadir_factura.add_factura()
-    #     else:
-    #         messagebox.showwarning("Archivo no seleccionado", "Primero seleccione un archivo JSON de facturas desde el menú Archivo -> Abrir JSON de Facturas.")
+
 class Datos_Factura:
 
     def __init__(self, ruta):

@@ -62,7 +62,7 @@ class AnalizarFactura():
         2) Si existe el archivo se invoca a la clase para introducir los datos de la factura
         '''
         self.root.destroy()
-        ruta_Json = 'archivoJson/facturas.json'
+        ruta_Json = ruta() #'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Datos_Facturas(ruta_Json)
             self.ventana_anadir_factura.mostrar_analisis()
