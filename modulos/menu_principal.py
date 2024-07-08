@@ -26,13 +26,13 @@ class MenuPrincipalFinal(tk.Tk):
 
     def crear_facturas(self):
         '''Método que permite ir a crear una factura'''
-        self.new_window = tk.Toplevel(self)
+        self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a CF
         CF(self.new_window)
 
 
     def eliminar_facturas(self):
         '''Método que permite ir a eliminar una factura'''
-        self.new_window = tk.Toplevel(self)
+        self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a EF
         EF(self.new_window)
 
 
@@ -47,7 +47,7 @@ class MenuPrincipalFinal(tk.Tk):
     
     def modificar(self):
         '''Método que permite ir a modificar una factura'''
-        self.new_window = tk.Toplevel(self)
+        self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a MF
         MF(self.new_window)
 
     def salir_programa(self):
@@ -56,12 +56,12 @@ class MenuPrincipalFinal(tk.Tk):
 
     def borrar_json_pdf(self):
         '''Método que permite borrar todo registro de las facturas en el archivo json y de los PDF'''
-        self.new_window = tk.Toplevel(self)
+        self.new_window = tk.Toplevel(self)# Genero una ventana por encima del menú principal y se la paso a EJ
         EJ(self.new_window)
     
     def analisis_datos(self):
         '''Método que permite visualizar las ganancias/factura'''
-        self.new_window = tk.Toplevel(self)
+        self.new_window = tk.Toplevel(self)# Genero una ventana por encima del menú principal y se la paso a AF
         AF(self.new_window)
 
         

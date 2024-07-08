@@ -50,7 +50,7 @@ class ModificarFactura():
         ''' Método para abrir el archivo PDF manualmente:
         1) Asignamos la ruta del json (necesaria)
         2) Obtenemos la ruta absoluta del archivo PDF seleccionado
-        3) Se obtiene el nombre del archivo PDF sin extensión .pdf
+        3) Se obtiene el nombre del archivo PDF
         4) Si existe el archivo se invoca a la clase para buscar la factura, pero la versión 2 donde no introducimos datos para buscar la factura
         '''
         self.ventana_buscar_por_datos.destroy()
@@ -72,7 +72,7 @@ class Modificar:
 
     def buscar_factura(self, nombrePDF):
         ''' Método para buscar una factura sin introducir los datos de búsqueda de la factura:
-        1) Se importa el nombre del archivo PDF seleccionado tal que fecha_numeroFactura:
+        1) Se importa el nombre del archivo PDF y se coge la fecha y el número de la factura mediante splicing (fecha_numeroFactura):
         2) Se convierte en string el nombre y se separan los elementos de fecha y numeroFactura
         3) Se adapta la fecha para que pueda buscarla en la lista de diccionarios de facturas
 
@@ -83,8 +83,8 @@ class Modificar:
         '''
 
         self.nombrePDF = str(nombrePDF)
-        numFactura0= self.nombrePDF[11:]
-        fecha1= self.nombrePDF[0:10]
+        numFactura0= self.nombrePDF[11:] # El resto será el número de factura
+        fecha1= self.nombrePDF[0:10] # La fecha siempre tiene esta medida
         fecha0 = fecha1.replace('_', '/')
         self.numeroFacturaZ = numFactura0.lower().strip()
         self.fechaZ = fecha0.lower().strip()
@@ -106,7 +106,7 @@ class Modificar:
     def formulario_edicion(self, factura):
         ''' Método para editar los campos de la factura seleccionada manualmente:
         Se van a mostrar todas los campos de la factura original y se podrán editar
-        Cuando se acabe se pulsa el botón de editar factura y se invoca el método de guardar_cambios2
+        Cuando se acabe se pulsa el botón de editar factura y se invoca el método de guardar_cambios
         '''
         self.ventana_EditarFactura = tk.Toplevel()
         self.ventana_EditarFactura.title("Editar Factura")

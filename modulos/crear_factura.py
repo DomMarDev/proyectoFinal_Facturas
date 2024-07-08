@@ -55,7 +55,7 @@ class CrearFactura():
         Se ejecuta el método add_factura
         '''
         self.ventana_crear.destroy()
-        ruta_Json = ruta()#'archivoJson/facturas.json'
+        ruta_Json = ruta() #'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Datos_Factura(ruta_Json)
             self.ventana_anadir_factura.add_factura()
