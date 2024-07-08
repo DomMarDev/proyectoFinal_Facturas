@@ -237,7 +237,7 @@ class MenuPrincipalFinal(tk.Tk):
     def controles_cuerpo2(self):
         # Imagen en el cuerpo principal
         alto = 550
-        ancho = 600
+        ancho = 450
         self.instrucciones = leer(ruta_imagen_instrucciones, (ancho, alto))
         label = tk.Label(self.cuerpo, image=self.instrucciones,
                          bg=color_cuerpo)

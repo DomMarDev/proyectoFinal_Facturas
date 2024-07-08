@@ -15,18 +15,23 @@
 
 ### 2) Eliminar una Factura
 
-* Si le das a Eliminar, te va a pedir:
-  * Número de la factura, p.ej: 49 K
-  * Fecha de la Factura, p.ej: 01/01/2000
-* Si le das a Buscar y Modificar accedes directamente a eliminar una factura seleccionandola.
+* Si le das a Buscar y Eliminar accedes directamente a eliminar una factura seleccionandola.
 
 ### 3) Mostrar Facturas
 
-* Te va a abrir la carpeta de las facturas en formato PDF.
+* Te va a abrir la carpeta de las facturas en formato PDF y podrás abrir el documento que quieras.
 
 ### 4) Modificar Factura
 
-* Si le das a Modificar, te va a pedir:
-  * Número de la factura, p.ej: 49 K
-  * Fecha de la Factura, p.ej: 01/01/2000
 * Si le das a Buscar y Modificar accedes directamente a modificar los campos de la factura.
+* Al darle a guardar vas a generar una nueva factura y la antigua se borrará.
+
+### 5) Salir
+
+### 6) Borrar Json y PDF
+
+* Va a borrar todos los PDF y la lista de facturas en la base de datos del archivo Json.
+
+### 7) Analisis datos
+
+* Muestra los totales de cada factura medianto un gráfico de barras.

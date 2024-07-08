@@ -8,13 +8,13 @@
 
 #### Descripción breve:
 
-- El proyecto se basará en un programa que permita al usuario crear, de forma local (de momento), facturas para un negocio. Además, el usuario tendrá control sobre estas y las podrá modificar(de momento no), eliminar, mostrar o buscar.
+- El proyecto se basará en un programa que permita al usuario crear, de forma local (de momento), facturas para un negocio. Además, el usuario tendrá control sobre estas y las podrá modificar, eliminar, mostrar o buscar.
 
 #### Objetivos:
 
-1. Generar una interfaz agradable para el usuario y que asegure que sólo puede acceder a ella aquel que tenga credenciales.
+1. Generar una interfaz agradable para el usuario y que asegure que sólo puede acceder a ella aquel que tenga credenciales. (Usuario: user, Contraseña: 1234)
 2. Como mínimo se deberá poder generar facturas en formato PDF dados unos datos en formato json.
-3. Se podrán eliminar las facturas, mostrarlas o buscarlas de alguna manera.
+3. Además, se podrán eliminar las facturas, mostrarlas, modificarlas y tener una idea de cuanto se ha facturado.
 
 #### Importancia:
 
@@ -26,13 +26,15 @@ Es un programa que facilita al usuario el realizar facturas con un formato está
 
 #### Librerías:
 
-persistencia = datos de una api los tenemos que guardar en un json o csv
+Persistencia = datos de una api los tenemos que guardar en un json o csv
 
-    - Archivos: JSON, txt, CSV
+    - Archivos: **JSON**, txt, CSV
 
     - Bases de datos (BBDD): SQlite
 
-Analisis de datos con: Numpy, Pandas, Matplotlib
+Analisis de datos con: Numpy, Pandas, **Matplotlib**
+
+
 
 Aún podrían faltar o quitarse algunas librerías.
 
@@ -41,10 +43,11 @@ Aún podrían faltar o quitarse algunas librerías.
 3) fpdf -> generador de archivo PDF ( pip install fpdf)
 4) tkinter como interfaz (alomejor kivy en un futuro)
 5) pathlib -> Necesario para la manipulación de rutas
-6) os -> para clear o pause screen (no sé si la voy a acabar usando)
-7) random -> generador de números aleatórios
+6) os -> Obtener rutas del sistema operativo y abrir documentos
+7) random -> generador de números aleatórios (no usada al final, pero podría usarse para generar números de facturas)
 8) json -> manipulación de archivos json
-9) Numpy, Pandas, Matplotlib -> Analisis de datos
+9) Matplotlib -> Analisis de datos
+10) webbrowser -> Incorporar la función de ir a la web de la empresa o al correo de esta
 
 ## 2. Diseño del proyecto:
 
