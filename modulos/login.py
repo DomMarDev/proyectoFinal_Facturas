@@ -7,7 +7,7 @@ import sys
 
 sys.path.append('.')
 
-import modulos.generic as utl
+from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
 from modulos.menu_principal import MenuPrincipalFinal as MP
 from modulos.colores_y_rutas import *
 
@@ -45,11 +45,11 @@ class Login:
         self.ventana.resizable(width=0, height=0)
 
         # Centramos la ventana
-        utl.centrar_ventanas(self.ventana, 800, 500)
+        centrar(self.ventana, 800, 500)
 
         # Importamos el logo de la carpeta imagenes, le asignamos un tamaño y la ponemos dentro de una etiqueta (toda la pantalla)
         ruta_logo = Path(ruta_logo_programa)
-        logo = utl.leer_imagen(ruta_logo, (200, 200))
+        logo = leer(ruta_logo, (200, 200))
 
         # Configuramos el frame o Panel:
         frame_logo = tk.Frame(self.ventana, 
