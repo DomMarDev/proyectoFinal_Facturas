@@ -12,6 +12,8 @@ from modulos.menu_principal import MenuPrincipalFinal as MP
 from modulos.colores_y_rutas import *
 
 from facturaDatos.factura import Abrir_archivo
+
+# Instancia de la clase Abrir archivo para que se verifique la presencia o ausencia del JSON y si no lo hay lo cree
 miArchivo = Abrir_archivo()
 
 class Login:
