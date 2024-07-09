@@ -191,18 +191,19 @@ class Datos_Factura:
             'dni': str(self.dni.get().lower().strip()),
             'listaElementos': listaFinalElementos 
         }
+        
+        #Se le asigna el nombre de sn si no hay campo en número de factura y si existe un número de factura con el mismo nombre le va añadiendo copia -
         if self.datos_factura['numeroFactura'] == '':
             self.datos_factura['numeroFactura'] = 'sn'
 
         for factura in self.listaFacturas:
             if factura['numeroFactura'] == self.datos_factura['numeroFactura']:
                 self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" #{random.randint(0, 1000)}
-       
+        
+        # Herramienta para ver si no hay datos en algún campo de unidad y precio para que se sustituya por un '0'
         for elemento1 in self.datos_factura['listaElementos']:
             try:
-                
                 float(elemento1[0])
-                
             except ValueError:
                 elemento1[0] = '0' 
       
