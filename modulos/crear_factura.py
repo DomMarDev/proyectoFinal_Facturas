@@ -96,8 +96,8 @@ class Datos_Factura:
         self.frameElementos = tk.Frame(self.ventana_CrearFactura) 
         self.frameElementos.pack(pady = 10)
 
-        frame = tk.Frame(self.frameElementos)
-        frame.pack(pady=5)
+        # frame = tk.Frame(self.frameElementos)
+        # frame.pack(pady=5)
 
         # self.listaElementos.append((entradaUnidades, entradaElemento, entradaPrecio))
         

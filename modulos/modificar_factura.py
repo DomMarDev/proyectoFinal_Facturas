@@ -153,7 +153,7 @@ class Modificar:
         entrada.pack(side=tk.LEFT)
         return entrada
     
-    def anadir_elemento(self, unidades="", elemento="", precio=""):
+    def anadir_elemento(self, unidades="0", elemento="", precio="0"):
         ''' Método para generar los frames y entradas de los elementos'''
         
         frame = tk.Frame(self.elementos_frame)
