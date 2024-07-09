@@ -199,15 +199,17 @@ class Datos_Factura:
                 self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" #{random.randint(0, 1000)}
        
         for elemento1 in self.datos_factura['listaElementos']:
-            if elemento1[0].isdigit():
-                elemento1[0] = elemento1[0]
-            else:
-                elemento1[0] = '0'                
-        
+            try:
+                
+                float(elemento1[0])
+                
+            except ValueError:
+                elemento1[0] = '0' 
+      
         for elemento2 in self.datos_factura['listaElementos']:
-            if elemento2[2].isdigit():
-                elemento2[2] = elemento2[2]
-            else:
+            try:
+                float(elemento2[2])
+            except ValueError:
                 elemento2[2] = '0'
                 
         self.listaFacturas.append(self.datos_factura)

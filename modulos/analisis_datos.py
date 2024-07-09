@@ -64,8 +64,8 @@ class AnalizarFactura():
         self.root.destroy()
         ruta_Json = ruta() #'archivoJson/facturas.json'
         if ruta_Json:
-            self.ventana_anadir_factura = Datos_Facturas(ruta_Json)
-            self.ventana_anadir_factura.mostrar_analisis()
+            self.ventana_analisis = Datos_Facturas(ruta_Json)
+            self.ventana_analisis.mostrar_analisis()
 
 
 class Datos_Facturas:

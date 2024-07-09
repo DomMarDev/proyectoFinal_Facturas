@@ -48,6 +48,8 @@ Aún podrían faltar o quitarse algunas librerías.
 8) json -> manipulación de archivos json
 9) Matplotlib -> Analisis de datos
 10) webbrowser -> Incorporar la función de ir a la web de la empresa o al correo de esta
+11) sys -> Necesario para que no haya errores a la hora de importar módulos
+12) 
 
 ## 2. Diseño del proyecto:
 

@@ -246,17 +246,33 @@ class Modificar:
                 self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" #{random.randint(0, 1000)}
 
         # Herramienta para ver si no hay datos en algún campo de unidad y precio para que se sustituya por un '0'       
-        for elemento1 in self.datos_factura['listaElementos']:
-            if elemento1[0].isdigit():
-                elemento1[0] = elemento1[0]
-            else:
-                elemento1[0] = '0'                
+        # for elemento1 in self.datos_factura['listaElementos']:
+        #     if elemento1[0].isdigit():
+        #         elemento1[0] = elemento1[0]
+        #     else:
+        #         elemento1[0] = '0'                
         
+        # for elemento2 in self.datos_factura['listaElementos']:
+        #     if elemento2[2].isdigit():
+        #         elemento2[2] = elemento2[2]
+        #     else:
+        #         elemento2[2] = '0'   
+
+        ################################
+        for elemento1 in self.datos_factura['listaElementos']:
+            try:
+                
+                float(elemento1[0])
+                
+            except ValueError:
+                elemento1[0] = '0' 
+      
         for elemento2 in self.datos_factura['listaElementos']:
-            if elemento2[2].isdigit():
-                elemento2[2] = elemento2[2]
-            else:
-                elemento2[2] = '0'   
+            try:
+                float(elemento2[2])
+            except ValueError:
+                elemento2[2] = '0'  
+        ################################
 
         self.listaFacturas.append(self.datos_factura)
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)

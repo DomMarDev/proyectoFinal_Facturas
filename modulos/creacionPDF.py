@@ -129,7 +129,6 @@ def crear_pdf(datos_factura):
                 if elementoFactura[0] == '0':
                     messagebox.showinfo(f"¡Cuidado!", f"{elementoFactura[1]}\n No tiene unidades o estas son 0\n No constará en el PDF") # Avisa que hay elementos con 0 en sus unidades
                     tabla2.remove(elementoFactura)
-
                 else:
                     pass
             contador+=1
@@ -169,11 +168,11 @@ def crear_pdf(datos_factura):
             lista[0] = float(lista[0])
             lista[2] = float(lista[2])
             suma1 = lista[0]*lista[2] + suma1
-        pdf.cell(w = 40, h = 10, txt = f'{str(suma1)} {chr(128)}', border = 1, align = 'C', fill= 0) 
+        pdf.cell(w = 40, h = 10, txt = f'{str(round(suma1, 2))} {chr(128)}', border = 1, align = 'C', fill= 0) 
         pdf.cell(w = 20, h = 10, txt ='21 %', border = 1, align = 'C', fill= 0) 
-        pdf.cell(w = 40, h = 10, txt = f'{str(suma1)} {chr(128)}', border = 1, align = 'C', fill= 0)
-        pdf.cell(w = 40, h = 10, txt = f'{str(suma1 * 0.21)} ' + chr(128), border = 1, align = 'C', fill= 0)  
-        pdf.multi_cell(w = 50, h = 10, txt = f'{str(suma1 * 1.21)} {chr(128)}', border = 1, align = 'C', fill= 0)
+        pdf.cell(w = 40, h = 10, txt = f'{str(round(suma1, 2))} {chr(128)}', border = 1, align = 'C', fill= 0)
+        pdf.cell(w = 40, h = 10, txt = f'{str(round((suma1 * 0.21), 2))} ' + chr(128), border = 1, align = 'C', fill= 0)  
+        pdf.multi_cell(w = 50, h = 10, txt = f'{str(round((suma1 * 1.21), 2))} {chr(128)}', border = 1, align = 'C', fill= 0)
 
         pdf.multi_cell(w = 0, h = 5, txt = '', border = 0, align = 'C', fill= 0) #Linea vacía
 
