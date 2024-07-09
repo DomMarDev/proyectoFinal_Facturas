@@ -84,8 +84,7 @@ class Modificar:
 
         self.nombrePDF = str(nombrePDF)
         numFactura0= self.nombrePDF[11:] # El resto será el número de factura
-        fecha1= self.nombrePDF[0:10] # La fecha siempre tiene esta medida
-        fecha0 = fecha1.replace('_', '/')
+        fecha0 = self.nombrePDF[0:10].replace('_', '/') # La fecha siempre tiene esta medida
         self.numeroFacturaZ = numFactura0.lower().strip()
         self.fechaZ = fecha0.lower().strip()
 
@@ -190,7 +189,7 @@ class Modificar:
         Se invoca al método de crear_pdf
         '''
         # Uso la terminación en Z para decir que es la final
-        fechaCorregidaZ = self.fechaZ.replace('/', '_') 
+        fechaCorregidaZ = self.fechaZ.replace('/', '_')
 
         ruta_pdf = f"PDF/{fechaCorregidaZ}_{self.numeroFacturaZ}.pdf"
 
@@ -204,11 +203,38 @@ class Modificar:
             precio= str(precio.get().lower().strip())
             listaFinalElementos.append([unidad, elemento, precio])
 
+        numFact =str(self.numeroFactura.get().lower().strip())
+        date_fecha = self.fecha.get().lower().strip()
+        client = str(self.cliente.get().lower().strip())
+        dni = str(self.dni.get().lower().strip())
+        
+        # En el caso de que el usuario haya borrado la fecha o haya puesto una fecha no válida, va a poner la del día en que se está haciendo la factura, luego la puede modificar
+        if date_fecha:
+            if len(date_fecha) == 10:
+                pass
+            else:                
+                hoy= date.today()
+                dia= hoy.strftime("%d")
+                mes= hoy.strftime("%m")
+                anyo= hoy.strftime("%Y")
+                fecha0= f'{dia}/{mes}/{anyo}'
+                date_fecha = fecha0
+                messagebox.showinfo('Error', f'La fecha introducida no era válida. Se ha asignado la siguiente {date_fecha}.') 
+
+        else:
+            hoy= date.today()
+            dia= hoy.strftime("%d")
+            mes= hoy.strftime("%m")
+            anyo= hoy.strftime("%Y")
+            fecha0= f'{dia}/{mes}/{anyo}'
+            date_fecha = fecha0  
+            messagebox.showinfo('Error', f'La fecha introducida no era válida. Se ha asignado la siguiente {date_fecha}.')           
+
         self.datos_factura = {
-            'numeroFactura': str(self.numeroFactura.get().lower().strip()),
-            'fecha': self.fecha.get().lower().strip(),
-            'cliente': str(self.cliente.get().lower().strip()),
-            'dni': str(self.dni.get().lower().strip()),
+            'numeroFactura': numFact,
+            'fecha': date_fecha,
+            'cliente': client,
+            'dni': dni,
             'listaElementos': listaFinalElementos 
         }
         #Se le asigna el nombre de sn si no hay campo en número de factura y si existe un número de factura con el mismo nombre le va añadiendo copia -
