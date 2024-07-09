@@ -192,18 +192,18 @@ class Modificar:
         fechaCorregidaZ = self.fechaZ.replace('/', '_')
 
         ruta_pdf = f"PDF/{fechaCorregidaZ}_{self.numeroFacturaZ}.pdf"
-
+        # Elimino el documento PDF
         if os.path.exists(ruta_pdf):
             os.remove(ruta_pdf)
-
+        #Cargo la lista de elementos de la factura
         listaFinalElementos = []
         for unidad, elemento, precio in self.listaElementos:
             unidad = str(unidad.get().lower().strip())
             elemento= str(elemento.get().lower().strip())
             precio= str(precio.get().lower().strip())
             listaFinalElementos.append([unidad, elemento, precio])
-
-        numFact =str(self.numeroFactura.get().lower().strip())
+        # Obtención de las variables que van a ir en los elementos del diccionario de la factura
+        numFact = str(self.numeroFactura.get().lower().strip())
         date_fecha = self.fecha.get().lower().strip()
         client = str(self.cliente.get().lower().strip())
         dni = str(self.dni.get().lower().strip())
@@ -220,7 +220,6 @@ class Modificar:
                 fecha0= f'{dia}/{mes}/{anyo}'
                 date_fecha = fecha0
                 messagebox.showinfo('Error', f'La fecha introducida no era válida. Se ha asignado la siguiente {date_fecha}.') 
-
         else:
             hoy= date.today()
             dia= hoy.strftime("%d")
@@ -228,7 +227,7 @@ class Modificar:
             anyo= hoy.strftime("%Y")
             fecha0= f'{dia}/{mes}/{anyo}'
             date_fecha = fecha0  
-            messagebox.showinfo('Error', f'La fecha introducida no era válida. Se ha asignado la siguiente {date_fecha}.')           
+            messagebox.showinfo('Error', f'La fecha introducida no era válida. Se ha asignado la siguiente {date_fecha}.')
 
         self.datos_factura = {
             'numeroFactura': numFact,
@@ -237,6 +236,7 @@ class Modificar:
             'dni': dni,
             'listaElementos': listaFinalElementos 
         }
+        
         #Se le asigna el nombre de sn si no hay campo en número de factura y si existe un número de factura con el mismo nombre le va añadiendo copia -
         if self.datos_factura['numeroFactura'] == '':
             self.datos_factura['numeroFactura'] = 'sn'
@@ -256,7 +256,7 @@ class Modificar:
             if elemento2[2].isdigit():
                 elemento2[2] = elemento2[2]
             else:
-                elemento2[2] = '0'
+                elemento2[2] = '0'   
 
         self.listaFacturas.append(self.datos_factura)
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)

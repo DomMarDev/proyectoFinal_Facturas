@@ -54,18 +54,7 @@ def crear_pdf(datos_factura):
         '''
 
         # / Ruta para guardar el PDF
-
-        
-
         fechaCorregidaZ = datos_factura['fecha'].replace('/', '_')
-        # else:
-        #     hoy= date.today()
-        #     dia= hoy.strftime("%d")
-        #     mes= hoy.strftime("%m")
-        #     anyo= hoy.strftime("%Y")
-        #     fechaCorregidaZ= f'{dia}_{mes}_{anyo}'
-        
-
         ruta_pdf = f"PDF/{fechaCorregidaZ}_{datos_factura['numeroFactura']}.pdf"
 
         # / Creamos el PDF:
