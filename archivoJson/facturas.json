@@ -11,5 +11,23 @@
                 "140"
             ]
         ]
+    },
+    {
+        "numeroFactura": "copia - sn",
+        "fecha": "10/07/2024",
+        "cliente": "",
+        "dni": "",
+        "listaElementos": [
+            [
+                "30",
+                "coches",
+                "85"
+            ],
+            [
+                "75",
+                "peras",
+                "96"
+            ]
+        ]
     }
 ]
