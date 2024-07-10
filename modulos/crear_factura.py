@@ -221,7 +221,14 @@ class Datos_Factura:
         else:
             self.entradaPrecio.delete(0, tk.END)
             self.entradaPrecio.insert(0, '0')
+        self.update_listbox()
         self.root_elementos.destroy()
+
+    def update_listbox(self):
+        self.listbox.delete(0, tk.END)
+        for i, elemento_lista_de_la_lista in enumerate(self.listaElementos):
+            elemento_info_info = f'{i} {elemento_lista_de_la_lista[0]}|{elemento_lista_de_la_lista[1]}|{elemento_lista_de_la_lista[2]}'
+            self.listbox.insert(tk.END, elemento_info_info)
 
     def guardar_factura(self):
         ''' Método que sirve para guardar los datos de la factura:
