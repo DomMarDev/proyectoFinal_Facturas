@@ -1,5 +1,4 @@
 # Importaciones de librerías
-from tkinter import *
 import os                                               # Obtener rutas del sistema operativo
 import json                                             # Trabajar con el archivo json
 from pathlib import Path                                # Trabajar con las rutas
@@ -110,7 +109,7 @@ class Modificar:
         '''
         self.ventana_EditarFactura = tk.Toplevel()
         self.ventana_EditarFactura.title("Editar Factura")
-        w, h = 1300, 500  # Tamaño de la ventana
+        w, h = 500, 500  # Tamaño de la ventana
         centrar(self.ventana_EditarFactura, w, h)
 
         self.numeroFactura = self.entradaDatos(self.ventana_EditarFactura, "Número de Factura: ")
@@ -122,36 +121,20 @@ class Modificar:
         self.dni = self.entradaDatos(self.ventana_EditarFactura, "DNI: ")
         self.dni.insert(0, factura['dni'])
 
+        self.listaElementos = []
         self.elementos_frame = tk.Frame(self.ventana_EditarFactura)
         self.elementos_frame.pack(pady=10)
-        
-        # Se recuperan los elementos de la lista de elementos de la factura y se pasan a anadir_elemento para que los muestre
-        self.listaElementos = factura['listaElementos']
 
+        # Se recuperan los elementos de la lista de elementos de la factura y se pasan a anadir_elemento para que los muestre
+        for elemento in factura['listaElementos']:
+            self.anadir_elemento(elemento[0], elemento[1], elemento[2])
             
                     # /// Se hace un botón para los elementos, se le asigna el comando anadir_elemento y se empaqueta luego        
         self.botonElemento = tk.Button(self.ventana_EditarFactura, text="Añadir Elemento", command=self.anadir_elemento) 
-        self.botonElemento.pack(pady = 5)
-        
-        self.botonElemento = tk.Button(self.ventana_EditarFactura, text="Modificar Elemento", command=self.editar_elemento) 
         self.botonElemento.pack(pady = 5)  
                     # /// Se hace un botón para los guardar, se le asigna el comando guardar_cambios y se empaqueta luego  
         self.botonGuardar = tk.Button(self.ventana_EditarFactura, text="Guardar Cambios", command=lambda: self.guardar_cambios(factura))
         self.botonGuardar.pack(pady=10)
-        
-        # ListBox que muestra los elementos introducidos 
-        self.listbox = tk.Listbox(
-            self.ventana_EditarFactura,
-            font= ('Times', 18),
-            height=20,            
-            width= 200,
-            selectmode=tk.EXTENDED)
-        
-        for i, elemento_lista_de_la_lista in enumerate(self.listaElementos):
-            elemento_info_info = f'Elemento {i}: Unidades: {elemento_lista_de_la_lista[0]} |Elemento: {elemento_lista_de_la_lista[1]}| Precio U.: {elemento_lista_de_la_lista[2]}'
-            self.listbox.insert(tk.END, elemento_info_info)
-        
-        self.listbox.pack(expand=True, fill=tk.BOTH)
 
     def entradaDatos(self, ventana_ModificarFactura, texto):
         ''' Método para hacer la entrada de datos:
@@ -169,90 +152,31 @@ class Modificar:
         entrada.pack(side=tk.LEFT)
         return entrada
     
-    def anadir_elemento(self):
+    def anadir_elemento(self, unidades="0", elemento="", precio="0"):
         ''' Método para generar los frames y entradas de los elementos'''
-
-        self.root_elementos = Tk()
-        w, h = 500, 100  # Tamaño de la ventana
-        centrar(self.root_elementos, w, h)
-
-        self.botonGuardar = tk.Button(self.root_elementos, text="Guardar Elemento", command=self.guardar_elemento)
-        self.botonGuardar.pack(pady = 10)
-
-        frame = tk.Frame(self.root_elementos)
+        
+        frame = tk.Frame(self.elementos_frame)
         frame.pack(pady=5)
 
-        self.etiquetaUnidades = tk.Label(frame, text="Unidades:")
-        self.etiquetaUnidades.pack(side=tk.LEFT)
-        self.entradaUnidades = tk.Entry(frame, width=5)
-        self.entradaUnidades.pack(side=tk.LEFT)
+        etiquetaUnidades = tk.Label(frame, text="Unidades:")
+        etiquetaUnidades.pack(side=tk.LEFT)
+        entradaUnidades = tk.Entry(frame, width=5)
+        entradaUnidades.pack(side=tk.LEFT)
+        entradaUnidades.insert(0, unidades)
 
+        etiquetaElemento = tk.Label(frame, text="Elemento:")
+        etiquetaElemento.pack(side=tk.LEFT)
+        entradaElemento = tk.Entry(frame, width=20)
+        entradaElemento.pack(side=tk.LEFT)
+        entradaElemento.insert(0, elemento)
 
-        self.etiquetaElemento = tk.Label(frame, text="Elemento:")
-        self.etiquetaElemento.pack(side=tk.LEFT)
-        self.entradaElemento = tk.Entry(frame, width=20)
-        self.entradaElemento.pack(side=tk.LEFT)
+        etiquetaPrecio = tk.Label(frame, text="Precio:")
+        etiquetaPrecio.pack(side=tk.LEFT)
+        entradaPrecio = tk.Entry(frame, width=10)
+        entradaPrecio.pack(side=tk.LEFT)
+        entradaPrecio.insert(0, precio)
 
-
-        self.etiquetaPrecio = tk.Label(frame, text="Precio:")
-        self.etiquetaPrecio.pack(side=tk.LEFT)
-        self.entradaPrecio = tk.Entry(frame, width=10)
-        self.entradaPrecio.pack(side=tk.LEFT)
-
-
-
-    def guardar_elemento(self):
-        '''Método para guardar el elemento introducido'''
-        self.listaElementos.append([self.entradaUnidades.get(), self.entradaElemento.get(), self.entradaPrecio.get()])
-
-        # Controles de entrada, de partida le pone un 0 a unidades y precio
-        if self.entradaUnidades.get().isdigit() and self.entradaUnidades.get() == '' :
-            pass
-        else:
-            self.entradaUnidades.delete(0, tk.END)
-            self.entradaUnidades.insert(0, '0')
-        
-        if self.entradaPrecio.get().isdigit() and self.entradaUnidades.get() == '' :
-            pass
-        else:
-            self.entradaPrecio.delete(0, tk.END)
-            self.entradaPrecio.insert(0, '0')
-        # Actualizamos la listbox con los elementos de la listaElementos
-        self.update_listbox()
-        # Destruimos la ventana con la que estabamos trabajando
-        self.root_elementos.destroy()
-
-    def update_listbox(self):
-        ''' Método para actualizar la listbox:
-        Borra la list box y luego la vuelve a generar con los elementos actualizados'''
-        self.listbox.delete(0, tk.END)
-        for i, elemento_lista_de_la_lista in enumerate(self.listaElementos):
-            elemento_info_info = f'Elemento {i}: Unidades: {elemento_lista_de_la_lista[0]} |Elemento: {elemento_lista_de_la_lista[1]}| Precio U.: {elemento_lista_de_la_lista[2]}'
-            self.listbox.insert(tk.END, elemento_info_info)
-        
-    
-    def editar_elemento(self):
-        ''' Método para editar el elemento de la listaElementos:
-        1) Se obtiene el índice del elemento de la listbox
-        2) Se usa ese índice para sobreescribir los datos invocando el método anadir_elemento
-        3) Se eliminan los antiguos
-        4) Se actualiza la listbox
-        '''
-        indice = self.listbox.curselection()
-        if not indice:
-            messagebox.showwarning("Advertencia", "Por favor, selecciona un elemento para editar.")
-            # return
-        index = indice[0]
-        # selected_contact = self.contacts[index]
-        
-        self.anadir_elemento()
-   
-        self.listaElementos[index] = [self.entradaUnidades.get(), self.entradaElemento.get(), self.entradaPrecio.get()]
-        for element in self.listaElementos:
-            if element[0] == '':
-                self.listaElementos.remove(element)
-        self.update_listbox()
-
+        self.listaElementos.append((entradaUnidades, entradaElemento, entradaPrecio))
 
     def guardar_cambios(self, factura):
         ''' Método para guardar los cambios realizados en la factura:
@@ -274,9 +198,9 @@ class Modificar:
         #Cargo la lista de elementos de la factura
         listaFinalElementos = []
         for unidad, elemento, precio in self.listaElementos:
-            unidad = str(unidad.lower().strip())
-            elemento= str(elemento.lower().strip())
-            precio= str(precio.lower().strip())
+            unidad = str(unidad.get().lower().strip())
+            elemento= str(elemento.get().lower().strip())
+            precio= str(precio.get().lower().strip())
             listaFinalElementos.append([unidad, elemento, precio])
         # Obtención de las variables que van a ir en los elementos del diccionario de la factura
         numFact = str(self.numeroFactura.get().lower().strip())

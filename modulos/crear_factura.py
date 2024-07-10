@@ -27,7 +27,7 @@ class CrearFactura():
         Tiene un menú superior con la función de crear factura o salir
         En el centro de la ventana podrá dar a un botón que le llevará al menú para crear la factura
         '''
-        self.listaElementos = []
+        self.listaElementos = [] # Declaro la lista de elementos que corresponden a todos los elementos de la factura (4))
         self.ventana_crear = root
         self.ventana_crear.title("Crear Factura") # Título
         w, h = 500, 100  # Tamaño de la ventana
@@ -98,20 +98,13 @@ class Datos_Factura:
         self.fecha = fecha.strftime("%d/%m/%Y") # No me gustan las fechas inglesa, por ello uso el método strftime para que me lo ponga como en España
         self.cliente = self.entradaDatos(self.ventana_CrearFactura, "Introduce el cliente: ")
         self.dni = self.entradaDatos(self.ventana_CrearFactura, "Introduce el DNI del cliente: ")
-            # // Declaro la lista de elementos que corresponden a todos los elementos de la factura (4))
+            
         
-        
-        # frame = tk.Frame(self.frameElementos)
-        # frame.pack(pady=5)
-
-        # self.listaElementos.append((entradaUnidades, entradaElemento, entradaPrecio))
-
-                # /// Se hace un botón para los elementos, se le asigna el comando anadir_elemento y se empaqueta luego        
+                        # /// Se hace un botón para los elementos, se le asigna el comando anadir_elemento y se empaqueta luego        
         self.botonElemento = tk.Button(self.ventana_CrearFactura, text="Añadir Elemento", command=self.anadir_elemento) 
         self.botonElemento.pack(pady = 5)
         
         self.botonElemento = tk.Button(self.ventana_CrearFactura, text="Modificar Elemento", command=self.editar_elemento) 
-        
         self.botonElemento.pack(pady = 5)
         
                 # /// Se hace un botón para los Guardar la factura, se le asigna el comando guardar_factura y se empaqueta luego    
@@ -123,9 +116,10 @@ class Datos_Factura:
         self.frameElementos = tk.Frame(self.ventana_CrearFactura) 
         self.frameElementos.pack(pady = 10)
 
-        # ListBox
+        # ListBox que muestra los elementos introducidos 
         self.listbox = tk.Listbox(
             self.frameElementos,
+            font= ('Times', 18),
             height=20,            
             width= 200,
             selectmode=tk.EXTENDED)
@@ -151,7 +145,7 @@ class Datos_Factura:
 
     def anadir_elemento(self):
         ''' Método para hacer la entrada de elementos:
-        1) Se usa el frame de los elementos (heredado) y se empaqueta
+        1) Se crea una nueva ventana y se centra. Esta tiene un botón para guardar el elemento una vez estemos satisfechos.
         2) A cada parte del elemento (Unidades/concepto/PrecioU) se le genera su etiqueta (y se empaqueta), y su entrada (y se la empaqueta)
         3) Luego cogemos por herencia la lista declarada en add_factura y le hacemos un append de cada parte del elemento de la factura
         Hay control de entrada donde los valores de unidad y precio se les autoasigna un 0 si no se les ha puesto valor alguno
@@ -163,7 +157,7 @@ class Datos_Factura:
 
         self.botonGuardar = tk.Button(self.root_elementos, text="Guardar Elemento", command=self.guardar_elemento)
         self.botonGuardar.pack(pady = 10)
-####################################################
+
         frame = tk.Frame(self.root_elementos)
         frame.pack(pady=5)
 
@@ -182,11 +176,8 @@ class Datos_Factura:
         self.entradaPrecio = tk.Entry(frame, width=10)
         self.entradaPrecio.pack(side=tk.LEFT)
 
-        return [[self.entradaUnidades.get(), self.entradaElemento.get(), self.entradaPrecio.get()]]
-    
     def guardar_elemento(self):
-        
-
+        '''Método para guardar el elemento introducido'''
         self.listaElementos.append([self.entradaUnidades.get(), self.entradaElemento.get(), self.entradaPrecio.get()])
 
         # Controles de entrada, de partida le pone un 0 a unidades y precio
@@ -201,11 +192,15 @@ class Datos_Factura:
         else:
             self.entradaPrecio.delete(0, tk.END)
             self.entradaPrecio.insert(0, '0')
+        # Actualizamos la listbox con los elementos de la listaElementos
         self.update_listbox()
+        # Destruimos la ventana con la que estabamos trabajando
         self.root_elementos.destroy()
         
 
     def update_listbox(self):
+        ''' Método para actualizar la listbox:
+        Borra la list box y luego la vuelve a generar con los elementos actualizados'''
         self.listbox.delete(0, tk.END)
         for i, elemento_lista_de_la_lista in enumerate(self.listaElementos):
             elemento_info_info = f'Elemento {i}: Unidades: {elemento_lista_de_la_lista[0]} |Elemento: {elemento_lista_de_la_lista[1]}| Precio U.: {elemento_lista_de_la_lista[2]}'
@@ -213,6 +208,12 @@ class Datos_Factura:
         
     
     def editar_elemento(self):
+        ''' Método para editar el elemento de la listaElementos:
+        1) Se obtiene el índice del elemento de la listbox
+        2) Se usa ese índice para sobreescribir los datos invocando el método anadir_elemento
+        3) Se eliminan los antiguos
+        4) Se actualiza la listbox
+        '''
         indice = self.listbox.curselection()
         if not indice:
             messagebox.showwarning("Advertencia", "Por favor, selecciona un elemento para editar.")
@@ -227,7 +228,7 @@ class Datos_Factura:
             if element[0] == '':
                 self.listaElementos.remove(element)
         self.update_listbox()
-            # self.root_elementos.destroy()
+
 
     def guardar_factura(self):
         ''' Método que sirve para guardar los datos de la factura:

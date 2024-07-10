@@ -4,29 +4,18 @@
         "fecha": "10/07/2024",
         "cliente": "",
         "dni": "",
-        "listaElementos": [
-            [
-                "10",
-                "macs",
-                "140"
-            ]
-        ]
+        "listaElementos": []
     },
     {
-        "numeroFactura": "copia - sn",
+        "numeroFactura": "123",
         "fecha": "10/07/2024",
         "cliente": "",
         "dni": "",
         "listaElementos": [
             [
                 "30",
-                "coches",
-                "85"
-            ],
-            [
-                "75",
-                "peras",
-                "96"
+                "40",
+                "50"
             ]
         ]
     }
