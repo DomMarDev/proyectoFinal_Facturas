@@ -3,7 +3,6 @@ from tkinter import *
 import json                                             # Trabajar con el archivo json
 from pathlib import Path                                # Trabajar con las rutas
 import tkinter as tk                                    # Interfaz gráfica
-from tkinter import ttk
 from tkinter import messagebox, filedialog as FD        # Por si queremos agregar la función de escoger el archivo json, mostrar mensajes
 import sys                                              # Necesario para que no haya errores a la hora de importar módulos
 from datetime import date                               # Necesario para manejar fechas
@@ -17,8 +16,6 @@ from ruta import ruta                                   # Se importa la ruta del
 from modulos. creacionPDF import crear_pdf as CPDF      # Necesario para llamar al módulo de creación del PDF (crear_pdf)
 
 
-
-
 class CrearFactura():
 
     def __init__(self, root):
@@ -27,7 +24,6 @@ class CrearFactura():
         Tiene un menú superior con la función de crear factura o salir
         En el centro de la ventana podrá dar a un botón que le llevará al menú para crear la factura
         '''
-        self.listaElementos = []
         self.ventana_crear = root
         self.ventana_crear.title("Crear Factura") # Título
         w, h = 500, 100  # Tamaño de la ventana
@@ -63,7 +59,7 @@ class CrearFactura():
         ruta_Json = ruta() #'archivoJson/facturas.json'
         if ruta_Json:
             self.ventana_anadir_factura = Datos_Factura(ruta_Json)
-            self.ventana_anadir_factura.add_factura(self.listaElementos)
+            self.ventana_anadir_factura.add_factura()
     
 
 class Datos_Factura:
@@ -73,9 +69,8 @@ class Datos_Factura:
         self.path = Path(ruta)
         self.facturas = Lectura_archivo.lee_archivo(ruta)
         self.listaFacturas = json.loads(self.facturas)
-        # self.listaElementos = []
 
-    def add_factura(self, lista):
+    def add_factura(self):
         ''' Método para añadir los datos de una factura:
         Al usuario se le pide:
             -1) Número de la Factura
@@ -83,7 +78,6 @@ class Datos_Factura:
             -3) DNI/CIF del cliente
             -4) Unidades/Concepto(s)/Precio Unidad        
         '''
-        self.listaElementos = lista
         # / Genero una ventana por encima de la del menú principal.        
         self.ventana_CrearFactura = tk.Toplevel() # Uso la clase Toplevel de tkinter
         self.ventana_CrearFactura.title("Añadir Factura") # Asigno el título Añadir factura a esta ventana
@@ -109,48 +103,14 @@ class Datos_Factura:
         self.botonElemento = tk.Button(self.ventana_CrearFactura, text="Añadir Elemento", command=self.anadir_elemento) 
         self.botonElemento.pack(pady = 5)
         
-        self.botonElemento = tk.Button(self.ventana_CrearFactura, text="Modificar Elemento", command=self.anadir_elemento) 
-        
-        self.botonElemento.pack(pady = 5)
-        
                 # /// Se hace un botón para los Guardar la factura, se le asigna el comando guardar_factura y se empaqueta luego    
         self.botonGuardar = tk.Button(self.ventana_CrearFactura, text="Guardar Factura", command=self.guardar_factura)
         self.botonGuardar.pack(pady = 10)
         
-
+        self.listaElementos = []
                 # /// Se hace un frame para los elementos y se empaqueta luego
         self.frameElementos = tk.Frame(self.ventana_CrearFactura) 
         self.frameElementos.pack(pady = 10)
-        self.listaElementos = [['1','2','3']]
-        # ListBox
-        self.listbox = tk.Listbox(
-            self.frameElementos,
-            height=10,            
-            width= 75,
-            selectmode=tk.EXTENDED)
-        
-        print(self.listaElementos)
-        self.listbox.delete(0, END)
-        for i, elemento_lista_de_la_lista in enumerate(self.listaElementos):
-            self.contenido = f'{i} {elemento_lista_de_la_lista[0]}|{elemento_lista_de_la_lista[1]}|{elemento_lista_de_la_lista[2]}'
-            # print(contenido)
-            # input('Enter...')
-            self.listbox.insert('end', self.contenido)
-
-        self.listbox.pack(expand=True, fill=BOTH)
-
-
-        # link a scrollbar to a list
-        
-        # scrollbar = ttk.Scrollbar(
-        #     self.frameElementos,
-        #     orient=tk.VERTICAL,
-        #     command=listbox.yview
-        # )
-
-        # listbox['yscrollcommand'] = scrollbar.set
-
-        # scrollbar.pack(side=tk.LEFT, expand=True, fill=tk.Y)
 
 
     def entradaDatos(self, ventana_CrearFactura, texto):
@@ -177,14 +137,7 @@ class Datos_Factura:
         Hay control de entrada donde los valores de unidad y precio se les autoasigna un 0 si no se les ha puesto valor alguno
         '''        
     
-        self.root_elementos = Tk()
-        w, h = 500, 100  # Tamaño de la ventana
-        centrar(self.root_elementos, w, h)
-
-        self.botonGuardar = tk.Button(self.root_elementos, text="Guardar Elemento", command=self.guardar_elemento)
-        self.botonGuardar.pack(pady = 10)
-####################################################
-        frame = tk.Frame(self.root_elementos)
+        frame = tk.Frame(self.ventana_CrearFactura)
         frame.pack(pady=5)
 
         self.etiquetaUnidades = tk.Label(frame, text="Unidades:")
@@ -202,12 +155,7 @@ class Datos_Factura:
         self.entradaPrecio = tk.Entry(frame, width=10)
         self.entradaPrecio.pack(side=tk.LEFT)
 
-    
-    def guardar_elemento(self):
-        
-
-        self.listaElementos.append([self.entradaUnidades.get(), self.entradaElemento.get(), self.entradaPrecio.get()])
-        print(self.listaElementos)
+        self.listaElementos.append((self.entradaUnidades, self.entradaElemento, self.entradaPrecio))
 
         # Controles de entrada, de partida le pone un 0 a unidades y precio
         if self.entradaUnidades.get().isdigit() and self.entradaUnidades.get() == '' :
@@ -221,8 +169,7 @@ class Datos_Factura:
         else:
             self.entradaPrecio.delete(0, tk.END)
             self.entradaPrecio.insert(0, '0')
-        self.root_elementos.destroy()
-
+    
     def guardar_factura(self):
         ''' Método que sirve para guardar los datos de la factura:
         1) Se genera diccionario (datos_factura) con cada dato introducido (incluido elementos de la factura)
@@ -237,9 +184,9 @@ class Datos_Factura:
         
         listaFinalElementos = []
         for unidad, elemento, precio in self.listaElementos:
-            unidad = str(unidad.lower().strip())
-            elemento= str(elemento.lower().strip())
-            precio= str(precio.lower().strip())
+            unidad = str(unidad.get().lower().strip())
+            elemento= str(elemento.get().lower().strip())
+            precio= str(precio.get().lower().strip())
             listaFinalElementos.append([unidad, elemento, precio])
 
         self.datos_factura = {

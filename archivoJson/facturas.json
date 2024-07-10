@@ -1,45 +1,14 @@
 [
     {
         "numeroFactura": "sn",
-        "fecha": "09/07/2024",
+        "fecha": "10/07/2024",
         "cliente": "",
         "dni": "",
         "listaElementos": [
             [
-                "700",
-                "macarrones",
-                "10.5"
-            ],
-            [
-                "20",
-                "peras",
-                "75.7"
-            ]
-        ]
-    },
-    {
-        "numeroFactura": "1234",
-        "fecha": "09/07/2024",
-        "cliente": "",
-        "dni": "",
-        "listaElementos": [
-            [
-                "30.5",
-                "peras",
-                "3.7"
-            ]
-        ]
-    },
-    {
-        "numeroFactura": "copia - sn",
-        "fecha": "09/07/2024",
-        "cliente": "",
-        "dni": "",
-        "listaElementos": [
-            [
-                "10.5",
-                "pepes",
-                "30.6"
+                "10",
+                "macs",
+                "140"
             ]
         ]
     }
