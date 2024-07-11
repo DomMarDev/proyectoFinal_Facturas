@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "numeroFactura": "sn",
+        "fecha": "11/07/2024",
+        "cliente": "",
+        "dni": "",
+        "listaElementos": []
+    }
+]

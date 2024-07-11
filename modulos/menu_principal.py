@@ -3,6 +3,7 @@ import os                                                                       
 from pathlib import Path                                                        # Trabajar con las rutas
 import webbrowser                                                               # Incorporar la función de ir a la web de la empresa
 import tkinter as tk                                                            # Interfaz gráfica
+from tkinter import messagebox
 from tkinter import font                                                        # Asignar un tipo de fuente de texto
 from tkinter.font import Font                                                   # Asignar un tipo de fuente de texto
 from tkinter import filedialog as FD                                            # Por si queremos agregar la función de escoger el archivo json
@@ -28,12 +29,14 @@ class MenuPrincipalFinal(tk.Tk):
         '''Método que permite ir a crear una factura'''
         self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a CF
         CF(self.new_window)
-
+        app.iconify() # Minimizar ventana para trabajar mejor
+        messagebox.showinfo('Minimizado', 'El menú principal se ha minimizado')
 
     def eliminar_facturas(self):
         '''Método que permite ir a eliminar una factura'''
         self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a EF
         EF(self.new_window)
+        
 
 
     def mostrar_facturas(self):
@@ -49,6 +52,8 @@ class MenuPrincipalFinal(tk.Tk):
         '''Método que permite ir a modificar una factura'''
         self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a MF
         MF(self.new_window)
+        app.iconify()
+        messagebox.showinfo('Minimizado', 'El menú principal se ha minimizado')
 
     def salir_programa(self):
         '''Método para salir del programa'''

@@ -163,7 +163,7 @@ class Modificar:
         '''        
         frame = tk.Frame(ventana_ModificarFactura)
         frame.pack(pady=5)
-        label = tk.Label(frame, text=texto)
+        label = tk.Label(frame, text=texto, font=('Times', 24))
         label.pack(side=tk.LEFT)
         entrada = tk.Entry(frame, width=50)
         entrada.pack(side=tk.LEFT)
@@ -178,6 +178,8 @@ class Modificar:
 
         self.botonGuardar = tk.Button(self.root_elementos, text="Guardar Elemento", command=self.guardar_elemento)
         self.botonGuardar.pack(pady = 10)
+
+
 
         frame = tk.Frame(self.root_elementos)
         frame.pack(pady=5)
@@ -198,6 +200,13 @@ class Modificar:
         self.etiquetaPrecio.pack(side=tk.LEFT)
         self.entradaPrecio = tk.Entry(frame, width=10)
         self.entradaPrecio.pack(side=tk.LEFT)
+        
+        self.root_elementos.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def on_closing(self):
+        ''' Método para avisar si se quiere borrar un elemento dándo a la X'''
+        if messagebox.askokcancel("Cuidado", "¿Quieres cerrar y borrar el elemento?"):
+            self.root_elementos.destroy()
 
 
 

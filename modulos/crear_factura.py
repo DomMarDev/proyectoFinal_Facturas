@@ -19,6 +19,7 @@ from modulos. creacionPDF import crear_pdf as CPDF      # Necesario para llamar 
 
 
 
+
 class CrearFactura():
 
     def __init__(self, root):
@@ -137,7 +138,7 @@ class Datos_Factura:
         '''
         frame = tk.Frame(ventana_CrearFactura)
         frame.pack(pady = 5)
-        label = tk.Label(frame, text = texto)
+        label = tk.Label(frame, text = texto, font=('Times', 24))
         label.pack(side = tk.LEFT)
         entrada = tk.Entry(frame, width = 50)
         entrada.pack(side = tk.LEFT)
@@ -175,6 +176,13 @@ class Datos_Factura:
         self.etiquetaPrecio.pack(side=tk.LEFT)
         self.entradaPrecio = tk.Entry(frame, width=10)
         self.entradaPrecio.pack(side=tk.LEFT)
+        
+        self.root_elementos.protocol("WM_DELETE_WINDOW", self.on_closing)
+    
+    def on_closing(self):
+        ''' Método para avisar si se quiere borrar un elemento dándo a la X'''
+        if messagebox.askokcancel("Cuidado", "¿Quieres cerrar y borrar el elemento?"):
+            self.root_elementos.destroy()
 
     def guardar_elemento(self):
         '''Método para guardar el elemento introducido'''
