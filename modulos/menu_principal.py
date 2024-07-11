@@ -29,7 +29,7 @@ class MenuPrincipalFinal(tk.Tk):
         '''Método que permite ir a crear una factura'''
         self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a CF
         CF(self.new_window)
-        app.iconify() # Minimizar ventana para trabajar mejor
+        app.wm_state('iconic') # Minimizar ventana para trabajar mejor, segunda opción -> app.iconify()
         messagebox.showinfo('Minimizado', 'El menú principal se ha minimizado')
 
     def eliminar_facturas(self):
@@ -51,8 +51,8 @@ class MenuPrincipalFinal(tk.Tk):
     def modificar(self):
         '''Método que permite ir a modificar una factura'''
         self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a MF
-        MF(self.new_window)
-        app.iconify()
+        MF(self.new_window)        
+        app.wm_state('iconic')
         messagebox.showinfo('Minimizado', 'El menú principal se ha minimizado')
 
     def salir_programa(self):
