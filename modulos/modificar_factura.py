@@ -235,7 +235,7 @@ class Modificar:
         ''' Método para editar el elemento de la listaElementos:
         1) Se obtiene el índice del elemento de la listbox
         2) Se usa ese índice para sobreescribir los datos invocando el método anadir_elemento
-        3) Se eliminan los antiguos
+        3) Se eliminan el antiguo
         4) Se actualiza la listbox
         '''
         indice = self.listbox.curselection()
@@ -322,19 +322,6 @@ class Modificar:
                 self.datos_factura['numeroFactura'] = f"copia - {self.datos_factura['numeroFactura']}" #{random.randint(0, 1000)}
 
         # Herramienta para ver si no hay datos en algún campo de unidad y precio para que se sustituya por un '0'       
-        # for elemento1 in self.datos_factura['listaElementos']:
-        #     if elemento1[0].isdigit():
-        #         elemento1[0] = elemento1[0]
-        #     else:
-        #         elemento1[0] = '0'                
-        
-        # for elemento2 in self.datos_factura['listaElementos']:
-        #     if elemento2[2].isdigit():
-        #         elemento2[2] = elemento2[2]
-        #     else:
-        #         elemento2[2] = '0'   
-
-        ################################
         for elemento1 in self.datos_factura['listaElementos']:
             try:
                 
@@ -348,7 +335,7 @@ class Modificar:
                 float(elemento2[2])
             except ValueError:
                 elemento2[2] = '0'  
-        ################################
+
 
         self.listaFacturas.append(self.datos_factura)
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
