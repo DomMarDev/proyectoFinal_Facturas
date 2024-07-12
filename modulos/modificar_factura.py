@@ -336,7 +336,6 @@ class Modificar:
             except ValueError:
                 elemento2[2] = '0'  
 
-
         self.listaFacturas.append(self.datos_factura)
         contenido = json.dumps(self.listaFacturas, indent=4, sort_keys=False)
         self.path.write_text(contenido)
