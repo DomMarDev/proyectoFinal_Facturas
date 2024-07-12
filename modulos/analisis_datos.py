@@ -4,9 +4,6 @@ from pathlib import Path                                # Trabajar con las rutas
 import tkinter as tk                                    # Interfaz gráfica
 from tkinter import messagebox, filedialog as FD        # Por si queremos agregar la función de escoger el archivo json, mostrar mensajes
 import sys                                              # Necesario para que no haya errores a la hora de importar módulos
-from fpdf import FPDF                                   # Necesario para crear el archivo PDF
-from datetime import date                               # Necesario para manejar fechas
-
 
 sys.path.append('.')
 
@@ -14,12 +11,8 @@ from modulos.generic import centrar_ventanas as centrar # Necesario para importa
 from modulos.leer_archivo import Lectura_archivo        # Necesario para leer el archivo json
 from modulos.colores_y_rutas import *                   # Necesario para autoasignar ciertos campos de la factura
 from ruta import ruta                                   # Se importa la ruta del archivo json
-import random
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-from matplotlib.figure import Figure
+
 
 # Prueba
 from modulos. creacionPDF import crear_pdf as CPDF

@@ -179,8 +179,6 @@ class Modificar:
         self.botonGuardar = tk.Button(self.root_elementos, text="Guardar Elemento", command=self.guardar_elemento)
         self.botonGuardar.pack(pady = 10)
 
-
-
         frame = tk.Frame(self.root_elementos)
         frame.pack(pady=5)
 
@@ -189,12 +187,10 @@ class Modificar:
         self.entradaUnidades = tk.Entry(frame, width=5)
         self.entradaUnidades.pack(side=tk.LEFT)
 
-
         self.etiquetaElemento = tk.Label(frame, text="Elemento:")
         self.etiquetaElemento.pack(side=tk.LEFT)
         self.entradaElemento = tk.Entry(frame, width=20)
         self.entradaElemento.pack(side=tk.LEFT)
-
 
         self.etiquetaPrecio = tk.Label(frame, text="Precio:")
         self.etiquetaPrecio.pack(side=tk.LEFT)
@@ -207,8 +203,6 @@ class Modificar:
         ''' Método para avisar si se quiere borrar un elemento dándo a la X'''
         if messagebox.askokcancel("Cuidado", "¿Quieres cerrar y borrar el elemento?"):
             self.root_elementos.destroy()
-
-
 
     def guardar_elemento(self):
         '''Método para guardar el elemento introducido'''
@@ -238,7 +232,6 @@ class Modificar:
         for i, elemento_lista_de_la_lista in enumerate(self.listaElementos):
             elemento_info_info = f'Elemento {i}: Unidades: {elemento_lista_de_la_lista[0]} |Elemento: {elemento_lista_de_la_lista[1]}| Precio U.: {elemento_lista_de_la_lista[2]}'
             self.listbox.insert(tk.END, elemento_info_info)
-        
     
     def editar_elemento(self):
         ''' Método para editar el elemento de la listaElementos:
@@ -333,9 +326,7 @@ class Modificar:
         # Herramienta para ver si no hay datos en algún campo de unidad y precio para que se sustituya por un '0'       
         for elemento1 in self.datos_factura['listaElementos']:
             try:
-                
                 float(elemento1[0])
-                
             except ValueError:
                 elemento1[0] = '0' 
       

@@ -1,3 +1,4 @@
+# Importación de librerías
 import json
 from pathlib import Path
 

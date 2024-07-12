@@ -1,17 +1,17 @@
 # Librerías importadas
-import tkinter as tk
-from tkinter import ttk, messagebox
-from tkinter.font import BOLD
-from pathlib import Path
+import tkinter as tk                # Interfaz gráfica
+from tkinter import ttk, messagebox # ttk -> aplicar ciertos widgets, messagebox para mostrar información y errores a la hora de ingresar credenciales
+from tkinter.font import BOLD       # Para poner en negrita un texto
+from pathlib import Path            # Trabajar con rutas de archivos
 import sys
 
 sys.path.append('.')
 
-from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar
-from modulos.menu_principal import MenuPrincipalFinal as MP
-from modulos.colores_y_rutas import *
+from modulos.generic import leer_imagen as leer , centrar_ventanas as centrar # Necesario para importar la función de centrar y leer imagen
+from modulos.menu_principal import MenuPrincipalFinal as MP                   # Necesario para mostrar el menú principal de la aplicación
+from modulos.colores_y_rutas import *                                         # Necesario para autoasignar ciertos campos de la factura
 
-from facturaDatos.factura import Abrir_archivo
+from facturaDatos.factura import Abrir_archivo                                # Verificación de la existencia del achivo JSON y si no lo crea (avisa por consola de todo)
 
 # Instancia de la clase Abrir archivo para que se verifique la presencia o ausencia del JSON y si no lo hay lo cree
 miArchivo = Abrir_archivo()

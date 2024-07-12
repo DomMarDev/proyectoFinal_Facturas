@@ -1,6 +1,5 @@
-# Librería Pillow -> poder ajustar images
-# Fuente: https://www.youtube.com/watch?v=fDyO2vKrSfw&t=6s&ab_channel=Autodidacta
-from PIL import ImageTk, Image
+# Importación de librerías
+from PIL import ImageTk, Image  # Librería para poder ajustar images
 
 def leer_imagen(path, size):
     return ImageTk.PhotoImage(Image.open(path).resize(size, Image.LANCZOS))

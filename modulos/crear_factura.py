@@ -1,9 +1,8 @@
 # Importaciones de librerías
-from tkinter import *
+from tkinter import *                                   # Interfaz gráfica
 import json                                             # Trabajar con el archivo json
 from pathlib import Path                                # Trabajar con las rutas
 import tkinter as tk                                    # Interfaz gráfica
-from tkinter import ttk
 from tkinter import messagebox, filedialog as FD        # Por si queremos agregar la función de escoger el archivo json, mostrar mensajes
 import sys                                              # Necesario para que no haya errores a la hora de importar módulos
 from datetime import date                               # Necesario para manejar fechas
