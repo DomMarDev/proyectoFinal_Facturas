@@ -29,16 +29,14 @@ class MenuPrincipalFinal(tk.Tk):
         '''Método que permite ir a crear una factura'''
         self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a CF
         CF(self.new_window)
-        app.wm_state('iconic') # Minimizar ventana para trabajar mejor, segunda opción -> app.iconify()
-        messagebox.showinfo('Minimizado', 'El menú principal se ha minimizado')
+        # app.wm_state('iconic') # Minimizar ventana para trabajar mejor, segunda opción -> app.iconify()
+        # messagebox.showinfo('Minimizado', 'El menú principal se ha minimizado')
 
     def eliminar_facturas(self):
         '''Método que permite ir a eliminar una factura'''
         self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a EF
         EF(self.new_window)
         
-
-
     def mostrar_facturas(self):
         '''Método para mostrar las facturas'''
         archivo = FD.askopenfile(title='Dale a Abrir con...', initialdir='PDF',
@@ -52,8 +50,8 @@ class MenuPrincipalFinal(tk.Tk):
         '''Método que permite ir a modificar una factura'''
         self.new_window = tk.Toplevel(self) # Genero una ventana por encima del menú principal y se la paso a MF
         MF(self.new_window)        
-        app.wm_state('iconic')
-        messagebox.showinfo('Minimizado', 'El menú principal se ha minimizado')
+        # app.wm_state('iconic')
+        # messagebox.showinfo('Minimizado', 'El menú principal se ha minimizado')
 
     def salir_programa(self):
         '''Método para salir del programa'''
@@ -69,7 +67,6 @@ class MenuPrincipalFinal(tk.Tk):
         self.new_window = tk.Toplevel(self)# Genero una ventana por encima del menú principal y se la paso a AF
         AF(self.new_window)
 
-        
 
     def __init__(self):
         super().__init__()
